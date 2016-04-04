@@ -9,7 +9,7 @@ package Model;
  *
  * @author Morgane
  */
-public class Jeton extends Transparent {
+public class Jeton extends Traversable {
    private boolean surPlateau ;
    private  int[] faces = new int [2] ;
    private boolean faceBlanche ;
@@ -24,6 +24,7 @@ public class Jeton extends Transparent {
     * @param noire : le nombre de déplacements sur la face noire.
     */
    public Jeton (int blanche, int noire) {
+       super();
        this.surPlateau = false ;
        this.faces[0] = blanche ;
        this.faces[1] = noire ;
@@ -35,6 +36,6 @@ public class Jeton extends Transparent {
    /* 
    Il faut faire les accesseurs, et éventuellement d'autres constructeurs.
    */
-   */
+   
     
 }

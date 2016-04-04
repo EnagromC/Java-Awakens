@@ -9,7 +9,15 @@ package Model;
  *
  * @author Morgane
  */
-public abstract class Transparent extends Pion {
-     protected boolean traversable ;
-    
+public abstract class Traversable extends Pion {
+
+    protected boolean traversable;
+
+    public Traversable() {
+        super();
+    }
+
+    public Traversable(Coordonnees c, Plateau p) {
+        super(c, p);
+    }
 }

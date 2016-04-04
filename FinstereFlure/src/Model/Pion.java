@@ -16,7 +16,7 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     // Attributs
     ////////////////////////////////////////////////////////////////////////////
-    protected int[] position = new int[2]; //la position du pion sur le plateau
+    protected Coordonnees position; //la position du pion sur le plateau
     protected Plateau plateau; //le plateau sur lequel est placé le pion
 
     ////////////////////////////////////////////////////////////////////////////
@@ -34,8 +34,8 @@ public abstract class Pion {
      *
      * @param coordonnees
      */
-    public Pion(int[] coordonnees) {
-        this.position = coordonnees;
+    public Pion(Coordonnees c) {
+        this.position = c;
         this.plateau = new Plateau();
     }
 
@@ -54,7 +54,7 @@ public abstract class Pion {
      * @param coordonnees
      * @param plateau
      */
-    public Pion(int[] coordonnees, Plateau plateau) {
+    public Pion(Coordonnees coordonnees, Plateau plateau) {
         this.position = coordonnees;
         this.plateau = plateau;
     }
@@ -62,7 +62,7 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     // Accesseurs
     ////////////////////////////////////////////////////////////////////////////
-    public int[] getPosition() {
+    public Coordonnees getPosition() {
         return this.position;
     }
 
@@ -70,9 +70,14 @@ public abstract class Pion {
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
     public void seDeplacer(Direction d) {
-        this.position[0]+=d.getDx();
-        this.position[1]+=d.getDy();
-        
+        this.position = this.position.plus(d.getVector());
+
+        if (plateau.valide(this.position)) {
+            //Changer les coordonnées dans le plateau
+        } else {
+            this.position = this.position.plus(d.getVector().fois(-1)); //On annule le déplacement
+            System.out.println("Déplacement invalide");
+        }
         //Attention, il faut aussi vérifier que les nouvelles coordonnées sont valides et bouger sur le plateau.
     }
 }

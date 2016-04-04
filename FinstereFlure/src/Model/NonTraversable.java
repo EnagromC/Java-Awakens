@@ -9,7 +9,16 @@ package Model;
  *
  * @author Morgane
  */
-public abstract class NonTransparent extends Pion {
-   protected boolean traversable ;
-    
+public abstract class NonTraversable extends Pion {
+
+    protected boolean traversable;
+
+    public NonTraversable() {
+        super();
+    }
+
+    public NonTraversable(Coordonnees c, Plateau p) {
+        super(c, p);
+    }
+
 }

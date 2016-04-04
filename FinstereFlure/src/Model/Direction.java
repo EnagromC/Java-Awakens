@@ -15,19 +15,21 @@ public enum Direction {
     GAUCHE(0, -1),
     DROITE(0, 1);
 
-    private int dx;
-    private int dy;
+    private Coordonnees vector;
 
     Direction(int dx, int dy) {
-        this.dx = dx;
-        this.dy = dy;
+        this.vector = new Coordonnees(dx,dy);
     }
 
     public int getDx() {
-        return this.dx;
+        return this.vector.getX();
     }
 
     public int getDy() {
-        return this.dy;
+        return this.vector.getY();
+    }
+    
+    public Coordonnees getVector(){
+        return this.vector;
     }
 }
