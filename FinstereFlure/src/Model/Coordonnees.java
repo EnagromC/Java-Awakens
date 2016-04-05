@@ -11,8 +11,8 @@ package Model;
  */
 public class Coordonnees {
 
-    int x;
-    int y;
+    private int x;
+    private int y;
 
     public Coordonnees(int x, int y) {
         this.x = x;
