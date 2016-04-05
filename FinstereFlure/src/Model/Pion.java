@@ -69,15 +69,15 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
-    public void seDeplacer(Direction d) {
-        this.position = this.position.plus(d.getVector());
+    public void seDeplacer(Coordonnees c) {
 
-        if (plateau.valide(this.position)) {
+        if (plateau.valide(this.position) && plateau.caseLibre(position)) {
             //Changer les coordonnées dans le plateau
-        } else {
-            this.position = this.position.plus(d.getVector().fois(-1)); //On annule le déplacement
+        } else { 
             System.out.println("Déplacement invalide");
         }
         //Attention, il faut aussi vérifier que les nouvelles coordonnées sont valides et bouger sur le plateau.
     }
+    
+
 }
