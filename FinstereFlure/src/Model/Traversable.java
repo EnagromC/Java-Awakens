@@ -6,18 +6,11 @@
 package Model;
 
 /**
+ * Interface "marqueur". Regroupe tous les pions pour lesquels on peut
+ * passer à travers, mais sur lesquels on ne peut pas s'arrêter.
  *
  * @author Morgane
  */
-public abstract class Traversable extends Pion {
+public interface Traversable {
 
-    protected boolean traversable;
-
-    public Traversable() {
-        super();
-    }
-
-    public Traversable(Coordonnees c, Plateau p) {
-        super(c, p);
-    }
 }

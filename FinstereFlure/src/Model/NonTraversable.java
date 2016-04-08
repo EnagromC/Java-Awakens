@@ -6,19 +6,11 @@
 package Model;
 
 /**
+ * Interface "marqueur". Regroupe tous les pions pour lesquels on NE peut
+ * PAS passer à travers.
  *
  * @author Morgane
  */
-public abstract class NonTraversable extends Pion {
-
-    protected boolean traversable;
-
-    public NonTraversable() {
-        super();
-    }
-
-    public NonTraversable(Coordonnees c, Plateau p) {
-        super(c, p);
-    }
+public interface NonTraversable {
 
 }

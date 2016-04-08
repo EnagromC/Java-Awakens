@@ -30,13 +30,14 @@ public abstract class Pion {
     }
 
     /**
-     * Initialise un pion à partir d'un tableau de coordonnées
+     * Initialise un pion à partir de ses coordonnées
      *
-     * @param coordonnees
+     * @param c coordonnées du pion sur le plateau
      */
     public Pion(Coordonnees c) {
         this.position = c;
         this.plateau = new Plateau();
+        this.plateau.addPion(this, c);
     }
 
     /**
@@ -57,6 +58,7 @@ public abstract class Pion {
     public Pion(Coordonnees coordonnees, Plateau plateau) {
         this.position = coordonnees;
         this.plateau = plateau;
+        this.plateau.addPion(this, coordonnees);
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -71,13 +73,14 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     public void seDeplacer(Coordonnees c) {
 
-        if (plateau.valide(this.position) && plateau.caseLibre(position)) {
-            //Changer les coordonnées dans le plateau
-        } else { 
+        if (plateau.valide(c) && plateau.caseLibre(c)) {
+            plateau.movePion(this.position, c);
+            this.position = c;
+            //Il faut voir pour prendre en comtpe les taches de sang.
+        } else {
             System.out.println("Déplacement invalide");
         }
-        //Attention, il faut aussi vérifier que les nouvelles coordonnées sont valides et bouger sur le plateau.
+
     }
-    
 
 }

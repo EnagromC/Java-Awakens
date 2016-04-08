@@ -6,15 +6,16 @@
 package Model;
 
 /**
+ * Représente le monstre qui essaye de manger les jetons des joueurs.
  *
  * @author Corentin
  */
-public class Monstre extends NonTraversable {
+public class Monstre extends Pion implements NonTraversable {
 
     Direction direction;
 
     public Monstre(Plateau p) {
-        super(new Coordonnees(0, 0),p);
+        super(new Coordonnees(0, 0), p);
         this.direction = Direction.DROITE;
     }
 }

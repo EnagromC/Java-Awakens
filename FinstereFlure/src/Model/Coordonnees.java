@@ -6,19 +6,34 @@
 package Model;
 
 /**
+ * Représente les coordonnées d'une case du plateau de jeu, en fonction de son
+ * numéro de ligne x, et de colonne y.
  *
  * @author Corentin
  */
 public class Coordonnees {
 
-    private int x;
-    private int y;
+    ////////////////////////////////////////////////////////////////////////////
+    // Attributs
+    ////////////////////////////////////////////////////////////////////////////
+    private int x; //numéro de ligne
+    private int y; //numéro de colonne
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Constructeurs
+    ////////////////////////////////////////////////////////////////////////////
     public Coordonnees(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Accesseurs
+    ////////////////////////////////////////////////////////////////////////////
+    /**
+     *
+     * @return les coordonnées sous la forme d'un tableau de 2 cases.
+     */
     public int[] getCoordonnees() {
         int[] coord = {this.x, this.y};
         return coord;
@@ -32,8 +47,12 @@ public class Coordonnees {
         return this.y;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Méthodes publiques
+    ////////////////////////////////////////////////////////////////////////////
     /**
      * Permet de calculer la somme de 2 vecteurs de coordonnées.
+     *
      * @param c les coordonnées à ajouter
      * @return la somme de 2 Coordonnées
      */
@@ -42,7 +61,9 @@ public class Coordonnees {
     }
 
     /**
-     * Permet de multiplier un vecteur de coordonnées par un entier. On peut ainsi faire la différence de 2 Coordonnées en multipliant par -1
+     * Permet de multiplier un vecteur de coordonnées par un entier. On peut
+     * ainsi faire la différence de 2 Coordonnées en multipliant par -1
+     *
      * @param lambda le coefficient de multiplication
      * @return le produit des coordonnées par lambda
      */
@@ -52,8 +73,9 @@ public class Coordonnees {
 
     /**
      * Calcule la distance euclidienne entre 2 coordonnées
-     * @param c 
-     * @return 
+     *
+     * @param c
+     * @return
      */
     public double distanceEuclidienne(Coordonnees c) {
         return Math.sqrt(Math.pow(this.x - c.x, 2) + Math.pow(this.y - c.y, 2));
@@ -61,14 +83,14 @@ public class Coordonnees {
 
     /**
      * Calcule la distance de Manhattan entre 2 coordonnées
+     *
      * @param c
-     * @return 
+     * @return
      */
     public int distanceManhattan(Coordonnees c) {
         return Math.abs(this.x - c.x) + Math.abs(this.y - c.y);
     }
 
-    
     @Override
     public boolean equals(Object o) {
         Coordonnees c = (Coordonnees) o;

@@ -6,9 +6,9 @@
 package Model;
 
 /**
- *
+ * Représente un caillou bloquant une case du labyrinthe
  * @author Corentin
  */
-public class Caillou extends NonTraversable{
+public class Caillou extends Pion implements NonTraversable{
     
 }

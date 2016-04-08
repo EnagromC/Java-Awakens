@@ -6,9 +6,10 @@
 package Model;
 
 /**
+ * Représente l'état et le déroulement d'une partie de Finstere Flure.
  *
  * @author Corentin
  */
 public class Partie {
-    
+
 }

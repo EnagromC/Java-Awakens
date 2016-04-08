@@ -6,32 +6,51 @@
 package Model;
 
 /**
+ * Les coordonnées d'une case, associées à la distance de cette case par rapport
+ * à une case de départ. Cette classe est utilisée comme type de retour pour les
+ * fonctions cherchant à déterminer quelles sont les classes accessibes d'un
+ * certain point.
  *
  * @author Corentin
  */
 public class CoordonneesDist {
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Attributs
+    ////////////////////////////////////////////////////////////////////////////
     private Coordonnees c;
     private int d;
-    
-    public CoordonneesDist(Coordonnees c, int d){
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Constructeurs
+    ////////////////////////////////////////////////////////////////////////////
+    public CoordonneesDist(Coordonnees c, int d) {
         this.c = c;
         this.d = d;
     }
-    
-    public Coordonnees getCoordonnees(){
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Accesseurs
+    ////////////////////////////////////////////////////////////////////////////
+    public Coordonnees getCoordonnees() {
         return this.c;
     }
-    
-    public int getDistance(){
+
+    public int getDistance() {
         return this.d;
     }
-    
-    public boolean equals(Object o){
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Méthodes publiques
+    ////////////////////////////////////////////////////////////////////////////
+    @Override
+    public boolean equals(Object o) {
         CoordonneesDist cd = (CoordonneesDist) o;
         return this.c == cd.c;
     }
-    
-    public int hashCode(){
+
+    @Override
+    public int hashCode() {
         return this.c.hashCode();
     }
 }
