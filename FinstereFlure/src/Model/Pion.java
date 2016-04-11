@@ -83,4 +83,17 @@ public abstract class Pion {
 
     }
 
+    public void seDeplacer(Direction d) {
+        Coordonnees newCoord = this.position.plus(d.getVector());
+
+        if (plateau.valide(newCoord) && plateau.caseLibre(newCoord)) {
+            plateau.movePion(this.position, newCoord);
+            this.position = newCoord;
+            //Il faut voir pour prendre en comtpe les taches de sang.
+        } else {
+            System.out.println("Déplacement invalide");
+        }
+
+    }
+
 }

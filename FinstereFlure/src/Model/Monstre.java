@@ -5,6 +5,9 @@
  */
 package Model;
 
+import static java.util.Arrays.asList;
+import java.util.List;
+
 /**
  * Représente le monstre qui essaye de manger les jetons des joueurs.
  *
@@ -23,4 +26,9 @@ public class Monstre extends Pion implements NonTraversable {
     }
     
     
+    public List directionsVisibles(){
+        List l = asList(Direction.values());
+        l.remove(this.direction.directionOpposee());
+        return l;
+    }
 }

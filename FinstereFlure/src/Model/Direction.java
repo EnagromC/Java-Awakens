@@ -36,4 +36,19 @@ public enum Direction {
     public Coordonnees getVector() {
         return this.vector;
     }
+    
+    public Direction directionOpposee(){
+        switch(this){
+            case HAUT :
+                return BAS;
+            case BAS :
+                return HAUT;
+            case GAUCHE:
+                return DROITE;
+            case DROITE:
+                return GAUCHE;     
+        }
+        return null;
+    }
+
 }
