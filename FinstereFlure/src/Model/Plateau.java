@@ -140,9 +140,13 @@ public class Plateau {
         Pion ancien = this.plateau.remove(c);
         return ancien != null;
     }
+    
+    public Pion getCase(Coordonnees c) {
+        return this.plateau.get(c) ;
+    }
 
     /**
-     * Déplace un pion sur le plateau, si il existe et que la case d'arrivée est
+     * Déplace un pion sur le plateau, s'il existe et que la case d'arrivée est
      * vide, des coordonnées depart aux coordonnées arrivee.
      *
      * @param depart coordonnées du pion à déplacer
