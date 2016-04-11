@@ -13,9 +13,14 @@ package Model;
 public class Monstre extends Pion implements NonTraversable {
 
     Direction direction;
-
+    /**
+     * C'est le constructeur ! Il prend en paramètre le plateau sur lequel on va positionner le monstre.
+     * @param p 
+     */
     public Monstre(Plateau p) {
         super(new Coordonnees(0, 0), p);
         this.direction = Direction.DROITE;
     }
+    
+    
 }
