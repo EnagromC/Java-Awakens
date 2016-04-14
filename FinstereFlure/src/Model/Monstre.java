@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class Monstre extends Pion implements NonTraversable {
 
-    Direction direction;
+    public Direction direction;
 
     /**
      * C'est le constructeur ! Il prend en paramètre le plateau sur lequel on va
@@ -88,6 +88,54 @@ public class Monstre extends Pion implements NonTraversable {
         this.direction = dir;//Une fois qu'on a trouvé la direction la plus intéressante, on MAJ la direction du zombie.
         //Si on n'a pas trouvé à manger, la direction du zombie ne bouge pas.
 
+    }
+
+    /**
+     * Indique si le monstre va sortir du plateau en faisant encore un pas dans
+     * la même direction
+     *
+     * @return true s'il va sortir, false sinon
+     */
+    public boolean vaSortir() {
+        return !(this.plateau.valide(this.position.plus(this.direction.getVector())));
+    }
+
+    /**
+     * Détermine les coordonnées de la case dans laquelle doit se téléporter le
+     * monstre. Attention, il faut auparavant s'assurer que le monstre est bien
+     * sur une case en bordure du plateau.
+     *
+     * @return les coordonnées de la case où le monstre doit se téléporter.
+     */
+    public Coordonnees destinationTeleportation() {
+        //Toutes les coordonnées des cases en bord de plateau.
+        int[][] coordTeleporteurs = {{0, 0}, {0, 1}, {0, 2}, {0, 3}, {0, 4}, {0, 5}, {0, 6}, {0, 7}, {0, 8}, {0, 9}, {0, 10}, {0, 11}, {1, 12}, {2, 13}, {3, 14}, {4, 15}, {5, 15}, {6, 15}, {7, 15}, {8, 15}, {9, 15}, {10, 15}, {10, 14}, {10, 13}, {10, 12}, {10, 11}, {10, 10}, {10, 9}, {10, 8}, {10, 7}, {10, 6}, {10, 5}, {10, 4}, {9, 3}, {8, 2}, {7, 1}, {6, 0}, {5, 0}, {4, 0}, {3, 0}, {2, 0}, {1, 0}};
+        ArrayList<Coordonnees> teleporteurs = new ArrayList<>();
+        for (int[] c : coordTeleporteurs) {
+            teleporteurs.add(new Coordonnees(c[0], c[1]));
+        }
+
+        int i = teleporteurs.indexOf(this.position);
+
+        //Dans la liste, les cases sont dans l'ordre. On remarque que la case d'arrivée de la téléportation est toujours 21 cases de bord plus loin que celle de départ : il suffit donc d'accéder aux coordonnées stockés 21 cases plus loin, modulo la taille de la liste.
+        i += 21;
+        i %= teleporteurs.size();
+
+        return teleporteurs.get(i);
+    }
+
+    public void avancer() {
+        if (this.vaSortir()) {
+
+        } else {
+            super.seDeplacer(direction);
+            if (!plateau.valide(this.position)) {
+            }
+        }
+    }
+
+    public void chasser() {
+        regarder();
     }
 
 }

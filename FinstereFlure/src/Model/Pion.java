@@ -71,6 +71,11 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
+    /**
+     * Déplace un pion vers de nouvelles coordonnées si elles sont valides
+     *
+     * @param c les coordonnées de la case d'arrivée
+     */
     public void seDeplacer(Coordonnees c) {
 
         if (plateau.valide(c) && plateau.caseLibre(c)) {
@@ -83,13 +88,23 @@ public abstract class Pion {
 
     }
 
+    /**
+     * Déplace le pion de 1 case dans une direction, si le mouvement est valide
+     *
+     * @param d la direction du déplacement
+     */
     public void seDeplacer(Direction d) {
         Coordonnees newCoord = this.position.plus(d.getVector());
 
         if (plateau.valide(newCoord) && plateau.caseLibre(newCoord)) {
+            
+            
+            
             plateau.movePion(this.position, newCoord);
             this.position = newCoord;
-            //Il faut voir pour prendre en comtpe les taches de sang.
+            while (this.plateau.estUneFlaque(this.position)) {
+                this.seDeplacer(d);
+            }
         } else {
             System.out.println("Déplacement invalide");
         }
