@@ -21,9 +21,9 @@ public class Joueur {
     // Constructeurs
     ////////////////////////////////////////////////////////////////////////////
     public Joueur() {
-        pions[0] = new Jeton(6, 1);
-        pions[1] = new Jeton(4, 3);
-        pions[2] = new Jeton(3, 4);
-        pions[3] = new Jeton(2, 5);
+        pions[0] = new Jeton(1,6);
+        pions[1] = new Jeton(3,4);
+        pions[2] = new Jeton(4,3);
+        pions[3] = new Jeton(5,2);
     }
 }

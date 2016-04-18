@@ -34,13 +34,13 @@ public class Jeton extends Pion implements Traversable {
      * @param blanche : le nombre de déplacements sur la face blanche.
      * @param noire : le nombre de déplacements sur la face noire.
      */
-    public Jeton(int blanche, int noire, String adresse) {
+    public Jeton(int blanche, int noire) {
         super();
         this.surPlateau = false;
         this.faces[0] = blanche;
         this.faces[1] = noire;
         this.enJeu = true;
-        super.adresse = adresse ;
+        this.faceBlanche = true;
     }
 
     /* 

@@ -21,23 +21,26 @@ import javax.swing.JPanel;
 public class JPion extends JPanel {
     
     
-    public static final int tailleCase = 36 ;
-    String image ;
+    public static final int TAILLE_CASE = 36 ;
+    String[] images;
+    int imageActuelle;
     
     /**
      * Constructeur
-     * @param chaine : l'adresse de l'image
+     * @param adresses : les adresses des images
      */
-    public JPion(String chaine) {
-        this.image = chaine ;
-        this.setSize(tailleCase, tailleCase);
+    public JPion(String[] adresses) { 
+        this.images = adresses;
+        imageActuelle = 0;
+        this.setSize(TAILLE_CASE, TAILLE_CASE);
+        
     }
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g) ;
         try {
-            BufferedImage img = ImageIO.read(new File("//img"+image));
-            g.drawImage(img,0,0,tailleCase, tailleCase, null) ;
+            BufferedImage img = ImageIO.read(new File("img/"+images[imageActuelle]));
+            g.drawImage(img,0,0,TAILLE_CASE, TAILLE_CASE, null) ;
         } catch (IOException ex) {
             Logger.getLogger(JPion.class.getName()).log(Level.SEVERE, null, ex);
         }
