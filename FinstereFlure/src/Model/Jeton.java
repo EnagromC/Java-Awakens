@@ -42,10 +42,9 @@ public class Jeton extends Pion implements Traversable {
         this.faces[0] = blanche;
         this.faces[1] = noire;
         this.enJeu = true;
-<<<<<<< HEAD
+
         this.faceBlanche = true;
-=======
->>>>>>> origin/Bibi's-update
+
     }
 
     /* 
@@ -71,7 +70,7 @@ public class Jeton extends Pion implements Traversable {
                     Chemin ch = new Chemin(c);
                     ch.incCout();
                     ch.add(c2);
-                    while(plateau.estUneFlaque(ch.destination())&&positionValide(ch.destination().plus(dir.getVector()))){
+                    while(plateau.estUneFlaque(ch.destination())&& positionValide(ch.destination().plus(dir.getVector()))){
                         ch.add(ch.destination().plus(dir.getVector()));
                     }
                     
@@ -88,5 +87,9 @@ public class Jeton extends Pion implements Traversable {
 
         }
         return res;
+    }
+
+    private boolean positionValide(Coordonnees plus) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
