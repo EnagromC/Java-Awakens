@@ -5,6 +5,19 @@
  */
 package InterfaceGraphique;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+import Model.Coordonnees;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+
+=======
+>>>>>>> origin/Bibi's-update
+=======
+>>>>>>> origin/Bibi's-update
 /**
  *
  * @author Morgane
@@ -14,8 +27,74 @@ public class Fenster extends javax.swing.JFrame {
     /**
      * Creates new form Fenster
      */
+<<<<<<< HEAD
+<<<<<<< HEAD
+    @SuppressWarnings("empty-statement")
     public Fenster() {
         initComponents();
+
+        String[] adresses = {"pionred_1_6_clair.gif", "pionpurple_1_6_fonce.gif"};
+        pionsPurple[0] = new JPion(adresses);
+        String[] adresses2 = {"pionred_3_4_clair.gif", "pionpurple_3_4_fonce.gif"};
+        pionsPurple[1] = new JPion(adresses2);
+        String[] adresses3 = {"pionred_4_3_clair.gif", "pionpurple_4_3_fonce.gif"};
+        pionsPurple[2] = new JPion(adresses3);
+        String[] adresses4 = {"pionred_5_2_clair.gif", "pionpurple_5_2_fonce.gif"};
+        pionsPurple[3] = new JPion(adresses4);
+
+        String[] adresses5 = {"piongreen_1_6_clair.gif", "piongreen_1_6_fonce.gif"};
+        pionsGreen[0] = new JPion(adresses5);
+        String[] adresses6 = {"piongreen_3_4_clair.gif", "piongreen_3_4_fonce.gif"};
+        pionsGreen[1] = new JPion(adresses6);
+        String[] adresses7 = {"piongreen_4_3_clair.gif", "piongreen_4_3_fonce.gif"};
+        pionsGreen[2] = new JPion(adresses7);
+        String[] adresses8 = {"piongreen_5_2_clair.gif", "piongreen_5_2_fonce.gif"};
+        pionsGreen[3] = new JPion(adresses8);
+
+        for (JPion p : pionsPurple) {
+            p.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    pionClicked(evt);
+                }
+            });
+        }
+        
+        for (JPion p : pionsGreen) {
+            p.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    pionClicked(evt);
+                }
+            });
+        }
+
+        plateau = new JPlateau();
+        plateau.setBounds(50, 50, 694, 479);//permet de définir la position et la taille en même temps
+        this.add(plateau);
+
+        plateau.add(pionsPurple[0], new Integer(1));
+        pionsPurple[0].setLocation(106, 220);
+        pionsPurple[0].setOpaque(false);
+
+        int larg = 106;
+        int haut = 220;
+        for (int i = 1; i < 4; i++) {
+            plateau.add(pionsPurple[i], new Integer(1));
+            larg += JPion.TAILLE_CASE + 5;
+            pionsPurple[i].setLocation(larg, 220 + JPion.TAILLE_CASE + 5);
+            pionsPurple[i].setOpaque(false);
+        }
+
+        plateau.add(pionsGreen[3], new Integer(1));
+        pionsGreen[3].setOpaque(false);
+        pionsGreen[3].setLocation(plateau.position(new Coordonnees(5, 1)));
+=======
+    public Fenster() {
+        initComponents();
+>>>>>>> origin/Bibi's-update
+=======
+    public Fenster() {
+        initComponents();
+>>>>>>> origin/Bibi's-update
     }
 
     /**
@@ -27,6 +106,13 @@ public class Fenster extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+=======
+=======
+>>>>>>> origin/Bibi's-update
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLayeredPane2 = new javax.swing.JLayeredPane();
 
@@ -61,10 +147,24 @@ public class Fenster extends javax.swing.JFrame {
         );
         jLayeredPane1.setLayer(jLayeredPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+<<<<<<< HEAD
+>>>>>>> origin/Bibi's-update
+=======
+>>>>>>> origin/Bibi's-update
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
+<<<<<<< HEAD
+            .addGap(0, 961, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 553, Short.MAX_VALUE)
+=======
+=======
+>>>>>>> origin/Bibi's-update
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLayeredPane1)
                 .addContainerGap())
@@ -74,11 +174,30 @@ public class Fenster extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLayeredPane1)
                 .addContainerGap())
+<<<<<<< HEAD
+>>>>>>> origin/Bibi's-update
+=======
+>>>>>>> origin/Bibi's-update
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    
+    private void pionClicked(MouseEvent evt){
+        //vérifier que on a bien cliqué sur un de ses pions, et pas de l'adversaire
+        //déselectionner l'ancien pion sélectionné.
+        this.selected.setBorder(null);
+        this.selected = (JPion) evt.getSource();
+        this.selected.setBorder(BorderFactory.createLineBorder(Color.yellow, 5));
+    }
+    
+=======
+>>>>>>> origin/Bibi's-update
+=======
+>>>>>>> origin/Bibi's-update
     /**
      * @param args the command line arguments
      */
@@ -115,7 +234,21 @@ public class Fenster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
+<<<<<<< HEAD
+    // End of variables declaration//GEN-END:variables
+    JPion[] pionsPurple = new JPion[4];
+    JPion[] pionsGreen = new JPion[4];
+    JPlateau plateau;
+    JPion selected = new JPion(new String[1]);
+=======
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     // End of variables declaration//GEN-END:variables
+>>>>>>> origin/Bibi's-update
+=======
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JLayeredPane jLayeredPane2;
+    // End of variables declaration//GEN-END:variables
+>>>>>>> origin/Bibi's-update
 }
