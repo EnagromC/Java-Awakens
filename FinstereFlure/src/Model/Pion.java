@@ -89,6 +89,17 @@ public abstract class Pion {
     }
 
     /**
+     * Détermine si le pion peut effectivement se trouver ou se déplacer à cette
+     * position.
+     *
+     * @param c Les coordonnées de la position
+     * @return true si elle est valide,false sinon
+     */
+    public boolean positionValide(Coordonnees c) {
+        return plateau.valide(c) && plateau.caseLibre(c);
+    }
+
+    /**
      * Déplace le pion de 1 case dans une direction, si le mouvement est valide
      *
      * @param d la direction du déplacement
@@ -96,17 +107,12 @@ public abstract class Pion {
     public void seDeplacer(Direction d) {
         Coordonnees newCoord = this.position.plus(d.getVector());
 
-        if (plateau.valide(newCoord) && plateau.caseLibre(newCoord)) {
-            
-            
-            
+        if (positionValide(newCoord)) {
             plateau.movePion(this.position, newCoord);
             this.position = newCoord;
             while (this.plateau.estUneFlaque(this.position)) {
                 this.seDeplacer(d);
             }
-        } else {
-            System.out.println("Déplacement invalide");
         }
 
     }

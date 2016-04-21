@@ -126,11 +126,15 @@ public class Monstre extends Pion implements NonTraversable {
 
     public void avancer() {
         if (this.vaSortir()) {
-
-        } else {
-            super.seDeplacer(direction);
-            if (!plateau.valide(this.position)) {
+            Coordonnees arrivee = destinationTeleportation();
+            if (!plateau.caseLibre(arrivee)) {
+                //intéragir avec le truc
             }
+            seDeplacer(arrivee);
+        } else {
+            
+            super.seDeplacer(direction);
+
         }
     }
 
