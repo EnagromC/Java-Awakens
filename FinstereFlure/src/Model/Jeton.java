@@ -18,10 +18,11 @@ public class Jeton extends Pion implements Traversable {
     ////////////////////////////////////////////////////////////////////////////
     // Attributs
     ////////////////////////////////////////////////////////////////////////////
-    private boolean surPlateau;
-    private int[] faces = new int[2];
-    private boolean faceBlanche;
-    private boolean enJeu;
+    private boolean surPlateau; //Indique si un pion est sur le plateau, ou dans la réserve du joueur / éliminé
+    private int[] faces = new int[2]; //valeur des 2 faces du pion. Par convention, la première est la blanche et la deuxième la noire.
+    private boolean faceBlanche; //indique si le pion est retourné sur la face blanche (false = face noire)
+    private boolean enJeu; //Indique si un pion est encore en jeu ou s'il a été éliminé
+    private int deplacementsRestants; //nombre de points de déplacement restants pour le tour
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructeurs
@@ -47,49 +48,81 @@ public class Jeton extends Pion implements Traversable {
 
     }
 
-    /* 
-   Il faut faire les accesseurs, et éventuellement d'autres constructeurs.
-     */
     /**
-     * Retourne l'ensemble des coordonnées des cases accessibles depuis la case
-     * de coordonnées c, en au maximum n déplacements, associée à leur distance
-     * (nombre de déplacements nécessaires) depuis la case de départ. On
-     * initialisera avec d = 0;
-     *
-     * @param c coordonnées de la case de départ
-     * @param n nombre de déplacements maximum
-     * @return l'ensemble des cases accessibles
+     * Permet de retourner le pion, c'est-à-dire de le mettre sur la face
+     * blanche s'il était sur la face noire, ou vice-versa.
      */
-    public HashSet<Chemin> accessibles(Chemin c, int n) {
-        HashSet<Chemin> res = new HashSet<>();
-        if (n != 0) {
-            HashSet<Chemin> newAcc = new HashSet<>(); //nouvelles cases accessibles
-            for (Direction dir : Direction.values()) { //On essaie de se déplacer dans les 4 directions (haut, bas, gauche, droite)
-                Coordonnees c2 = dir.getVector().plus(c.destination());
-                if (plateau.valide(c2) && (plateau.caseLibre(c2) || (n != 1 && plateau.getCase(c2) instanceof Traversable))) {//Pour chaque nouvelle coordonnée générée on vérifie si elle est valide. S'il ne reste qu'un déplacement, la case d'arrivée doit aussi être vide. Si ce n'est pas le dernier mouvement, si elle est occupée ça doit être par une entité traversable.
-                    Chemin ch = new Chemin(c);
-                    ch.incCout();
-                    ch.add(c2);
-                    while(plateau.estUneFlaque(ch.destination())&& positionValide(ch.destination().plus(dir.getVector()))){
-                        ch.add(ch.destination().plus(dir.getVector()));
+    public void retourner() {
+        this.faceBlanche = !this.faceBlanche;
+    }
+
+    /**
+     * Permet de faire se déplacer un jeton d'une case dans une direction, en
+     * vérifiant que le mouvement est possible. Si la case est libre, le pion y
+     * est simplement déplacée. Si c'est une flaque de sang, il glisse. Si la
+     * case contient un autre jeton, il ne peut y rentrer que s'il la quitte
+     * immédiatement en glissant, ou s'il lui reste assez de points de
+     * déplacements pour la quitter ensuite. Si c'est un caillou, il le pousse
+     * si possible et prend sa place.
+     *
+     * On suppose que quand cette méthode est appelée, le joueur a un nombre de
+     * points de déplacements non nul.
+     *
+     * @param d la direction du déplacement
+     * @return true si le déplacement a été effectué, false s'il était invalide.
+     */
+    public boolean seDeplacer(Direction d) {
+        Coordonnees newCoord = this.position.plus(d.getVector()); //coordonnées de la case d'arrivée
+
+        if (plateau.valide(newCoord)) {//On vérifie que cette case est bien sur le plateau
+            if (plateau.caseLibre(newCoord)) { //Si elle est libre, on déplace le pion grâce à la méthode mère (qui gère les glissades...)
+                super.seDeplacer(d);
+                this.deplacementsRestants--;
+                return true;
+
+            } else if (plateau.getCase(newCoord) instanceof Traversable) { //Si la case contient un joueur
+                if (this.deplacementsRestants > 1) { //Dans le cas où on a au moins 2 points de déplacement on peut y rentrer.
+                    this.position = newCoord; //On ne met ici pas à jour la position dans le plateau afin de ne pas effacer l'autre joueur se trouvant dans cette case. La mise à jour du plateau aura lieu au rochain mouvement de ce jeton, qui doit de toute façon quitter cette case pour finir son tour.
+                    this.deplacementsRestants--;
+                    if (plateau.estUneFlaque(this.position)) {//On gère la glissade éventuelle
+                        this.seDeplacer(d);
                     }
-                    
-                    if (res.add(ch)) { //On ajoute la case dans l'ensemble des accessibles et on vérifie si elle n'y était pas déjà
-                        newAcc.add(ch); //Si elle n'y était pas déjà, on l'ajoute à la liste des nouveaux accessibles de ce niveau
+                    return true;
+
+                } else if (plateau.estUneFlaque(newCoord)) {//Dans le cas ou le joueur n'a plus qu'un seul point de déplacement, il ne peut éventuellement entrer sur la case que si elle lui permet de la quitter immédiatement en glissant
+                    this.position = newCoord;
+                    if (this.seDeplacer(d)) { //On vérifie alors si le joueur peut glisser
+                        this.deplacementsRestants--;
+                        return true;
+                    } else { //Si non, on lui remet ses anciennes coordonnées pour annuler le déplacement
+                        this.position.plus(d.getVector().fois(-1));
+                        return false;
                     }
-                    
+                }
+
+            } else if (plateau.getCase(newCoord) instanceof Caillou) { //Si la case contient un caillou
+                Caillou caillou = (Caillou) plateau.getCase(newCoord);
+                if (caillou.seDeplacer(d)) { //On pousse le caillou d'une case
+                    this.seDeplacer(d); //On prend sa place
+                    return true;
                 }
             }
-
-            for (Chemin ch : newAcc) { //Pour chaque nouvel accessible, on génére les nouveaux états accessibles. Puisqu'on parcourt en largeur, ils sont forcément plus éloignés de l'état de départ que les précédents.
-                res.addAll(accessibles(ch, n - 1));
-            }
-
         }
-        return res;
+
+        return false; //Si le mouvement n'est pas possible
     }
 
-    private boolean positionValide(Coordonnees plus) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Indique si le joueur peut finir son tour. Plus exactement, indique s'il
+     * est bien sur une case libre, ou s'il est sur une case occupée par un
+     * autre joueur (auquel cas il est obligé de quitter la case avant de finir
+     * son tour)
+     *
+     * @return true si le jeton est seul sur sa case, false s'il est sur la case
+     * d'un autre jeton.
+     */
+    public boolean peutFinirTour() {
+        return plateau.getCase(this.position) == this;
     }
+
 }

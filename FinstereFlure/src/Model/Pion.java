@@ -18,7 +18,6 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     protected Coordonnees position; //la position du pion sur le plateau
     protected Plateau plateau; //le plateau sur lequel est placé le pion
-    
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructeurs
@@ -74,7 +73,7 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     /**
      * Déplace un pion vers de nouvelles coordonnées si elles sont valides
-     *
+     * @deprecated 
      * @param c les coordonnées de la case d'arrivée
      */
     public void seDeplacer(Coordonnees c) {
@@ -90,26 +89,23 @@ public abstract class Pion {
     }
 
     /**
-     * Déplace le pion de 1 case dans une direction, si le mouvement est valide
+     * Déplace le pion de 1 case dans une direction, et glisse si on arrive sur
+     * une tâche de sang. Redéfinir la méthode dans les classes filles en
+     * faisant appel à celle-là pour pouvoir ajouter des conditions de
+     * déplacements.
      *
      * @param d la direction du déplacement
+     * @return true si on a réussi à se déplacer, false sinon
      */
-    public void seDeplacer(Direction d) {
-        Coordonnees newCoord = this.position.plus(d.getVector());
+    public boolean seDeplacer(Direction d) {
+        this.position = this.position.plus(d.getVector());
+        plateau.movePion(this.position, this.position);
 
-        if (plateau.valide(newCoord) && plateau.caseLibre(newCoord)) {
-            
-            
-            
-            plateau.movePion(this.position, newCoord);
-            this.position = newCoord;
-            while (this.plateau.estUneFlaque(this.position)) {
-                this.seDeplacer(d);
-            }
-        } else {
-            System.out.println("Déplacement invalide");
+        //On glisse si on est sur une flaque de sang
+        while (this.plateau.estUneFlaque(this.position)) {
+            this.seDeplacer(d);
         }
-
+        return true;
     }
 
 }

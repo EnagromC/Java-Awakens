@@ -5,26 +5,21 @@
  */
 package Model;
 
+import java.awt.Point;
+
 /**
  * Représente les coordonnées d'une case du plateau de jeu, en fonction de son
- * numéro de ligne x, et de colonne y.
+ * numéro de ligne et de colonne
  *
  * @author Corentin
  */
-public class Coordonnees {
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Attributs
-    ////////////////////////////////////////////////////////////////////////////
-    private int x; //numéro de ligne
-    private int y; //numéro de colonne
+public class Coordonnees extends Point{
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructeurs
     ////////////////////////////////////////////////////////////////////////////
     public Coordonnees(int x, int y) {
-        this.x = x;
-        this.y = y;
+       super(x,y);
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -39,11 +34,11 @@ public class Coordonnees {
         return coord;
     }
 
-    public int getX() {
+    public int getXint() {
         return this.x;
     }
 
-    public int getY() {
+    public int getYint() {
         return this.y;
     }
 
@@ -71,34 +66,5 @@ public class Coordonnees {
         return new Coordonnees(this.x * lambda, this.y * lambda);
     }
 
-    /**
-     * Calcule la distance euclidienne entre 2 coordonnées
-     *
-     * @param c
-     * @return
-     */
-    public double distanceEuclidienne(Coordonnees c) {
-        return Math.sqrt(Math.pow(this.x - c.x, 2) + Math.pow(this.y - c.y, 2));
-    }
-
-    /**
-     * Calcule la distance de Manhattan entre 2 coordonnées
-     *
-     * @param c
-     * @return
-     */
-    public int distanceManhattan(Coordonnees c) {
-        return Math.abs(this.x - c.x) + Math.abs(this.y - c.y);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        Coordonnees c = (Coordonnees) o;
-        return this.x == c.x && this.y == c.y;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.x * 3 + this.y * 7;
-    }
+    
 }

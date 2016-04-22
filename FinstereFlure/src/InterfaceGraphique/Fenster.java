@@ -15,12 +15,17 @@ import javax.swing.BorderFactory;
  * @author Corentin
  */
 public class Fenster extends javax.swing.JFrame {
+    public static final String VERSION = "0.2";
 
     /**
      * Creates new form Fenste
      */
     public Fenster() {
         initComponents();
+        
+        /*
+          Création des jetons joueurs avec ajout de leurs images
+        */
         String[] adresses = {"pionred_1_6_clair.gif", "pionpurple_1_6_fonce.gif"};
         pionsPurple[0] = new JPion(adresses);
         String[] adresses2 = {"pionred_3_4_clair.gif", "pionpurple_3_4_fonce.gif"};
@@ -39,6 +44,10 @@ public class Fenster extends javax.swing.JFrame {
         String[] adresses8 = {"piongreen_5_2_clair.gif", "piongreen_5_2_fonce.gif"};
         pionsGreen[3] = new JPion(adresses8);
 
+        
+        /*
+            A chaque jeton on ajoute un MouseListener afin de détecter un clic dessus
+        */
         for (JPion p : pionsPurple) {
             p.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -55,10 +64,19 @@ public class Fenster extends javax.swing.JFrame {
             });
         }
 
+        
+        /*
+            Création et initialisation du plateau
+        */
         plateau = new JPlateau();
         plateau.setBounds(50, 50, 694, 479);//permet de définir la position et la taille en même temps
         this.add(plateau);
 
+        
+        
+        /*
+            Là c'est des essais
+        */
         plateau.add(pionsPurple[0], new Integer(1));
         pionsPurple[0].setLocation(106, 220);
         pionsPurple[0].setOpaque(false);
@@ -87,7 +105,7 @@ public class Fenster extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Finstere Flure");
+        setTitle("Finstere Flure v" +this.VERSION);
         setPreferredSize(new java.awt.Dimension(1000, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -107,7 +125,6 @@ public class Fenster extends javax.swing.JFrame {
     
     private void pionClicked(MouseEvent evt){
         //vérifier que on a bien cliqué sur un de ses pions, et pas de l'adversaire
-        //déselectionner l'ancien pion sélectionné.
         this.selected.setBorder(null);
         this.selected = (JPion) evt.getSource();
         this.selected.setBorder(BorderFactory.createLineBorder(Color.yellow, 5));

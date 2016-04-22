@@ -26,11 +26,11 @@ public enum Direction {
     }
 
     public int getDx() {
-        return this.vector.getX();
+        return this.vector.getXint();
     }
 
     public int getDy() {
-        return this.vector.getY();
+        return this.vector.getYint();
     }
 
     public Coordonnees getVector() {

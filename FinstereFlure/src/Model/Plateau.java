@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,7 +27,7 @@ public class Plateau {
     // Attributs
     ////////////////////////////////////////////////////////////////////////////
     private Map<Coordonnees, Pion> plateau; //Contient les cases occupées du plateau.
-    private ArrayList<Coordonnees> flaques; //Contient les coordonnées des cases sur lesquelles il y a une flaque de sang.
+    private ArrayList<Rectangle> flaques; //Contient les coordonnées des tâches de sang, chacune étant représentée par un rectangle.
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructeurs
@@ -38,7 +39,12 @@ public class Plateau {
     public Plateau() {
         this.plateau = new HashMap<>();
         this.flaques = new ArrayList<>();
-        //Ajouter les flaques dans la liste.
+        
+        //Ajout des tâches de sang
+        this.flaques.add(new Rectangle(8,4,3,0));
+        this.flaques.add(new Rectangle(2,8,1,1));
+        
+        //Ajout du monstre
         Coordonnees cle = new Coordonnees(0, 0);
         this.plateau.put(cle, new Monstre(this));
     }
@@ -54,7 +60,12 @@ public class Plateau {
      * @return true si la case est une flaque
      */
     public boolean estUneFlaque(Coordonnees position) {
-        return this.flaques.contains(position);
+        for(Rectangle flaque : flaques){ //Pour chaque rectangle représentant une flaque, on reegarde s'il contient le point demandé.
+            if(flaque.contains(position)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -65,8 +76,8 @@ public class Plateau {
      * @return true si les coordonnées sont dans le plateau, false sinon
      */
     public boolean valide(Coordonnees c) {
-        int x = c.getX();
-        int y = c.getY();
+        int x = c.getXint();
+        int y = c.getYint();
         boolean coinHD = (x == 0 && y > 11) || (x == 1 && y > 12) || (x == 2 && y > 13) || (x == 3 && y > 14);
         boolean coinBG = (y == 0 && x > 6) || (y == 1 && x > 7) || (y == 2 && x > 8) || (y == 3 && x > 9);
 
@@ -88,7 +99,8 @@ public class Plateau {
      * de coordonnées c, en au maximum n déplacements, associée à leur distance
      * (nombre de déplacements nécessaires) depuis la case de départ. On
      * initialisera avec d = 0;
-     *
+     * 
+     * @deprecated 
      * @param c coordonnées de la case de départ
      * @param n nombre de déplacements maximum
      * @param d la distance d'une case accessible à la case de départ
