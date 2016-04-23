@@ -16,7 +16,8 @@ import java.util.List;
  */
 public class Monstre extends Pion implements NonTraversable {
 
-    public Direction direction;
+    private Direction direction;
+    private Jeton dernierMange; //Le dernier jeton qui a été dévoré par le monstre
 
     /**
      * C'est le constructeur ! Il prend en paramètre le plateau sur lequel on va
@@ -27,6 +28,7 @@ public class Monstre extends Pion implements NonTraversable {
     public Monstre(Plateau p) {
         super(new Coordonnees(0, 0), p);
         this.direction = Direction.DROITE;
+        this.dernierMange = null;
     }
 
     /**
@@ -124,18 +126,64 @@ public class Monstre extends Pion implements NonTraversable {
         return teleporteurs.get(i);
     }
 
-    public void avancer() {
-        if (this.vaSortir()) {
-
-        } else {
-            super.seDeplacer(direction);
-            if (!plateau.valide(this.position)) {
-            }
+    public void pousser(Pion p) {
+        Coordonnees destination = p.getPosition().plus(this.direction.getVector());
+        if (!plateau.valide(destination)) {
+            //le truc sort du plateau
+        } else if (!p.seDeplacer(direction)) { //On essaie de déplacer le pion. S'il y arrive on est OK, sinon c'est qu'il y a quelque chose derrière.
+            Pion p2 = plateau.getCase(destination); //Le pion qui bloque le déplacement
+            pousser(p2); //On pousse à son tour le pion qui bloquait
+            p.seDeplacer(direction); //On peut alors déplacer ce pion
         }
     }
 
-    public void chasser() {
+    public boolean seDeplacer(Direction d) {
+        Coordonnees newCoord = this.position.plus(d.getVector()); //coordonnées de la case d'arrivée
+
+        if (plateau.valide(newCoord)) {//On vérifie que cette case est bien sur le plateau
+            if (plateau.caseLibre(newCoord)) { //Si elle est libre, on déplace le pion grâce à la méthode mère (qui gère les glissades...)
+                super.seDeplacer(d);
+                return true;
+
+            } else if (plateau.getCase(newCoord) instanceof Jeton) { //Si la case contient un joueur
+                //On se débrouille pour le manger
+                this.seDeplacer(d);
+                return true;
+
+            } else if (plateau.getCase(newCoord) instanceof Caillou) { //Si la case contient un caillou
+                pousser(plateau.getCase(newCoord));
+                this.seDeplacer(d);
+            }
+        }
+
+        return false; //Si le mouvement n'est pas possible
+    }
+
+    public void manger(Pion p) {
+        plateau.removePion(p, p.getPosition());
+        if (p instanceof Jeton) {
+            this.dernierMange = (Jeton) p;
+        }
+    }
+
+    public Jeton chasser() {
         regarder();
+        if (this.vaSortir()) {
+            /*
+            Téléportation
+            */
+            plateau.removePion(this, this.position);
+            //On positionne virtuellement le monstre une case avant la case d'arrivée, pour pouvoir utiliser la méthode seDeplacer qui prend en compte l'intéraction avec une éventuelle tâche de sang, ou un caillou ou joueur.
+            this.position = this.destinationTeleportation().plus(this.direction.getVector().fois(-1));
+        }
+        
+        /*
+        Déplacement et éventuel repas
+        */
+        this.dernierMange = null;
+        this.seDeplacer(this.direction);
+        return this.dernierMange;
+
     }
 
 }

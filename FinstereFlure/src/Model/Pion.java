@@ -71,22 +71,7 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
-    /**
-     * Déplace un pion vers de nouvelles coordonnées si elles sont valides
-     * @deprecated 
-     * @param c les coordonnées de la case d'arrivée
-     */
-    public void seDeplacer(Coordonnees c) {
 
-        if (plateau.valide(c) && plateau.caseLibre(c)) {
-            plateau.movePion(this.position, c);
-            this.position = c;
-            //Il faut voir pour prendre en comtpe les taches de sang.
-        } else {
-            System.out.println("Déplacement invalide");
-        }
-
-    }
 
     /**
      * Déplace le pion de 1 case dans une direction, et glisse si on arrive sur
@@ -98,12 +83,13 @@ public abstract class Pion {
      * @return true si on a réussi à se déplacer, false sinon
      */
     public boolean seDeplacer(Direction d) {
-        this.position = this.position.plus(d.getVector());
-        plateau.movePion(this.position, this.position);
+        Coordonnees destination = this.position.plus(d.getVector());
+        plateau.movePion(this, this.position, destination);
+        this.position = destination;
 
         //On glisse si on est sur une flaque de sang
         while (this.plateau.estUneFlaque(this.position)) {
-            this.seDeplacer(d);
+            seDeplacer(d);
         }
         return true;
     }

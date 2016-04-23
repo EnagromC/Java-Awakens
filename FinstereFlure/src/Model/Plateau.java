@@ -144,13 +144,13 @@ public class Plateau {
     /**
      * Supprime du plateau le pion situé aux coordonnées donénes
      *
+     * @param p le pion à supprimer
      * @param c coordonnées du pion à supprimer
      * @return true si le pion a bien été supprimé, false s'il n'y avait pas de
      * pion à ces coordonées.
      */
-    public boolean removePion(Coordonnees c) {
-        Pion ancien = this.plateau.remove(c);
-        return ancien != null;
+    public boolean removePion(Pion p, Coordonnees c) {
+        return this.plateau.remove(c, p);
     }
     
     public Pion getCase(Coordonnees c) {
@@ -158,22 +158,23 @@ public class Plateau {
     }
 
     /**
-     * Déplace un pion sur le plateau, s'il existe et que la case d'arrivée est
+     * Déplace un pion sur le plateau, si la case d'arrivée est
      * vide, des coordonnées depart aux coordonnées arrivee.
      *
+     * @param p le pion à déplacer
      * @param depart coordonnées du pion à déplacer
      * @param arrivee coordonnées de la case où doit arriver le pion
      * @return true si tout c'est bien passé, false si le pion n'existait pas ou
      * la case d'arrivée est déjà occupée.
      */
-    public boolean movePion(Coordonnees depart, Coordonnees arrivee) {
-        Pion p = this.plateau.get(depart);
-        if (p != null) { //S'il y a bien un pion sur la case départ
+    public boolean movePion(Pion p, Coordonnees depart, Coordonnees arrivee) {
+        
+
             if (addPion(p, arrivee)) { //Si on a bien pu déplacer le pion sur la case d'arrivée
-                removePion(depart);
+                removePion(p,depart);
                 return true;
             }
-        }
+        
         return false;
     }
 }
