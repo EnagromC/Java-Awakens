@@ -36,9 +36,9 @@ public class JPlateau extends JLayeredPane {
      * @return un point
      */
     public Point position(Coordonnees c) {
-        int x = c.getXint() * 40 + 27;
-        int y = c.getYint() * 40 + 20;
-        return new Point(x, y);
+        int x = c.getXint() * 40 + 20;
+        int y = c.getYint() * 40 + 27;
+        return new Point(y, x);
 
     }
 

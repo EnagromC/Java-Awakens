@@ -6,6 +6,8 @@
 package InterfaceGraphique;
 
 import Model.Coordonnees;
+import Model.Direction;
+import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
@@ -69,7 +71,7 @@ public class Fenster extends javax.swing.JFrame {
             Création et initialisation du plateau
         */
         plateau = new JPlateau();
-        plateau.setBounds(50, 50, 694, 479);//permet de définir la position et la taille en même temps
+        plateau.setBounds(50, 50, 694, 479);//permet de définir la position et la taille en même temps        
         this.add(plateau);
 
         
@@ -81,12 +83,12 @@ public class Fenster extends javax.swing.JFrame {
         pionsPurple[0].setLocation(106, 220);
         pionsPurple[0].setOpaque(false);
 
-        int larg = 106;
+        int larg = 4;
         int haut = 220;
         for (int i = 1; i < 4; i++) {
             plateau.add(pionsPurple[i], new Integer(1));
-            larg += JPion.TAILLE_CASE + 5;
-            pionsPurple[i].setLocation(larg, 220 + JPion.TAILLE_CASE + 5);
+            larg ++;
+            pionsPurple[i].setLocation(plateau.position(new Coordonnees(6,larg)));
             pionsPurple[i].setOpaque(false);
         }
 
@@ -107,6 +109,11 @@ public class Fenster extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Finstere Flure v" +this.VERSION);
         setPreferredSize(new java.awt.Dimension(1000, 600));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,6 +128,32 @@ public class Fenster extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        Direction d = null;
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_DOWN:
+                d = Direction.BAS;
+                break;
+            case KeyEvent.VK_UP:
+                d = Direction.HAUT;
+                break;
+            case KeyEvent.VK_LEFT:
+                d = Direction.GAUCHE;
+                break;
+            case KeyEvent.VK_RIGHT:
+                d = Direction.DROITE;
+                break;
+        }
+        
+        if(selected != null && d != null){
+            
+            /*
+            METTRE ICI LES INSTRUCTIONS DE DEPLACEMENT
+            */
+            selected.setLocation(plateau.position(selected.getCoordonnees().plus(d.getVector())));
+        }
+    }//GEN-LAST:event_formKeyPressed
 
     
     private void pionClicked(MouseEvent evt){
