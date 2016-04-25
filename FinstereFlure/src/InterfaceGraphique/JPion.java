@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 public class JPion extends JPanel {
 
     public static final int TAILLE_CASE = 36;
-    String[] images;
+    String[] sprites;
     int imageActuelle;
 
     /**
@@ -31,7 +31,7 @@ public class JPion extends JPanel {
      * @param adresses : les adresses des images
      */
     public JPion(String[] adresses) {
-        this.images = adresses;
+        this.sprites = adresses;
         imageActuelle = 0;
         this.setSize(TAILLE_CASE, TAILLE_CASE);
 
@@ -46,11 +46,15 @@ public class JPion extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         try {
-            BufferedImage img = ImageIO.read(new File("img/" + images[imageActuelle]));
+            BufferedImage img = ImageIO.read(new File("img/" + sprites[imageActuelle]));
             g.drawImage(img, 0, 0, TAILLE_CASE, TAILLE_CASE, null);
         } catch (IOException ex) {
             Logger.getLogger(JPion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /*
+    Il faut créer les fonctions pour gérer le changement de sprite
+    */
 
 }
