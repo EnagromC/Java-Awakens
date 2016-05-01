@@ -22,8 +22,8 @@ import javax.swing.JPanel;
 public class JPion extends JPanel {
 
     public static final int TAILLE_CASE = 36;
-    String[] sprites;
-    int imageActuelle;
+    protected String[] sprites;
+    protected int imageActuelle;
 
     /**
      * Constructeur

@@ -59,5 +59,7 @@ public class JPlateau extends JLayeredPane {
             Logger.getLogger(JPion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+
 
 }
