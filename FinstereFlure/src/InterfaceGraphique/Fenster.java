@@ -5,21 +5,24 @@
  */
 package InterfaceGraphique;
 
+import Model.Caillou;
 import Model.Coordonnees;
 import Model.Direction;
+import Model.Jeton;
+import Model.Monstre;
+import Model.Partie;
+import Model.Pion;
 import com.sun.glass.events.KeyEvent;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.Component;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Corentin
  */
-public class Fenster extends javax.swing.JFrame {
+public class Fenster extends javax.swing.JFrame implements Vue {
 
     public static final String VERSION = "0.2";
 
@@ -29,6 +32,15 @@ public class Fenster extends javax.swing.JFrame {
     public Fenster() {
         initComponents();
         this.getContentPane().setBackground(new Color(220, 205, 245));
+
+        this.partie = new Partie(this);
+
+        /*
+        Création du monstre
+         */
+        String[] spritesMonstre = {"monstre1.gif", "monstre2.gif", "monstre3.gif", "monstre4.gif"};
+        monstre = new JPion(spritesMonstre);
+        monstre.setOpaque(false);
 
         /*
           Création des jetons joueurs avec ajout de leurs images
@@ -77,28 +89,42 @@ public class Fenster extends javax.swing.JFrame {
         plateau.setBounds(100, 50, 694, 479);//permet de définir la position et la taille en même temps        
         this.add(plateau);
 
+        
+        
+        
+        
+        
+        
+        
+        this.updatePlateau();
+        
+        
+        
+        
+        
+
         /*
             Là c'est des essais
          */
-        plateau.add(pionsPurple[0], new Integer(1));
-        pionsPurple[0].setLocation(106, 220);
-        pionsPurple[0].setOpaque(false);
-
-        int larg = 4;
-        int haut = 220;
-        for (int i = 1; i < 4; i++) {
-            plateau.add(pionsPurple[i], new Integer(1));
-            larg++;
-            pionsPurple[i].setLocation(plateau.position(new Coordonnees(6, larg)));
-            pionsPurple[i].setOpaque(false);
-        }
-
-        JFlaque flaque = new JFlaque(JFlaque.Forme.HORIZ);
-        flaque.setLocation(plateau.position(new Coordonnees(5, 6)));
-        flaque.setOpaque(false);
-        plateau.add(flaque, new Integer(0));
-        sortis.add(pionsGreen[1]);
-        sortis.add(pionsGreen[2]);
+//        plateau.add(pionsPurple[0], new Integer(1));
+//        pionsPurple[0].setLocation(106, 220);
+//        pionsPurple[0].setOpaque(false);
+//
+//        int larg = 4;
+//        int haut = 220;
+//        for (int i = 1; i < 4; i++) {
+//            plateau.add(pionsPurple[i], new Integer(1));
+//            larg++;
+//            pionsPurple[i].setLocation(plateau.position(new Coordonnees(6, larg)));
+//            pionsPurple[i].setOpaque(false);
+//        }
+//
+//        JFlaque flaque = new JFlaque(JFlaque.Forme.HORIZ);
+//        flaque.setLocation(plateau.position(new Coordonnees(5, 6)));
+//        flaque.setOpaque(false);
+//        plateau.add(flaque, new Integer(0));
+//        sortis.add(pionsGreen[1]);
+//        sortis.add(pionsGreen[2]);
         //pionsGreen[1].setLocation(plateau.position(new Coordonnees(5, 1)));
     }
 
@@ -296,7 +322,92 @@ public class Fenster extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     JPion[] pionsPurple = new JPion[4];
     JPion[] pionsGreen = new JPion[4];
+    JPion monstre;
     JPlateau plateau;
     JPion selected = new JPion(new String[1]);
+
+    Partie partie;
+
+    /**
+     * Met à jour le plateau et des salles d'attente et d'arrivée.
+     */
+    @Override
+    public void updatePlateau() {
+
+        //On supprime toutes les entités du plateau qui sont sur la couche 1 = tout sauf les tâches de sang
+        Component[] pions = plateau.getComponentsInLayer(1);
+        for(Component c : pions){
+            plateau.remove(c);
+        }
+
+        //On affiche les jetons
+        for (int i = 0; i < 4; i++) {
+            Jeton jeton = this.partie.getJoueur1().getPions()[i];
+            JPion jetonAffiche = pionsPurple[i];
+            //On n'affiche que les pions vivants
+            if (jeton.getVivant() && jeton.getEnJeu()) {//On ne met pas à jour les pions sortis car une fois qu'ils sont déjà sortis, ils peuvent pas aller ailleurs !! (cf. "Vous sortes !")
+                if (jeton.getSurPlateau()) {
+                    jetonAffiche.setLocation(plateau.position(jeton.getPosition()));
+
+                    //Revoir s'il faut vérifier le sprite
+                    plateau.add(jetonAffiche, new Integer(1));
+                } else { //Le jeton est dans la réserve
+                    salleAttenteRed.add(jetonAffiche);
+                }
+
+            }
+        }
+
+        for (int i = 0; i < 4; i++) {
+            Jeton jeton = this.partie.getJoueur2().getPions()[i];
+            JPion jetonAffiche = pionsGreen[i];
+            //On n'affiche que les pions vivants
+            if (jeton.getVivant() && jeton.getEnJeu()) {//On ne met pas à jour les pions sortis car une fois qu'ils sont déjà sortis, ils peuvent pas aller ailleurs !! (cf. "Vous sortes !")
+                if (jeton.getSurPlateau()) {
+                    jetonAffiche.setLocation(plateau.position(jeton.getPosition()));
+
+                    //Revoir s'il faut vérifier le sprite
+                    plateau.add(jetonAffiche, new Integer(1));
+                } else { //Le jeton est dans la réserve
+                    salleAttenteGreen.add(jetonAffiche);
+                }
+
+            }
+        }
+
+        //On parcourt le plateau du modèle
+        for (Pion p : this.partie.getPlateau().getPlateau().values()) {
+
+            //On affiche les cailloux
+            if (p instanceof Caillou) {
+                String[] sprite = new String[1];
+                sprite[0] = "mur.png";
+                JPion caillou = new JPion(sprite);//On créé un nouveau caillou
+                caillou.setLocation(plateau.position(p.getPosition())); //plateau.position(Coordonnees c) est le convertisseur qui transforme les coordonnées en la position en pixels sur l'écran
+                plateau.add(caillou, new Integer(1));
+
+                //On affiche le monstre
+            } else if (p instanceof Monstre) {
+                Monstre m = (Monstre) p;//On est obligé de convertir en Monstre pour pouvoir utiliser getDirection()
+                monstre.setLocation(plateau.position(p.getPosition()));
+                switch (m.getDirection()) {//On attribue au monstre le sprite correspondant à sa direction
+                    case HAUT:
+                        monstre.setSprite(0);
+                        break;
+                    case DROITE:
+                        monstre.setSprite(1);
+                        break;
+                    case BAS:
+                        monstre.setSprite(2);
+                        break;
+                    case GAUCHE:
+                        monstre.setSprite(3);
+                        break;
+                }
+                plateau.add(monstre,new Integer(1));
+
+            }
+        }
+    }
 
 }

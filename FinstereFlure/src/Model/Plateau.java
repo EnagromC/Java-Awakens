@@ -156,6 +156,10 @@ public class Plateau {
     public Pion getCase(Coordonnees c) {
         return this.plateau.get(c) ;
     }
+    
+    public Map<Coordonnees,Pion> getPlateau(){
+        return this.plateau;
+    }
 
     /**
      * Déplace un pion sur le plateau, si la case d'arrivée est

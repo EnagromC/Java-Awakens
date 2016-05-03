@@ -31,6 +31,12 @@ public class Monstre extends Pion implements NonTraversable {
         this.dernierMange = null;
     }
 
+    
+    public Direction getDirection(){
+        return this.direction;
+    }
+    
+    
     /**
      * Renvoie la liste des directions visibles par le zombie, c'est-à-dire
      * celles dans lesquelles il peut se déplacer.

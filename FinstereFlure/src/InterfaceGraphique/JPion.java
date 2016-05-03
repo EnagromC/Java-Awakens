@@ -43,6 +43,18 @@ public class JPion extends JPanel {
         return new Coordonnees(x, y);
     }
 
+    
+    public void nextSprite(){
+        this.imageActuelle = (this.imageActuelle+1)%sprites.length;
+        this.repaint();
+    }
+    
+    public void setSprite(int n){
+        this.imageActuelle = n%sprites.length;
+        this.repaint();
+    }
+    
+    
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         try {

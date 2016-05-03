@@ -21,7 +21,8 @@ public class Jeton extends Pion implements Traversable {
     private boolean surPlateau; //Indique si un pion est sur le plateau, ou dans la réserve du joueur / éliminé
     private int[] faces = new int[2]; //valeur des 2 faces du pion. Par convention, la première est la blanche et la deuxième la noire.
     private boolean faceBlanche; //indique si le pion est retourné sur la face blanche (false = face noire)
-    private boolean enJeu; //Indique si un pion est encore en jeu ou s'il a été éliminé
+    private boolean enJeu; //Indique si un pion est encore en jeu ou s'il a été éliminé/est sorti
+    private boolean vivant; //indique si un pion est encore vivant. Si un pion est vivant mais pas en jeu, il est sorti.
     private int deplacementsRestants; //nombre de points de déplacement restants pour le tour
 
     ////////////////////////////////////////////////////////////////////////////
@@ -43,11 +44,33 @@ public class Jeton extends Pion implements Traversable {
         this.faces[0] = blanche;
         this.faces[1] = noire;
         this.enJeu = true;
+        this.vivant = true;
 
         this.faceBlanche = true;
 
     }
 
+    
+    ////////////////////////////////////////////////////////////////////////////
+    // Accesseurs
+    ////////////////////////////////////////////////////////////////////////////
+    public boolean getEnJeu(){
+        return this.enJeu;
+    }
+    
+    public boolean getSurPlateau(){
+        return this.surPlateau;
+    }
+    
+    public boolean getVivant(){
+        return this.vivant;
+    }
+    
+    
+    ////////////////////////////////////////////////////////////////////////////
+    // Méthodes publiques
+    ////////////////////////////////////////////////////////////////////////////
+    
     /**
      * Permet de retourner le pion, c'est-à-dire de le mettre sur la face
      * blanche s'il était sur la face noire, ou vice-versa.
