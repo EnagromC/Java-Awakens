@@ -9,6 +9,8 @@ import Model.Caillou;
 import Model.Coordonnees;
 import Model.Direction;
 import Model.Jeton;
+import Model.Joueur;
+import Model.JoueurIA;
 import Model.Monstre;
 import Model.Partie;
 import Model.Pion;
@@ -17,6 +19,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,78 +36,9 @@ public class Fenster extends javax.swing.JFrame implements Vue {
      */
     public Fenster() {
         initComponents();
-        this.getContentPane().setBackground(new Color(220, 205, 245));
+        this.getContentPane().setBackground(BG_COLOR);
 
-        this.partie = new Partie(this);
-
-        /*
-        Création du monstre
-         */
-        String[] spritesMonstre = {"monstre1.gif", "monstre2.gif", "monstre3.gif", "monstre4.gif"};
-        monstre = new JPion(spritesMonstre);
-        monstre.setOpaque(false);
-
-        /*
-          Création des jetons joueurs avec ajout de leurs images
-         */
-        String[] adresses = {"pionred_1_6_clair.gif", "pionpurple_1_6_fonce.gif"};
-        pionsPurple[0] = new JPion(adresses);
-        String[] adresses2 = {"pionred_3_4_clair.gif", "pionpurple_3_4_fonce.gif"};
-        pionsPurple[1] = new JPion(adresses2);
-        String[] adresses3 = {"pionred_4_3_clair.gif", "pionpurple_4_3_fonce.gif"};
-        pionsPurple[2] = new JPion(adresses3);
-        String[] adresses4 = {"pionred_5_2_clair.gif", "pionpurple_5_2_fonce.gif"};
-        pionsPurple[3] = new JPion(adresses4);
-
-        String[] adresses5 = {"piongreen_1_6_clair.gif", "piongreen_1_6_fonce.gif"};
-        pionsGreen[0] = new JPion(adresses5);
-        String[] adresses6 = {"piongreen_3_4_clair.gif", "piongreen_3_4_fonce.gif"};
-        pionsGreen[1] = new JPion(adresses6);
-        String[] adresses7 = {"piongreen_4_3_clair.gif", "piongreen_4_3_fonce.gif"};
-        pionsGreen[2] = new JPion(adresses7);
-        String[] adresses8 = {"piongreen_5_2_clair.gif", "piongreen_5_2_fonce.gif"};
-        pionsGreen[3] = new JPion(adresses8);
-
-        /*
-            A chaque jeton on ajoute un MouseListener afin de détecter un clic dessus
-         */
-        for (JPion p : pionsPurple) {
-            p.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    pionClicked(evt);
-                }
-            });
-        }
-
-        for (JPion p : pionsGreen) {
-            p.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    pionClicked(evt);
-                }
-            });
-        }
-
-        /*
-            Création et initialisation du plateau
-         */
-        plateau = new JPlateau();
-        plateau.setBounds(100, 50, 694, 479);//permet de définir la position et la taille en même temps        
-        this.add(plateau);
-
-        
-        
-        
-        
-        
-        
-        
-        this.updatePlateau();
-        
-        
-        
-        
-        
-
+        // this.updatePlateau();
         /*
             Là c'est des essais
          */
@@ -140,10 +76,24 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         sortis = new JGroupePions(false);
         salleAttenteGreen = new JGroupePions(true);
         salleAttenteRed = new JGroupePions(true);
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        nomJoueurRouge = new javax.swing.JLabel();
+        nomJoueurVert = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuPartie = new javax.swing.JMenu();
+        jMenuItemNewGame = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuHelp = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Finstere Flure v" +this.VERSION);
-        setPreferredSize(new java.awt.Dimension(1000, 800));
         setResizable(false);
         setSize(new java.awt.Dimension(1000, 800));
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -197,6 +147,56 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             .addGap(0, 38, Short.MAX_VALUE)
         );
 
+        jLabel1.setText("Rouge :");
+
+        jLabel2.setText("Vert :");
+
+        jMenuPartie.setText("Partie");
+        jMenuPartie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuPartieActionPerformed(evt);
+            }
+        });
+
+        jMenuItemNewGame.setText("Nouvelle partie...");
+        jMenuItemNewGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemNewGameActionPerformed(evt);
+            }
+        });
+        jMenuPartie.add(jMenuItemNewGame);
+        jMenuPartie.add(jSeparator1);
+
+        jMenuItem2.setText("Historique");
+        jMenuPartie.add(jMenuItem2);
+
+        jMenuItem3.setText("Options");
+        jMenuPartie.add(jMenuItem3);
+        jMenuPartie.add(jSeparator2);
+
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem4.setText("Quitter");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenuPartie.add(jMenuItem4);
+
+        jMenuBar1.add(jMenuPartie);
+
+        jMenuHelp.setText("?");
+
+        jMenuItem5.setText("Aide");
+        jMenuHelp.add(jMenuItem5);
+
+        jMenuItem6.setText("A propos...");
+        jMenuHelp.add(jMenuItem6);
+
+        jMenuBar1.add(jMenuHelp);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,9 +208,19 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                         .addComponent(sortis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(124, 124, 124)
-                        .addComponent(salleAttenteRed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(salleAttenteRed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(nomJoueurRouge, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(74, 74, 74)
-                        .addComponent(salleAttenteGreen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(nomJoueurVert, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(salleAttenteGreen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(200, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -218,11 +228,18 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(77, 77, 77)
                 .addComponent(sortis, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(salleAttenteRed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salleAttenteGreen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(193, 193, 193))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(nomJoueurRouge, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(nomJoueurVert, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(173, 173, 173))
         );
 
         pack();
@@ -261,6 +278,26 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             selected.setLocation(plateau.position(selected.getCoordonnees().plus(d.getVector())));
         }
     }//GEN-LAST:event_formKeyPressed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItemNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNewGameActionPerformed
+        String[] typePartie = {"2 joueurs","contre l'ordinateur"};
+        int rang = JOptionPane.showOptionDialog(null, "Quel type de partie voulez-vous jouer ?", "Type partie", JOptionPane.OK_CANCEL_OPTION,-1,null,typePartie,typePartie[0]);
+        if(rang ==0){//Si partie 2 joueurs
+            //Faire s'authentifier les joueurs
+            partie = new Partie(this, new Joueur(), new Joueur());
+        }else{//Si contre IA
+            //Faire s'authentifier le joueur
+            partie = new Partie(this,new Joueur(), new JoueurIA());
+        }
+    }//GEN-LAST:event_jMenuItemNewGameActionPerformed
+
+    private void jMenuPartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPartieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuPartieActionPerformed
 
     /**
      * Instructions à éxécuter quand on clique sur un pion : on le sélectionne
@@ -315,7 +352,80 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         });
     }
 
+    public void initPartie(Joueur j1, Joueur j2) {
+        this.partie = new Partie(this, j1, j2);
+
+        /*
+        Création du monstre
+         */
+        String[] spritesMonstre = {"monstre1.gif", "monstre2.gif", "monstre3.gif", "monstre4.gif"};
+        monstre = new JPion(spritesMonstre);
+        monstre.setOpaque(false);
+
+        /*
+          Création des jetons joueurs avec ajout de leurs images
+         */
+        String[] adresses = {"pionred_1_6_clair.gif", "pionpurple_1_6_fonce.gif"};
+        pionsPurple[0] = new JPion(adresses);
+        String[] adresses2 = {"pionred_3_4_clair.gif", "pionpurple_3_4_fonce.gif"};
+        pionsPurple[1] = new JPion(adresses2);
+        String[] adresses3 = {"pionred_4_3_clair.gif", "pionpurple_4_3_fonce.gif"};
+        pionsPurple[2] = new JPion(adresses3);
+        String[] adresses4 = {"pionred_5_2_clair.gif", "pionpurple_5_2_fonce.gif"};
+        pionsPurple[3] = new JPion(adresses4);
+
+        String[] adresses5 = {"piongreen_1_6_clair.gif", "piongreen_1_6_fonce.gif"};
+        pionsGreen[0] = new JPion(adresses5);
+        String[] adresses6 = {"piongreen_3_4_clair.gif", "piongreen_3_4_fonce.gif"};
+        pionsGreen[1] = new JPion(adresses6);
+        String[] adresses7 = {"piongreen_4_3_clair.gif", "piongreen_4_3_fonce.gif"};
+        pionsGreen[2] = new JPion(adresses7);
+        String[] adresses8 = {"piongreen_5_2_clair.gif", "piongreen_5_2_fonce.gif"};
+        pionsGreen[3] = new JPion(adresses8);
+
+        /*
+            A chaque jeton on ajoute un MouseListener afin de détecter un clic dessus
+         */
+        for (JPion p : pionsPurple) {
+            p.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    pionClicked(evt);
+                }
+            });
+        }
+
+        for (JPion p : pionsGreen) {
+            p.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    pionClicked(evt);
+                }
+            });
+        }
+
+        /*
+            Création et initialisation du plateau
+         */
+        plateau = new JPlateau();
+        plateau.setBounds(100, 50, 694, 479);//permet de définir la position et la taille en même temps        
+        this.add(plateau);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuHelp;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItemNewGame;
+    private javax.swing.JMenu jMenuPartie;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JLabel nomJoueurRouge;
+    private javax.swing.JLabel nomJoueurVert;
     private javax.swing.JPanel salleAttenteGreen;
     private javax.swing.JPanel salleAttenteRed;
     private javax.swing.JPanel sortis;
@@ -325,6 +435,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     JPion monstre;
     JPlateau plateau;
     JPion selected = new JPion(new String[1]);
+
+    boolean typePartie; //false : 2 joueurs, true : contre IA
+
+    public final Color BG_COLOR = new Color(220, 205, 245);
 
     Partie partie;
 
@@ -336,7 +450,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
 
         //On supprime toutes les entités du plateau qui sont sur la couche 1 = tout sauf les tâches de sang
         Component[] pions = plateau.getComponentsInLayer(1);
-        for(Component c : pions){
+        for (Component c : pions) {
             plateau.remove(c);
         }
 
@@ -404,10 +518,11 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                         monstre.setSprite(3);
                         break;
                 }
-                plateau.add(monstre,new Integer(1));
+                plateau.add(monstre, new Integer(1));
 
             }
         }
     }
+
 
 }

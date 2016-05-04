@@ -20,10 +20,10 @@ public class Partie {
     private int manche;
     private int tour;
     
-    public Partie(Vue v){
+    public Partie(Vue v,Joueur j1, Joueur j2){
         this.vue = v;
-        joueur1 = new Joueur();
-        joueur2 = new Joueur();
+        joueur1 = j1;
+        joueur2 = j2;
         plateau = new Plateau();
         this.manche = 0;
         this.tour = 0;
