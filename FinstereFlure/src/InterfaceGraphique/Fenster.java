@@ -37,25 +37,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     public Fenster() {
         initComponents();
         this.getContentPane().setBackground(BG_COLOR);
-<<<<<<< HEAD
-
-        
-
-        
-        
-        
-        
-        
-        
-        
-        this.updatePlateau();
-        
-        
-        
-        
-        
-=======
->>>>>>> origin/Bibi's-update
 
         // this.updatePlateau();
         /*
@@ -83,8 +64,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         //pionsGreen[1].setLocation(plateau.position(new Coordonnees(5, 1)));
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,10 +73,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialogTypePartie = new javax.swing.JDialog();
-        jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         sortis = new JGroupePions(false);
         salleAttenteGreen = new JGroupePions(true);
         salleAttenteRed = new JGroupePions(true);
@@ -116,46 +91,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jMenuHelp = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-<<<<<<< HEAD
-
-        jDialogTypePartie.setBackground(BG_COLOR);
-
-        jLabel3.setText("Type de partie :");
-
-        jButton1.setText("2 joueurs");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Contre l'ordinateur");
-
-        javax.swing.GroupLayout jDialogTypePartieLayout = new javax.swing.GroupLayout(jDialogTypePartie.getContentPane());
-        jDialogTypePartie.getContentPane().setLayout(jDialogTypePartieLayout);
-        jDialogTypePartieLayout.setHorizontalGroup(
-            jDialogTypePartieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialogTypePartieLayout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addGroup(jDialogTypePartieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(120, Short.MAX_VALUE))
-        );
-        jDialogTypePartieLayout.setVerticalGroup(
-            jDialogTypePartieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialogTypePartieLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(68, Short.MAX_VALUE))
-        );
-=======
->>>>>>> origin/Bibi's-update
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Finstere Flure v" +this.VERSION);
@@ -217,14 +152,11 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jLabel2.setText("Vert :");
 
         jMenuPartie.setText("Partie");
-<<<<<<< HEAD
-=======
         jMenuPartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuPartieActionPerformed(evt);
             }
         });
->>>>>>> origin/Bibi's-update
 
         jMenuItemNewGame.setText("Nouvelle partie...");
         jMenuItemNewGame.addActionListener(new java.awt.event.ActionListener() {
@@ -352,14 +284,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItemNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNewGameActionPerformed
-<<<<<<< HEAD
-        
-    }//GEN-LAST:event_jMenuItemNewGameActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-=======
         String[] typePartie = {"2 joueurs","contre l'ordinateur"};
         int rang = JOptionPane.showOptionDialog(null, "Quel type de partie voulez-vous jouer ?", "Type partie", JOptionPane.OK_CANCEL_OPTION,-1,null,typePartie,typePartie[0]);
         if(rang ==0){//Si partie 2 joueurs
@@ -374,7 +298,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private void jMenuPartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPartieActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuPartieActionPerformed
->>>>>>> origin/Bibi's-update
 
     /**
      * Instructions à éxécuter quand on clique sur un pion : on le sélectionne
@@ -427,67 +350,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 new Fenster().setVisible(true);
             }
         });
-    }
-    
-    
-    
-    
-    public void initPartie(){
-        this.partie = new Partie(this);
-
-        /*
-        Création du monstre
-         */
-        String[] spritesMonstre = {"monstre1.gif", "monstre2.gif", "monstre3.gif", "monstre4.gif"};
-        monstre = new JPion(spritesMonstre);
-        monstre.setOpaque(false);
-
-        /*
-          Création des jetons joueurs avec ajout de leurs images
-         */
-        String[] adresses = {"pionred_1_6_clair.gif", "pionpurple_1_6_fonce.gif"};
-        pionsPurple[0] = new JPion(adresses);
-        String[] adresses2 = {"pionred_3_4_clair.gif", "pionpurple_3_4_fonce.gif"};
-        pionsPurple[1] = new JPion(adresses2);
-        String[] adresses3 = {"pionred_4_3_clair.gif", "pionpurple_4_3_fonce.gif"};
-        pionsPurple[2] = new JPion(adresses3);
-        String[] adresses4 = {"pionred_5_2_clair.gif", "pionpurple_5_2_fonce.gif"};
-        pionsPurple[3] = new JPion(adresses4);
-
-        String[] adresses5 = {"piongreen_1_6_clair.gif", "piongreen_1_6_fonce.gif"};
-        pionsGreen[0] = new JPion(adresses5);
-        String[] adresses6 = {"piongreen_3_4_clair.gif", "piongreen_3_4_fonce.gif"};
-        pionsGreen[1] = new JPion(adresses6);
-        String[] adresses7 = {"piongreen_4_3_clair.gif", "piongreen_4_3_fonce.gif"};
-        pionsGreen[2] = new JPion(adresses7);
-        String[] adresses8 = {"piongreen_5_2_clair.gif", "piongreen_5_2_fonce.gif"};
-        pionsGreen[3] = new JPion(adresses8);
-
-        /*
-            A chaque jeton on ajoute un MouseListener afin de détecter un clic dessus
-         */
-        for (JPion p : pionsPurple) {
-            p.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    pionClicked(evt);
-                }
-            });
-        }
-
-        for (JPion p : pionsGreen) {
-            p.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    pionClicked(evt);
-                }
-            });
-        }
-
-        /*
-            Création et initialisation du plateau
-         */
-        plateau = new JPlateau();
-        plateau.setBounds(100, 50, 694, 479);//permet de définir la position et la taille en même temps        
-        this.add(plateau);
     }
 
     public void initPartie(Joueur j1, Joueur j2) {
@@ -549,17 +411,8 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JDialog jDialogTypePartie;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-=======
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
->>>>>>> origin/Bibi's-update
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuHelp;
     private javax.swing.JMenuItem jMenuItem2;
@@ -582,9 +435,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     JPion monstre;
     JPlateau plateau;
     JPion selected = new JPion(new String[1]);
-    
-    
-    public final Color BG_COLOR = new Color(220, 205, 245);
 
     boolean typePartie; //false : 2 joueurs, true : contre IA
 
