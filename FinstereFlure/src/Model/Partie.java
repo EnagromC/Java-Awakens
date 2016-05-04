@@ -15,10 +15,11 @@ import InterfaceGraphique.Vue;
 public class Partie {
     private Vue vue;
     private Joueur joueur1;
-    Joueur joueur2;
+    private Joueur joueur2;
     private Plateau plateau;
     private int manche;
     private int tour;
+    private Paquet paquet ;
     
     public Partie(Vue v,Joueur j1, Joueur j2){
         this.vue = v;
@@ -47,6 +48,10 @@ public class Partie {
     
     public int getTour() {
         return this.tour ;
+    }
+    
+    public Paquet getPaquet() {
+        return this.paquet ;
     }
     
 }
