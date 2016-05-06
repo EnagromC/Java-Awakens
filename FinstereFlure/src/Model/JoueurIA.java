@@ -5,7 +5,6 @@
  */
 package Model;
 
-import IA.Etat;
 import java.util.HashMap;
 
 /**
@@ -29,7 +28,7 @@ public class JoueurIA extends Joueur{
             return sinit.kikawon();
         }
         int v = 0;
-        if(sinit.kikijoue() == Etat.ORDI){
+        if(sinit.kikijoue() == ORDI){
             v = Integer.MIN_VALUE;
             for(Etat fils : sinit.successeurs()){
                 v = Math.max(v, expectiminimax(fils,prof-1,alpha,beta));
@@ -41,7 +40,7 @@ public class JoueurIA extends Joueur{
                 }
                     
             }
-        }else if(sinit.kikijoue() == Etat.HUMAIN){
+        }else if(sinit.kikijoue() == HUMAIN){
             v = Integer.MAX_VALUE;
             for(Etat fils:sinit.successeurs()){
                 v = Math.min(v, expectiminimax(fils,prof-1,alpha,beta));
@@ -52,7 +51,7 @@ public class JoueurIA extends Joueur{
                     beta = Math.min(beta,v);
                 }
             }
-        }else if(sinit.kikijoue() == Etat.CHANCE){
+        }else if(sinit.kikijoue() == CHANCE){
             v = 0;
             for(Etat fils : sinit.successeurs()){
                 v+= fils.proba()*expectiminimax(fils,prof-1,alpha,beta);
