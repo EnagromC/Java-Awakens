@@ -18,10 +18,14 @@ import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -94,6 +98,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Finstere Flure v" +this.VERSION);
+        setFocusCycleRoot(false);
         setResizable(false);
         setSize(new java.awt.Dimension(1000, 800));
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -284,15 +289,18 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItemNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNewGameActionPerformed
-        String[] typePartie = {"2 joueurs","contre l'ordinateur"};
-        int rang = JOptionPane.showOptionDialog(null, "Quel type de partie voulez-vous jouer ?", "Type partie", JOptionPane.OK_CANCEL_OPTION,-1,null,typePartie,typePartie[0]);
-        if(rang ==0){//Si partie 2 joueurs
+        String[] typePartie = {"2 joueurs", "contre l'ordinateur"};
+        int rang = JOptionPane.showOptionDialog(null, "Quel type de partie voulez-vous jouer ?", "Type partie", JOptionPane.OK_CANCEL_OPTION, -1, null, typePartie, typePartie[0]);
+        if (rang == 0) {//Si partie 2 joueurs
             //Faire s'authentifier les joueurs
-            partie = new Partie(this, new Joueur(), new Joueur());
-        }else{//Si contre IA
+
+            initPartie(new Joueur("joueur 1"), new Joueur("Joueur 22"));
+        } else {//Si contre IA
             //Faire s'authentifier le joueur
-            partie = new Partie(this,new Joueur(), new JoueurIA());
+            initPartie(new Joueur("joueur 1"), new JoueurIA());
         }
+
+
     }//GEN-LAST:event_jMenuItemNewGameActionPerformed
 
     private void jMenuPartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPartieActionPerformed
@@ -320,29 +328,42 @@ public class Fenster extends javax.swing.JFrame implements Vue {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+
+        /* Set the STANDARD look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+            * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Fenster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Fenster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Fenster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Fenster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Fenster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(Fenster.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Fenster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(Fenster.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Fenster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Fenster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(Fenster.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Fenster.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
+//</editor-fold>
+//</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -353,8 +374,15 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     }
 
     public void initPartie(Joueur j1, Joueur j2) {
+        
+        
         this.partie = new Partie(this, j1, j2);
 
+        
+        this.nomJoueurRouge.setText(j1.getPseudo());
+        this.nomJoueurVert.setText(j2.getPseudo());
+        
+        
         /*
         Création du monstre
          */
@@ -384,9 +412,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         pionsGreen[3] = new JPion(adresses8);
 
         /*
-            A chaque jeton on ajoute un MouseListener afin de détecter un clic dessus
+            A chaque jeton on ajoute un MouseListener afin de détecter un clic dessus, et on rend le pion transparent
          */
         for (JPion p : pionsPurple) {
+            p.setOpaque(false);
             p.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     pionClicked(evt);
@@ -395,6 +424,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         }
 
         for (JPion p : pionsGreen) {
+            p.setOpaque(false);
             p.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     pionClicked(evt);
@@ -408,6 +438,11 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         plateau = new JPlateau();
         plateau.setBounds(100, 50, 694, 479);//permet de définir la position et la taille en même temps        
         this.add(plateau);
+
+        updatePlateau();
+
+        this.pack();
+        this.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -453,6 +488,8 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         for (Component c : pions) {
             plateau.remove(c);
         }
+        salleAttenteGreen.removeAll();
+        salleAttenteRed.removeAll();
 
         //On affiche les jetons
         for (int i = 0; i < 4; i++) {
@@ -523,6 +560,5 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             }
         }
     }
-
 
 }

@@ -16,7 +16,7 @@ public class JoueurIA extends Joueur{
     private HashMap<Etat,Integer> dejaCalcules; //Les utilités des noeuds déjà calculées.
     
     public JoueurIA(){
-        super();
+        super(baptiser());
         dejaCalcules = new HashMap<>();
     }
     
@@ -61,5 +61,16 @@ public class JoueurIA extends Joueur{
         
         dejaCalcules.put(sinit, v);
         return v;
+    }
+    
+    
+    
+    
+    /**
+     * Génère un nom rigolo pour l'ordinateur
+     * @return un nom rigolo
+     */
+    private static String baptiser(){
+        return "Barnabé";
     }
 }
