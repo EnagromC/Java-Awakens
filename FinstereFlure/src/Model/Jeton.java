@@ -18,7 +18,7 @@ public class Jeton extends Pion implements Traversable {
     ////////////////////////////////////////////////////////////////////////////
     // Attributs
     ////////////////////////////////////////////////////////////////////////////
-    private boolean surPlateau; //Indique si un pion est sur le plateau, ou dans la réserve du joueur / éliminé
+    private boolean surPlateau; //Indique si un pion est sur le plateau, ou dans la réserve du joueur / éliminé ou sorti.
     private int[] faces = new int[2]; //valeur des 2 faces du pion. Par convention, la première est la blanche et la deuxième la noire.
     private boolean faceBlanche; //indique si le pion est retourné sur la face blanche (false = face noire)
     private boolean enJeu; //Indique si un pion est encore en jeu ou s'il a été éliminé/est sorti
