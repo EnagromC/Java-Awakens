@@ -5,10 +5,60 @@
  */
 package Model;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Corentin
  */
 public class JoueurIA extends Joueur{
+    private HashMap<Etat,Integer> dejaCalcules; //Les utilités des noeuds déjà calculées.
     
+    public JoueurIA(){
+        super();
+        dejaCalcules = new HashMap<>();
+    }
+    
+    public int expectiminimax(Etat sinit, int prof, int alpha, int beta){
+        if(this.dejaCalcules.containsKey(sinit)){
+            return dejaCalcules.get(sinit);
+        }
+        
+        if(prof == 0 || sinit.fini()){
+            return sinit.kikawon();
+        }
+        int v = 0;
+        if(sinit.kikijoue() == ORDI){
+            v = Integer.MIN_VALUE;
+            for(Etat fils : sinit.successeurs()){
+                v = Math.max(v, expectiminimax(fils,prof-1,alpha,beta));
+                if(v >= beta){ //Coupure bêta
+                    dejaCalcules.put(sinit, v);
+                    return v; 
+                }else{
+                    alpha = Math.max(alpha, v);
+                }
+                    
+            }
+        }else if(sinit.kikijoue() == HUMAIN){
+            v = Integer.MAX_VALUE;
+            for(Etat fils:sinit.successeurs()){
+                v = Math.min(v, expectiminimax(fils,prof-1,alpha,beta));
+                if(alpha >= v){ //coupure alpha
+                    dejaCalcules.put(sinit, v);
+                    return v;
+                }else{
+                    beta = Math.min(beta,v);
+                }
+            }
+        }else if(sinit.kikijoue() == CHANCE){
+            v = 0;
+            for(Etat fils : sinit.successeurs()){
+                v+= fils.proba()*expectiminimax(fils,prof-1,alpha,beta);
+            }
+        }
+        
+        dejaCalcules.put(sinit, v);
+        return v;
+    }
 }
