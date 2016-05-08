@@ -51,39 +51,36 @@ public class Jeton extends Pion implements Traversable {
 
     }
 
-    
     ////////////////////////////////////////////////////////////////////////////
     // Accesseurs
     ////////////////////////////////////////////////////////////////////////////
-    public boolean getEnJeu(){
+    public boolean getEnJeu() {
         return this.enJeu;
     }
-    
-    public boolean getSurPlateau(){
+
+    public boolean getSurPlateau() {
         return this.surPlateau;
     }
-    
-    public boolean getVivant(){
+
+    public boolean getVivant() {
         return this.vivant;
     }
-    
-    public int getFaceBlanche(){
+
+    public int getFaceBlanche() {
         return this.faces[0];
     }
-    
-    public int getFaceNoire(){
+
+    public int getFaceNoire() {
         return this.faces[1];
     }
-    
-    public boolean estSurFaceBlanche(){
+
+    public boolean estSurFaceBlanche() {
         return this.faceBlanche;
     }
-    
-    
+
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
-    
     /**
      * Permet de retourner le pion, c'est-à-dire de le mettre sur la face
      * blanche s'il était sur la face noire, ou vice-versa.
@@ -160,7 +157,20 @@ public class Jeton extends Pion implements Traversable {
     public boolean peutFinirTour() {
         return plateau.getCase(this.position) == this;
     }
+    
+    /**
+     * Indique si le pion est dans la salle d'attente
+     * @return 
+     */
+    public boolean dansSalleDAttente(){
+        return this.vivant && this.enJeu && !this.surPlateau;
+    }
 
-    
-    
+    public void entrerPlateau() {
+        if (this.dansSalleDAttente()) {
+            this.position = new Coordonnees(10, 15);
+            this.deplacementsRestants--;
+        }
+    }
+
 }

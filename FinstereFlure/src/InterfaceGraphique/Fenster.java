@@ -84,8 +84,8 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jLabel2 = new javax.swing.JLabel();
         nomJoueurRouge = new javax.swing.JLabel();
         nomJoueurVert = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        boutonEntrerPlateau = new javax.swing.JButton();
+        boutonFinTour = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuPartie = new javax.swing.JMenu();
         jMenuItemNewGame = new javax.swing.JMenuItem();
@@ -158,13 +158,13 @@ public class Fenster extends javax.swing.JFrame implements Vue {
 
         jLabel2.setText("Vert :");
 
-        jButton1.setText("Entrer sur le plateau");
-        jButton1.setEnabled(false);
+        boutonEntrerPlateau.setText("Entrer sur le plateau");
+        boutonEntrerPlateau.setEnabled(false);
 
-        jButton2.setText("Terminer le tour");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        boutonFinTour.setText("Terminer le tour");
+        boutonFinTour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                boutonFinTourActionPerformed(evt);
             }
         });
 
@@ -240,10 +240,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(salleAttenteGreen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                                .addComponent(jButton1))))
+                                .addComponent(boutonEntrerPlateau))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton2)
+                        .addComponent(boutonFinTour)
                         .addGap(441, 441, 441)))
                 .addGap(33, 33, 33))
         );
@@ -258,7 +258,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                     .addComponent(salleAttenteGreen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jButton1)))
+                        .addComponent(boutonEntrerPlateau)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -267,7 +267,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                     .addComponent(jLabel2)
                     .addComponent(nomJoueurVert, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(78, 78, 78)
-                .addComponent(jButton2)
+                .addComponent(boutonFinTour)
                 .addGap(72, 72, 72))
         );
 
@@ -323,6 +323,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             //Faire s'authentifier le joueur
             initPartie();
         }
+        
 
 
     }//GEN-LAST:event_jMenuItemNewGameActionPerformed
@@ -331,9 +332,9 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuPartieActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void boutonFinTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonFinTourActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_boutonFinTourActionPerformed
 
     /**
      * Instructions à éxécuter quand on clique sur un pion : on le sélectionne
@@ -343,12 +344,12 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private void pionClicked(MouseEvent evt) {
         //vérifier que on a bien cliqué sur un de ses pions, et pas de l'adversaire
         JPion clicked = (JPion) evt.getSource();
-        if (clicked.isEnabled()) {
-            //this.selected.unselect();
-            this.selected.setBorder(null);
+        if (clicked.isEnabled() && clicked.getNumJoueur() == numJoueur && ! dejaBouge) {
+            
+            this.selected.unselect();
             this.selected = clicked;
-            //this.selected.select();
-            this.selected.setBorder(BorderFactory.createLineBorder(Color.yellow, 5)); //Queque chose pour montrer que le pion est sélectionné
+            this.selected.select();
+          
         }
     }
 
@@ -423,22 +424,22 @@ public class Fenster extends javax.swing.JFrame implements Vue {
           Création des jetons joueurs avec ajout de leurs images
          */
         String[] adresses = {"pionred_1_6_clair.gif", "pionpurple_1_6_fonce.gif"};
-        pionsPurple[0] = new JPion(adresses);
+        pionsPurple[0] = new JPion(adresses,1);
         String[] adresses2 = {"pionred_3_4_clair.gif", "pionpurple_3_4_fonce.gif"};
-        pionsPurple[1] = new JPion(adresses2);
+        pionsPurple[1] = new JPion(adresses2,1);
         String[] adresses3 = {"pionred_4_3_clair.gif", "pionpurple_4_3_fonce.gif"};
-        pionsPurple[2] = new JPion(adresses3);
+        pionsPurple[2] = new JPion(adresses3,1);
         String[] adresses4 = {"pionred_5_2_clair.gif", "pionpurple_5_2_fonce.gif"};
-        pionsPurple[3] = new JPion(adresses4);
+        pionsPurple[3] = new JPion(adresses4,1);
 
         String[] adresses5 = {"piongreen_1_6_clair.gif", "piongreen_1_6_fonce.gif"};
-        pionsGreen[0] = new JPion(adresses5);
+        pionsGreen[0] = new JPion(adresses5,2);
         String[] adresses6 = {"piongreen_3_4_clair.gif", "piongreen_3_4_fonce.gif"};
-        pionsGreen[1] = new JPion(adresses6);
+        pionsGreen[1] = new JPion(adresses6,2);
         String[] adresses7 = {"piongreen_4_3_clair.gif", "piongreen_4_3_fonce.gif"};
-        pionsGreen[2] = new JPion(adresses7);
+        pionsGreen[2] = new JPion(adresses7,2);
         String[] adresses8 = {"piongreen_5_2_clair.gif", "piongreen_5_2_fonce.gif"};
-        pionsGreen[3] = new JPion(adresses8);
+        pionsGreen[3] = new JPion(adresses8,2);
 
         /*
             A chaque jeton on ajoute un MouseListener afin de détecter un clic dessus, et on rend le pion transparent
@@ -473,10 +474,14 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         this.pack();
         this.repaint();
     }
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton boutonEntrerPlateau;
+    private javax.swing.JButton boutonFinTour;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -502,7 +507,9 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     JPlateau plateau;
     JPion selected = new JPion(new String[1]);
 
-    boolean typePartie; //false : 2 joueurs, true : contre IA
+    int numJoueur;
+    
+    boolean dejaBouge; //Indique si le joueur a déjà commencé à bouger un pion. Si oui, il ne peut pas en sélectionner d'autre.
 
     public final Color BG_COLOR = new Color(220, 205, 245);
 
@@ -589,6 +596,21 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 plateau.add(monstre, new Integer(1));
 
             }
+        }
+    }
+
+    @Override
+    public void tourJoueur(int numJoueur) {
+        dejaBouge = false;
+        selected.unselect();
+        this.selected = null;
+        boutonFinTour.setEnabled(true);
+        
+        
+        if(numJoueur == 1){
+            this.numJoueur = 1;
+        }else if (numJoueur == 2){
+            this.numJoueur = 2;
         }
     }
 

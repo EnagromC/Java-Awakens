@@ -111,39 +111,7 @@ public class Plateau {
         return !this.plateau.containsKey(c);
     }
 
-    /**
-     * Retourne l'ensemble des coordonnées des cases accessibles depuis la case
-     * de coordonnées c, en au maximum n déplacements, associée à leur distance
-     * (nombre de déplacements nécessaires) depuis la case de départ. On
-     * initialisera avec d = 0;
-     *
-     * @deprecated
-     * @param c coordonnées de la case de départ
-     * @param n nombre de déplacements maximum
-     * @param d la distance d'une case accessible à la case de départ
-     * @return l'ensemble des cases accessibles
-     */
-    public HashSet<CoordonneesDist> accessibles(Coordonnees c, int n, int d) {
-        HashSet<CoordonneesDist> res = new HashSet<>();
-        if (n != 0) {
-            HashSet<Coordonnees> newAcc = new HashSet<>(); //nouvelles cases accessibles
-            for (Direction dir : Direction.values()) { //On essaie de se déplacer dans les 4 directions (haut, bas, gauche, droite)
-                Coordonnees c2 = dir.getVector().plus(c);
-                if (valide(c2) && (caseLibre(c2) || (n != 1 && plateau.get(c2) instanceof Traversable))) {//Pour chaque nouvelle coordonnée générée on vérifie si elle est valide. S'il ne reste qu'un déplacement, la case d'arrivée doit aussi être vide. Si ce n'est pas le dernier mouvement, si elle est occupée ça doit être par une entité traversable.
 
-                    if (res.add(new CoordonneesDist(c2, d))) { //On ajoute la case dans l'ensemble des accessibles et on vérifie si elle n'y était pas déjà
-                        newAcc.add(c2); //Si elle n'y était pas déjà, on l'ajoute à la liste des nouveaux accessibles de ce niveau
-                    }
-                }
-            }
-
-            for (Coordonnees c2 : newAcc) { //Pour chaque nouvel accessible, on génére les nouveaux états accessibles. Puisqu'on parcourt en largeur, ils sont forcément plus éloignés de l'état de départ que les précédents.
-                res.addAll(accessibles(c2, n - 1, d + 1));
-            }
-
-        }
-        return res;
-    }
 
     /**
      * Permet d'ajouter un pion sur le plateau.
@@ -191,24 +159,4 @@ public class Plateau {
     }
     
     
-    @Override
-    public Object clone(){
-        Plateau p = new Plateau();
-        p.flaques = (ArrayList<Rectangle>) this.flaques.clone();
-        
-        p.monstre = this.monstre.clone();
-        
-        p.plateau = new HashMap<>();
-        
-        for(Coordonnees c : this.plateau.keySet()){
-            if(this.plateau.get(c) instanceof Monstre){
-                p.plateau.put((Coordonnees) c.clone(), monstre);
-            }else if (this.plateau.get(c) instanceof Jeton){
-                Jeton j = (Jeton) this.plateau.get(c);
-                Jeton j2 = new Jeton(j.g
-                p.plateau.put((Coordonnees) c.clone(),null);
-            }
-        }
-        
-    }
 }

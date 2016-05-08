@@ -6,6 +6,7 @@
 package InterfaceGraphique;
 
 import Model.Coordonnees;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
@@ -24,17 +26,35 @@ public class JPion extends JPanel {
     public static final int TAILLE_CASE = 36;
     protected String[] sprites;
     protected int imageActuelle;
+    private int numJoueur;
 
     /**
      * Constructeur
      *
      * @param adresses : les adresses des images
+     *
      */
     public JPion(String[] adresses) {
         this.sprites = adresses;
         imageActuelle = 0;
         this.setSize(TAILLE_CASE, TAILLE_CASE);
+        
+        this.numJoueur = 0;
 
+    }
+
+    /**
+     * Constructeur
+     *
+     * @param adresses : les adresses des images
+     * @param numJoueur : le joueur à qui appartient le pion
+     */
+    public JPion(String[] adresses, int numJoueur) {
+        this.sprites = adresses;
+        imageActuelle = 0;
+        this.setSize(TAILLE_CASE, TAILLE_CASE);
+
+        this.numJoueur = numJoueur;
     }
 
     public Coordonnees getCoordonnees() {
@@ -43,18 +63,20 @@ public class JPion extends JPanel {
         return new Coordonnees(x, y);
     }
 
-    
-    public void nextSprite(){
-        this.imageActuelle = (this.imageActuelle+1)%sprites.length;
+    public int getNumJoueur() {
+        return this.numJoueur;
+    }
+
+    public void nextSprite() {
+        this.imageActuelle = (this.imageActuelle + 1) % sprites.length;
         this.repaint();
     }
-    
-    public void setSprite(int n){
-        this.imageActuelle = n%sprites.length;
+
+    public void setSprite(int n) {
+        this.imageActuelle = n % sprites.length;
         this.repaint();
     }
-    
-    
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         try {
@@ -64,9 +86,12 @@ public class JPion extends JPanel {
             Logger.getLogger(JPion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    /*
-    Il faut créer les fonctions pour gérer le changement de sprite
-    */
 
+    public void select() {
+        this.setBorder(BorderFactory.createLineBorder(Color.yellow, 5)); //Queque chose pour montrer que le pion est sélectionné
+    }
+
+    public void unselect() {
+        this.setBorder(null);
+    }
 }

@@ -127,13 +127,13 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="salleAttenteGreen" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="36" max="32767" attributes="0"/>
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <Component id="boutonEntrerPlateau" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="boutonFinTour" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="441" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -152,7 +152,7 @@
                   <Component id="salleAttenteGreen" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="boutonEntrerPlateau" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -165,7 +165,7 @@
                   <Component id="nomJoueurVert" min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <Component id="boutonFinTour" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -279,18 +279,18 @@
     </Component>
     <Component class="javax.swing.JLabel" name="nomJoueurVert">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="boutonEntrerPlateau">
       <Properties>
         <Property name="text" type="java.lang.String" value="Entrer sur le plateau"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="boutonFinTour">
       <Properties>
         <Property name="text" type="java.lang.String" value="Terminer le tour"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonFinTourActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
