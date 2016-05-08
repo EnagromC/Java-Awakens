@@ -65,6 +65,11 @@ public class Coordonnees extends Point{
     public Coordonnees fois(int lambda) {
         return new Coordonnees(this.x * lambda, this.y * lambda);
     }
+    
+    
+    public Object clone(){
+        return new Coordonnees(this.getXint(),this.getYint());
+    }
 
     
 }

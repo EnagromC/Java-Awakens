@@ -37,9 +37,10 @@ public class Jeton extends Pion implements Traversable {
      *
      * @param blanche : le nombre de déplacements sur la face blanche.
      * @param noire : le nombre de déplacements sur la face noire.
+     * @param p : le plateau auquel est rattaché le Jeton
      */
-    public Jeton(int blanche, int noire) {
-        super();
+    public Jeton(int blanche, int noire, Plateau p) {
+        super(p);
         this.surPlateau = false;
         this.faces[0] = blanche;
         this.faces[1] = noire;
@@ -64,6 +65,18 @@ public class Jeton extends Pion implements Traversable {
     
     public boolean getVivant(){
         return this.vivant;
+    }
+    
+    public int getFaceBlanche(){
+        return this.faces[0];
+    }
+    
+    public int getFaceNoire(){
+        return this.faces[1];
+    }
+    
+    public boolean estSurFaceBlanche(){
+        return this.faceBlanche;
     }
     
     
@@ -148,4 +161,6 @@ public class Jeton extends Pion implements Traversable {
         return plateau.getCase(this.position) == this;
     }
 
+    
+    
 }

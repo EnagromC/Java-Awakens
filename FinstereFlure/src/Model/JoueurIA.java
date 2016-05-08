@@ -15,8 +15,8 @@ import java.util.HashMap;
 public class JoueurIA extends Joueur{
     private HashMap<Etat,Integer> dejaCalcules; //Les utilités des noeuds déjà calculées.
     
-    public JoueurIA(){
-        super(baptiser());
+    public JoueurIA(Plateau p){
+        super(baptiser(),p);
         dejaCalcules = new HashMap<>();
     }
     

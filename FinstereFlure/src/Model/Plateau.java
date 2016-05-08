@@ -28,6 +28,7 @@ public class Plateau {
     ////////////////////////////////////////////////////////////////////////////
     private Map<Coordonnees, Pion> plateau; //Contient les cases occupées du plateau.
     private ArrayList<Rectangle> flaques; //Contient les coordonnées des tâches de sang, chacune étant représentée par un rectangle.
+    private Monstre monstre;
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructeurs
@@ -39,14 +40,30 @@ public class Plateau {
     public Plateau() {
         this.plateau = new HashMap<>();
         this.flaques = new ArrayList<>();
-        
+
         //Ajout des tâches de sang
-        this.flaques.add(new Rectangle(8,4,3,0));
-        this.flaques.add(new Rectangle(2,8,1,1));
-        
+        this.flaques.add(new Rectangle(8, 4, 3, 0));
+        this.flaques.add(new Rectangle(2, 8, 1, 1));
+
         //Ajout du monstre
+        this.monstre = new Monstre(this);
         Coordonnees cle = new Coordonnees(0, 0);
-        this.plateau.put(cle, new Monstre(this));
+        this.plateau.put(cle, monstre);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Accesseurs
+    ////////////////////////////////////////////////////////////////////////////
+    public Pion getCase(Coordonnees c) {
+        return this.plateau.get(c);
+    }
+
+    public Map<Coordonnees, Pion> getPlateau() {
+        return this.plateau;
+    }
+    
+    public Monstre getMonstre(){
+        return this.monstre;
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -60,8 +77,8 @@ public class Plateau {
      * @return true si la case est une flaque
      */
     public boolean estUneFlaque(Coordonnees position) {
-        for(Rectangle flaque : flaques){ //Pour chaque rectangle représentant une flaque, on reegarde s'il contient le point demandé.
-            if(flaque.contains(position)){
+        for (Rectangle flaque : flaques) { //Pour chaque rectangle représentant une flaque, on reegarde s'il contient le point demandé.
+            if (flaque.contains(position)) {
                 return true;
             }
         }
@@ -99,8 +116,8 @@ public class Plateau {
      * de coordonnées c, en au maximum n déplacements, associée à leur distance
      * (nombre de déplacements nécessaires) depuis la case de départ. On
      * initialisera avec d = 0;
-     * 
-     * @deprecated 
+     *
+     * @deprecated
      * @param c coordonnées de la case de départ
      * @param n nombre de déplacements maximum
      * @param d la distance d'une case accessible à la case de départ
@@ -152,18 +169,10 @@ public class Plateau {
     public boolean removePion(Pion p, Coordonnees c) {
         return this.plateau.remove(c, p);
     }
-    
-    public Pion getCase(Coordonnees c) {
-        return this.plateau.get(c) ;
-    }
-    
-    public Map<Coordonnees,Pion> getPlateau(){
-        return this.plateau;
-    }
 
     /**
-     * Déplace un pion sur le plateau, si la case d'arrivée est
-     * vide, des coordonnées depart aux coordonnées arrivee.
+     * Déplace un pion sur le plateau, si la case d'arrivée est vide, des
+     * coordonnées depart aux coordonnées arrivee.
      *
      * @param p le pion à déplacer
      * @param depart coordonnées du pion à déplacer
@@ -172,13 +181,34 @@ public class Plateau {
      * la case d'arrivée est déjà occupée.
      */
     public boolean movePion(Pion p, Coordonnees depart, Coordonnees arrivee) {
-        
 
-            if (addPion(p, arrivee)) { //Si on a bien pu déplacer le pion sur la case d'arrivée
-                removePion(p,depart);
-                return true;
-            }
-        
+        if (addPion(p, arrivee)) { //Si on a bien pu déplacer le pion sur la case d'arrivée
+            removePion(p, depart);
+            return true;
+        }
+
         return false;
+    }
+    
+    
+    @Override
+    public Object clone(){
+        Plateau p = new Plateau();
+        p.flaques = (ArrayList<Rectangle>) this.flaques.clone();
+        
+        p.monstre = this.monstre.clone();
+        
+        p.plateau = new HashMap<>();
+        
+        for(Coordonnees c : this.plateau.keySet()){
+            if(this.plateau.get(c) instanceof Monstre){
+                p.plateau.put((Coordonnees) c.clone(), monstre);
+            }else if (this.plateau.get(c) instanceof Jeton){
+                Jeton j = (Jeton) this.plateau.get(c);
+                Jeton j2 = new Jeton(j.g
+                p.plateau.put((Coordonnees) c.clone(),null);
+            }
+        }
+        
     }
 }

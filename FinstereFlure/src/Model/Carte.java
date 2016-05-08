@@ -31,4 +31,28 @@ public class Carte {
         return this.proie ;
     }
     
+  
+     @Override
+    public boolean equals(Object o){
+        if(o instanceof Carte){
+            Carte c = (Carte) o;
+            return c.nombre == this.nombre && c.proie == this.proie;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 41 * hash + this.nombre;
+        hash = 41 * hash + (this.proie ? 1 : 0);
+        return hash;
+    }
+    
+     @Override
+    public Object clone(){
+        return new Carte(this.nombre, this.proie);
+    }
+    
+    
 }

@@ -5,8 +5,10 @@
  */
 package IA;
 
+import Model.Carte;
 import Model.Jeton;
 import Model.Paquet;
+import Model.Partie;
 import Model.Plateau;
 import java.util.ArrayList;
 
@@ -22,9 +24,31 @@ public class Etat {
     private int manche;
     private int tour;
     private Paquet paquet;
+    private int kikijoue;
     public static final int HUMAIN = 0;
     public static final int ORDI = 1;
     public static final int CHANCE = 2;
+    
+    
+    public Etat(Jeton[] humain, Jeton[] ordi, Plateau plateau, int manche, int tour, Paquet paquet, int kikijoue){
+        this.humain = humain;
+        this.ordi = ordi;
+        this.plateau = plateau;
+        this.manche = manche;
+        this. tour = tour;
+        this.paquet = paquet;
+        this.kikijoue = kikijoue;
+    }
+    
+    
+    public Etat(Partie p){
+        this.manche = p.getManche();
+        this.plateau=p.getPlateau();
+        this.tour = p.getTour();
+        this.paquet = p.getPaquet();
+        this.humain = p.getJoueur1().getPions();
+        this.ordi = p.getJoueur2().getPions();
+    }
 
     public Jeton[] getHumain() {
         return this.humain;
@@ -65,10 +89,21 @@ public class Etat {
     }
 
     public int kikijoue() {
-        return 0;
+        return kikijoue;
     }
 
     public ArrayList<Etat> successeurs() {
+        ArrayList<Etat> successeurs = new ArrayList<>();
+        
+        if(this.kikijoue == CHANCE){
+            for(Carte c : paquet.getComposition().keySet()){
+                
+            }
+        }
+        
+        
+        
+        
         return new ArrayList<>();
     }
 
@@ -96,6 +131,11 @@ public class Etat {
         return 0; //Match nul.
 
     }
+    
+    
+    public Object clone(){
+        return null;
+    }
 
     private int nbPionsSortis(Jeton[] joueur) {
         int compteur = 0;
@@ -106,5 +146,7 @@ public class Etat {
         }
         return compteur;
     }
+    
+    
 
 }

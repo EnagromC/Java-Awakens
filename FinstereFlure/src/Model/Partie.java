@@ -17,6 +17,7 @@ public class Partie {
     private Joueur joueur1;
     private Joueur joueur2;
     private Plateau plateau;
+    private boolean faceBlanche;
     private int manche;
     private int tour;
     private Paquet paquet ;
@@ -28,6 +29,8 @@ public class Partie {
         plateau = new Plateau();
         this.manche = 0;
         this.tour = 0;
+        this.paquet = new Paquet();
+        faceBlanche = true;
     }
     
     public Joueur getJoueur1() {

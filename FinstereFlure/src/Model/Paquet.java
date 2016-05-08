@@ -7,6 +7,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  *
@@ -43,5 +44,37 @@ public class Paquet {
         return c ;
     }
     
+    public int taille(){
+        return this.paquet.size();
+    }
+    
+    public boolean vide(){
+        return this.paquet.isEmpty();
+    }
+    
+    
+    public HashMap<Carte,Integer> getComposition(){
+        HashMap<Carte,Integer> hm = new HashMap<>();
+        for (Carte c : this.paquet){
+            if(hm.containsKey(c)){
+                hm.replace(c, hm.get(c)+1);
+            }else{
+                hm.put(c, 1);
+            }
+        }
+        return hm;
+    }
+    
+    
+    @Override
+    public Object clone(){
+        Paquet p = new Paquet();
+        ArrayList<Carte> cartes = new ArrayList<>();
+        for(Carte c : this.paquet){
+            cartes.add((Carte) c.clone());
+        }
+        
+        return p;
+    }
     
 }

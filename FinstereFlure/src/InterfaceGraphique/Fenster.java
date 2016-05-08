@@ -318,10 +318,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         if (rang == 0) {//Si partie 2 joueurs
             //Faire s'authentifier les joueurs
 
-            initPartie(new Joueur("joueur 1"), new Joueur("Joueur 22"));
+            initPartie();
         } else {//Si contre IA
             //Faire s'authentifier le joueur
-            initPartie(new Joueur("joueur 1"), new JoueurIA());
+            initPartie();
         }
 
 
@@ -401,8 +401,9 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         });
     }
 
-    public void initPartie(Joueur j1, Joueur j2) {
+    public void initPartie() {
         
+        //Créer les 2 joueurs en fonction de la réposne
         
         this.partie = new Partie(this, j1, j2);
 
