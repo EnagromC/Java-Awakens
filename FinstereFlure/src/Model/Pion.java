@@ -16,7 +16,7 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     // Attributs
     ////////////////////////////////////////////////////////////////////////////
-    protected int[] position = new int[2]; //la position du pion sur le plateau
+    protected Coordonnees position; //la position du pion sur le plateau
     protected Plateau plateau; //le plateau sur lequel est placé le pion
 
     ////////////////////////////////////////////////////////////////////////////
@@ -30,13 +30,14 @@ public abstract class Pion {
     }
 
     /**
-     * Initialise un pion à partir d'un tableau de coordonnées
+     * Initialise un pion à partir de ses coordonnées
      *
-     * @param coordonnees
+     * @param c coordonnées du pion sur le plateau
      */
-    public Pion(int[] coordonnees) {
-        this.position = coordonnees;
+    public Pion(Coordonnees c) {
+        this.position = c;
         this.plateau = new Plateau();
+        this.plateau.addPion(this, c);
     }
 
     /**
@@ -54,25 +55,43 @@ public abstract class Pion {
      * @param coordonnees
      * @param plateau
      */
-    public Pion(int[] coordonnees, Plateau plateau) {
+    public Pion(Coordonnees coordonnees, Plateau plateau) {
         this.position = coordonnees;
         this.plateau = plateau;
+        this.plateau.addPion(this, coordonnees);
     }
 
     ////////////////////////////////////////////////////////////////////////////
     // Accesseurs
     ////////////////////////////////////////////////////////////////////////////
-    public int[] getPosition() {
+    public Coordonnees getPosition() {
         return this.position;
     }
 
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
-    public void seDeplacer(Direction d) {
-        this.position[0]+=d.getDx();
-        this.position[1]+=d.getDy();
-        
-        //Attention, il faut aussi vérifier que les nouvelles coordonnées sont valides et bouger sur le plateau.
+
+
+    /**
+     * Déplace le pion de 1 case dans une direction, et glisse si on arrive sur
+     * une tâche de sang. Redéfinir la méthode dans les classes filles en
+     * faisant appel à celle-là pour pouvoir ajouter des conditions de
+     * déplacements.
+     *
+     * @param d la direction du déplacement
+     * @return true si on a réussi à se déplacer, false sinon
+     */
+    public boolean seDeplacer(Direction d) {
+        Coordonnees destination = this.position.plus(d.getVector());
+        plateau.movePion(this, this.position, destination);
+        this.position = destination;
+
+        //On glisse si on est sur une flaque de sang
+        while (this.plateau.estUneFlaque(this.position)) {
+            seDeplacer(d);
+        }
+        return true;
     }
+
 }
