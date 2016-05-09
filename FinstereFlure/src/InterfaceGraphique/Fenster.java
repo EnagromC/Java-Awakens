@@ -316,14 +316,17 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         String[] typePartie = {"2 joueurs", "contre l'ordinateur"};
         int rang = JOptionPane.showOptionDialog(null, "Quel type de partie voulez-vous jouer ?", "Type partie", JOptionPane.OK_CANCEL_OPTION, -1, null, typePartie, typePartie[0]);
         if (rang == 0) {//Si partie 2 joueurs
-            //Faire s'authentifier les joueurs
+            /*
+            APPELER 2 FOIS LA FENETRE D'AUTHENTIFICATION. CE SERAIT BIEN DE POUVOIR RECUPERER LE PSEUDO DU JOUEUR. EN CAS DERREUR DE MDP, ON PEUT AFFICHER UN POPUP D'ERREUR.
+             */
 
             initPartie();
         } else {//Si contre IA
-            //Faire s'authentifier le joueur
+            /*
+            MEME CHOSE MAIS UNE SEULE FOIS, CAR IL N'Y A QU'UN JOUEUR
+            */
             initPartie();
         }
-        
 
 
     }//GEN-LAST:event_jMenuItemNewGameActionPerformed
@@ -344,12 +347,12 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private void pionClicked(MouseEvent evt) {
         //vérifier que on a bien cliqué sur un de ses pions, et pas de l'adversaire
         JPion clicked = (JPion) evt.getSource();
-        if (clicked.isEnabled() && clicked.getNumJoueur() == numJoueur && ! dejaBouge) {
-            
+        if (clicked.isEnabled() && clicked.getNumJoueur() == numJoueur && !dejaBouge) {
+
             this.selected.unselect();
             this.selected = clicked;
             this.selected.select();
-          
+
         }
     }
 
@@ -403,16 +406,13 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     }
 
     public void initPartie() {
-        
+
         //Créer les 2 joueurs en fonction de la réposne
-        
         this.partie = new Partie(this, j1, j2);
 
-        
         this.nomJoueurRouge.setText(j1.getPseudo());
         this.nomJoueurVert.setText(j2.getPseudo());
-        
-        
+
         /*
         Création du monstre
          */
@@ -424,22 +424,22 @@ public class Fenster extends javax.swing.JFrame implements Vue {
           Création des jetons joueurs avec ajout de leurs images
          */
         String[] adresses = {"pionred_1_6_clair.gif", "pionpurple_1_6_fonce.gif"};
-        pionsPurple[0] = new JPion(adresses,1);
+        pionsPurple[0] = new JPion(adresses, 1);
         String[] adresses2 = {"pionred_3_4_clair.gif", "pionpurple_3_4_fonce.gif"};
-        pionsPurple[1] = new JPion(adresses2,1);
+        pionsPurple[1] = new JPion(adresses2, 1);
         String[] adresses3 = {"pionred_4_3_clair.gif", "pionpurple_4_3_fonce.gif"};
-        pionsPurple[2] = new JPion(adresses3,1);
+        pionsPurple[2] = new JPion(adresses3, 1);
         String[] adresses4 = {"pionred_5_2_clair.gif", "pionpurple_5_2_fonce.gif"};
-        pionsPurple[3] = new JPion(adresses4,1);
+        pionsPurple[3] = new JPion(adresses4, 1);
 
         String[] adresses5 = {"piongreen_1_6_clair.gif", "piongreen_1_6_fonce.gif"};
-        pionsGreen[0] = new JPion(adresses5,2);
+        pionsGreen[0] = new JPion(adresses5, 2);
         String[] adresses6 = {"piongreen_3_4_clair.gif", "piongreen_3_4_fonce.gif"};
-        pionsGreen[1] = new JPion(adresses6,2);
+        pionsGreen[1] = new JPion(adresses6, 2);
         String[] adresses7 = {"piongreen_4_3_clair.gif", "piongreen_4_3_fonce.gif"};
-        pionsGreen[2] = new JPion(adresses7,2);
+        pionsGreen[2] = new JPion(adresses7, 2);
         String[] adresses8 = {"piongreen_5_2_clair.gif", "piongreen_5_2_fonce.gif"};
-        pionsGreen[3] = new JPion(adresses8,2);
+        pionsGreen[3] = new JPion(adresses8, 2);
 
         /*
             A chaque jeton on ajoute un MouseListener afin de détecter un clic dessus, et on rend le pion transparent
@@ -474,10 +474,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         this.pack();
         this.repaint();
     }
-    
-    
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton boutonEntrerPlateau;
@@ -508,7 +505,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     JPion selected = new JPion(new String[1]);
 
     int numJoueur;
-    
+
     boolean dejaBouge; //Indique si le joueur a déjà commencé à bouger un pion. Si oui, il ne peut pas en sélectionner d'autre.
 
     public final Color BG_COLOR = new Color(220, 205, 245);
@@ -605,11 +602,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         selected.unselect();
         this.selected = null;
         boutonFinTour.setEnabled(true);
-        
-        
-        if(numJoueur == 1){
+
+        if (numJoueur == 1) {
             this.numJoueur = 1;
-        }else if (numJoueur == 2){
+        } else if (numJoueur == 2) {
             this.numJoueur = 2;
         }
     }
