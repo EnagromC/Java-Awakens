@@ -71,7 +71,11 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
-
+    
+    public void seDeplacer(Coordonnees c){
+        this.plateau.movePion(this, this.position, c);
+        this.position = c;
+    }
 
     /**
      * Déplace le pion de 1 case dans une direction, et glisse si on arrive sur

@@ -39,6 +39,10 @@ public class Etat {
     ////////////////////////////////////////////////////////////////////////////
     // Constructeurs
     ////////////////////////////////////////////////////////////////////////////  
+    public Etat(){
+        
+    }
+    
     public Etat(Jeton[] humain, Jeton[] ordi, Plateau plateau, int manche, int tour, Paquet paquet, int kikijoue) {
         this.humain = humain;
         this.ordi = ordi;
@@ -61,6 +65,7 @@ public class Etat {
         Coordonnees coordMonstre = p.getPlateau().getMonstre().getPosition();
         plat.getMonstre().seDeplacer(coordMonstre);
 
+        this.plateau = plat;
         //Copie des cailloux
         for (Pion pion : plat.getPlateau().values()) {
             if (pion instanceof Caillou) {
@@ -69,10 +74,14 @@ public class Etat {
         }
         
         //Copie des jetons
-        
-
-        this.humain = p.getJoueur1().getPions();
-        this.ordi = p.getJoueur2().getPions();
+        for(int i = 0;i<4;i++){
+            this.humain[i] = (Jeton) p.getJoueur1().getPions()[i].clone();
+            this.humain[i].setPlateau(plat);
+            
+            this.ordi[i] = (Jeton) p.getJoueur2().getPions()[i].clone();
+            this.ordi[i].setPlateau(plat);
+            
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -181,7 +190,40 @@ public class Etat {
 
     @Override
     public Object clone() {
-        return null;
+        Etat s = new Etat();
+         s.manche = this.manche;
+        s.tour = this.tour;
+
+        s.paquet = (Paquet) this.paquet.clone();
+
+        Plateau plat = new Plateau();
+
+        //Copie du monstre
+        Coordonnees coordMonstre = this.getPlateau().getMonstre().getPosition();
+        plat.getMonstre().seDeplacer(coordMonstre);
+
+        //Copie des cailloux
+        for (Pion pion : plat.getPlateau().values()) {
+            if (pion instanceof Caillou) {
+                Caillou caillou = new Caillou(pion.getPosition(), plat); //Le caillou est ajouté au plateau
+            }
+        }
+        this.plateau = plat;
+        
+        //Copie des jetons
+        for(int i = 0;i<4;i++){
+            s.humain[i] = (Jeton) this.humain[i].clone();
+            s.humain[i].setPlateau(plat);
+            
+            s.ordi[i] = (Jeton) this.ordi[i].clone();
+            s.ordi[i].setPlateau(plat); 
+        }
+        
+        
+        s.kikijoue = this.kikijoue;
+        s.proba = this.proba;
+        
+        return s;
     }
 
     ////////////////////////////////////////////////////////////////////////////
