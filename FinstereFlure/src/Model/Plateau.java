@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Représente le plateau de jeu dans lequel évoluent les pions. Le plateau est
@@ -43,6 +44,12 @@ public class Plateau {
         //Ajout des tâches de sang
         this.flaques.add(new Rectangle(8, 4, 3, 0));
         this.flaques.add(new Rectangle(2, 8, 1, 1));
+        
+        //Ajout des cailloux
+        int[][] coordCailloux = {{2,2},{7,4},{9,5},{6,6},{4,7},{5,8},{3,12},{5,13},{7,12},{9,8},{8,14}};
+        for(int i = 0;i<11;i++){
+            Caillou c = new Caillou(new Coordonnees(coordCailloux[i][0],coordCailloux[i][1]),this); 
+        }
 
         //Ajout du monstre
         this.monstre = new Monstre(this);
@@ -157,5 +164,21 @@ public class Plateau {
         return false;
     }
     
-    
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Plateau){
+            Plateau p = (Plateau) o;
+            return this.flaques.equals(p.flaques) && this.monstre.equals(p.monstre) && this.plateau.equals(p.plateau);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.plateau);
+        hash = 19 * hash + Objects.hashCode(this.flaques);
+        hash = 19 * hash + Objects.hashCode(this.monstre);
+        return hash;
+    }
 }

@@ -8,6 +8,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  *
@@ -118,6 +119,22 @@ public class Paquet {
         }
 
         return p;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Paquet){
+            Paquet p = (Paquet) o;
+            return this.paquet.equals(p.paquet);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.paquet);
+        return hash;
     }
 
 }

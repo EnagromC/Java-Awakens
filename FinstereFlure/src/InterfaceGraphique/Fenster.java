@@ -14,6 +14,7 @@ import Model.JoueurIA;
 import Model.Monstre;
 import Model.Partie;
 import Model.Pion;
+import Model.ClasseSQL.*;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Component;
@@ -146,6 +147,11 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         });
 
         validerCreation.setText("Valider");
+        validerCreation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                validerCreationMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -469,6 +475,12 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         //finir la fonction qui voit si un compte est valide ou pas
         valide = connexionIdent(pseudo, mdp);
     }//GEN-LAST:event_validerConnexionMouseClicked
+
+    private void validerCreationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validerCreationMouseClicked
+        String p = champPseudoCrea.getText();
+        String m = champMdpCrea.getText();
+        creationCompte(p, m);
+    }//GEN-LAST:event_validerCreationMouseClicked
 
     /**
      * Instructions à éxécuter quand on clique sur un pion : on le sélectionne
