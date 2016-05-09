@@ -1,5 +1,5 @@
 /*
- * Cette classe contient toutes les requêtes SQL pour communiquer avec la base de données
+ * Cette classe contient toutes les requï¿½tes SQL pour communiquer avec la base de donnï¿½es
  */
 package Model;
 
@@ -13,9 +13,12 @@ import java.util.logging.Logger;
  * @author Laurine
  */
 public class ClasseSQL { 
-    public static void main (String[]args){
-        String connectUrl = "jdbc:mysql://localhost/nomdelabase"; //à changer avec l'url de la bdd 
-        String username = "nom", password ="mdp"; //utilisé pour getConnexion
+    
+    private Connection con ;
+    
+    public void connexionSQL(){
+        String connectUrl = "jdbc:mysql://localhost/java";  
+        String username = "nom", password ="mdp"; //utilisÃ© pour getConnexion
         Connection con = null;
         try{
             Class.forName(" com.mysql.jdbc.Driver ").newInstance(); // on enregistre le driver JDBC
@@ -25,49 +28,45 @@ public class ClasseSQL {
         catch (Exception e){
             System.out.println("Erreur");
         }
-        finally {
-                // à la fin, on ferme la connection avec la BdD
-            if (con != null) {
-                try {
-                    con.close();
-                    System.out.println ("Database connection terminated.");
-                } 
-                catch (Exception e) { /* ignore close errors */ }
+    }
+    
+    public void deconnexionSQL(){
+        if (con != null) {
+            try {
+                con.close();
+                System.out.println ("Database connection terminated.");
+            } 
+            catch (Exception e) { /* ignore close errors */ }
+        }
+    }
+    /**
+     * Cette mï¿½thode crï¿½e un compte utilisateur avec comme entrï¿½es le pseudonyme et le mot de passe
+     * @param pseudo
+     * @param mdp
+     */
+    public void creationCompte(String pseudo, String mdp){
+        try {
+            boolean compteExistant = verifCompte(pseudo) ;
+            if (compteExistant){
+                Statement req1 = con.createStatement();
+                int nb = req1.executeUpdate("INSERT INTO CompteJoueur (Pseudonyme, MotDePasse) VALUES ("+pseudo+","+mdp+") ");}
+            else{
+                System.out.println("Un compte avec ce pseudonyme existe dÃ©jÃ .");
             }
         }
-    }
-    
-    /**
-     * Cette méthode crée un compte utilisateur avec comme entrées le pseudonyme et le mot de passe
-     * @param con connexion à la base de donnée
-     */
-    public void creationCompte(Connection con){
-        try {
-        Scanner sc1 = new Scanner(System.in);
-        System.out.println("Veuillez saisir un pseudonyme");
-        String pseudo = sc1.nextLine();
-        Scanner sc2 = new Scanner(System.in);
-        System.out.println("Veuillez saisir un mot de passe");
-        String mdp = sc2.nextLine();
-
-        Statement req1 = con.createStatement();
-        int nb = req1.executeUpdate("INSERT INTO CompteJoueur (Pseudonyme, MotDePasse) " + "VALUES (pseudo, mdp) ");
-        }
         catch (SQLException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     /**
-     * Cette méthode permet de renseigner le nom de l'utilisateur 
-     * @param con connexion à la bdd
+     * Cette mï¿½thode permet de renseigner le nom de l'utilisateur
+     * @param nom
      */
-    public void entrerNom(Connection con){
+    public void entrerNom(String nom){
         try {
-            Scanner sc3 = new Scanner(System.in);
-            String nom = sc3.nextLine();
             Statement req2 = con.createStatement();
-            int nb = req2.executeUpdate("UPDATE CompteJoueur" + "SET Nom = nom");
+            int nb = req2.executeUpdate("UPDATE CompteJoueur SET Nom =" +nom);
         }
         catch (SQLException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,15 +74,13 @@ public class ClasseSQL {
     }
     
     /**
-     * Cette méthode permet de renseigner le nom de l'utilisateur
-     * @param con connexion à la bdd
+     * Cette mï¿½thode permet de renseigner le nom de l'utilisateur
+     * @param prenom
      */
-    public void entrerPrenom(Connection con){
+    public void entrerPrenom(String prenom){
         try{
-            Scanner sc4 = new Scanner(System.in);
-            String prenom = sc4.nextLine();
             Statement req3 = con.createStatement();
-            int nb = req3.executeUpdate("UPDATE CompteJoueur" + "SET Prenom = prenom");
+            int nb = req3.executeUpdate("UPDATE CompteJoueur SET Prenom =" +prenom);
         }
         catch (SQLException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,10 +88,9 @@ public class ClasseSQL {
     }
     
     /**
-     * Méthode pour insérer une image dans l'avatar
-     * @param con 
+     * Mï¿½thode pour insï¿½rer une image dans l'avatar
      */
-    public void insererAvatar(Connection con){
+    public void insererAvatar(){
         Scanner imLoc = new Scanner(System.in);
         String location = imLoc.nextLine();
         Scanner nomIm = new Scanner(System.in);
@@ -107,14 +103,14 @@ public class ClasseSQL {
         catch (FileNotFoundException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try { //on crée la table image
-            tableImage(con);
+        try { //on crï¿½e la table image
+            tableImage();
         }
         catch (Exception ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            // on insère l'image dans la base de données
+            // on insï¿½re l'image dans la base de donnï¿½es
             PreparedStatement ps = con.prepareStatement("INSERT INTO image (name, img) values (?,?)");
             try {
                 ps.setString(1, nomPourIm);
@@ -124,12 +120,12 @@ public class ClasseSQL {
             finally {
                 ps.close();
             }
-            //on récupère l'image pour l'insérer dans l'attribut "avatar"
+            //on rï¿½cupï¿½re l'image pour l'insï¿½rer dans l'attribut "avatar"
             Statement recupImage = con.createStatement();
             String query3 = "SELECT nomPourIm FROM image";
             ResultSet res = recupImage.executeQuery(query3);
             Statement reqIm = con.createStatement();
-            int nb = reqIm.executeUpdate("UPDATE CompteJoueur" + "SET Avatar = res");
+            int nb = reqIm.executeUpdate("UPDATE CompteJoueur SET Avatar =" +res);
             
         } 
         catch (SQLException ex) {
@@ -145,59 +141,64 @@ public class ClasseSQL {
     }
     
     /**
-     * Méthode pour créer une table "image" dans la bdd
-     * @param con
-     * @throws Exception vu qu'on l'appelle dans insererAvatar, c'est cette méthode qui gêrera l'erreur
+     * Mï¿½thode pour crï¿½er une table "image" dans la bdd
+     * @throws Exception vu qu'on l'appelle dans insererAvatar, c'est cette mï¿½thode qui gï¿½rera l'erreur
      */
-    public void tableImage (Connection con) throws Exception{
+    public void tableImage () throws Exception{
         Statement creation = con.createStatement();
-        int nb = creation.executeUpdate("CREATE TABLE image " + "name varchar(20) NOT NULL" + "img mediumblob" + "  PRIMARY KEY  (name)");
+        int nb = creation.executeUpdate("CREATE TABLE image name varchar(20) NOT NULL img mediumblob  PRIMARY KEY (name)");
     }
     
     /**
-     * Méthode pour enregistrer une partie
-     * @param con 
-     * nbTour correspond au nombre de tour au bout desquels la partie est gagnée. Rappel : au bout de 14, la partie est finie.
+     * Mï¿½thode pour enregistrer une partie
+     * nbTour correspond au nombre de tour au bout desquels la partie est gagnï¿½e. Rappel : au bout de 14, la partie est finie.
      */
-    public void enregistrerPartie(Connection con){
+    public void enregistrerPartie(int nbTour){
         try {
-        Statement req7 = con.createStatement();
-        int nb = req7.executeUpdate("INSERT INTO Partie" + "Values (DEFAULT, nbTour)");
-        } //DEFAULT est utilisé pour les données avec "NumAuto" pour remplir automatiquement. On peut aussi ne rien mettre.
+            Statement req7 = con.createStatement();
+            int nb = req7.executeUpdate("INSERT INTO Partie Values (DEFAULT," +nbTour+")");
+        } //DEFAULT est utilisï¿½ pour les donnï¿½es avec "NumAuto" pour remplir automatiquement. On peut aussi ne rien mettre.
         catch (SQLException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     /**
-     * Méthode pour connecter un compte joueur. Elle demande le pseudonyme et le mdp.
-     * @param con 
+     * MÃ©thode pour connecter un compte joueur.
+     * @param pseudoCo le pseudonyme du joueur
+     * @param mdpCo le mot de passe utilisÃ© pour se connecter
+     * @return 
      */
-    public void connexion(Connection con){
+    public boolean connexionIdent(String pseudoCo, String mdpCo){
         try {
-                Scanner sc6 = new Scanner(System.in);
-                System.out.println("Veuillez entrer votre pseudonyme");
-                String pseudoCo = sc6.nextLine();
-                Scanner sc7 = new Scanner(System.in);
-                System.out.println("Veuillez entrer votre mot de passe");
-                String mdpCo = sc7.nextLine();
-                Statement req6 = con.createStatement();
-                String query2 = "SELECT Pseudonyme, MotDePasse FROM CompteJoueur" + "WHERE Pseudonyme LIKE pseudoCo AND MotDePasse LIKE mdpCo";
-                ResultSet res = req6.executeQuery(query2);
+            Statement req6 = con.createStatement();
+            String query2 = "SELECT Pseudonyme, MotDePasse FROM CompteJoueur WHERE Pseudonyme ="+pseudoCo+" AND MotDePasse =" +mdpCo;
+            ResultSet res = req6.executeQuery(query2);
+            if (res.first()){
+                String p = res.getString("Pseudonyme");//je me permet de rester Ã  la premiÃ¨re rangÃ©e, car si le programme fonctionne bien il n'y aura qu'un cas dans le res
+                String m = res.getString("MotDePasse");
+                if (p == pseudoCo && m == mdpCo){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
-            catch (Exception e){
-                System.out.println("Identifiants incorrects, ou je me suis fail, mais ça c'est pas possible.");
-            }
+        }
+        catch (Exception e){
+        }
+        System.out.println("Erreur");
+        return false;
     }
     
     /**
-     * Crée une occurrence de "participer"
-     * @param con 
+     * CrÃ©e une occurrence de "participer"
+     * @param pseudo 
      */
-    public void participer(Connection con){
+    public void participer(String pseudo){
         try {
             Statement req8 = con.createStatement();
-            int nb = req8.executeUpdate("INSERT INTO Participer" + "Values (pseudo1, DEFAULT");
+            int nb = req8.executeUpdate("INSERT INTO Participer Values ("+pseudo+", DEFAULT)");
         }
         catch (SQLException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -205,16 +206,41 @@ public class ClasseSQL {
     }
     
     /**
-     * Crée une occurrence de "gagner" table de la bdd
-     * @param con 
+     * CrÃ©e une occurrence de "gagner" table de la bdd
      */
-    public void gagner(Connection con){
+    public void gagner(){
         try {
             Statement req8 = con.createStatement();
-            int nb = req8.executeUpdate("INSERT INTO Gagner" + "Values ( , DEFAULT");
-        } //revoir le modèle E/A et le modèle relationnel.
+            int nb = req8.executeUpdate("INSERT INTO Gagner Values ( , DEFAULT");
+        } 
         catch (SQLException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    /**
+     * Cette mÃ©thode vÃ©rifie si un compte avec ce pseudo n'est pas dÃ©jÃ  crÃ©Ã©
+     * @param pseudo prend en paramÃ¨tre le pseudo que le joueur veut utiliser
+     * @return vrai si le pseudonyme est libre, faux si il n'y est pas ou si il y a une erreur.
+     */
+    public boolean verifCompte(String pseudo){
+        try {
+            Statement req9 = con.createStatement();
+            String queryCo = "SELECT Pseudonyme FROM CompteJoueur WHERE Pseudonyme = "+pseudo;
+            ResultSet res;
+        
+            res = req9.executeQuery(queryCo);
+            if (res.first()){ //regarde si il existe une occurrence dans le rÃ©sultat. Si il n'en existe pas, c'est que le pseudo n'est pas pris.
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Erreur.");
+        return false;
     }
 }
