@@ -74,12 +74,24 @@ public class Jeton extends Pion implements Traversable {
         return this.faces[1];
     }
 
+    public int getDeplacementsRestants() {
+        return this.deplacementsRestants;
+    }
+
     public boolean estSurFaceBlanche() {
         return this.faceBlanche;
     }
 
     public void setPlateau(Plateau p) {
         this.plateau = p;
+    }
+
+    public void setVivant(boolean b) {
+        this.vivant = b;
+    }
+
+    public void setSurPlateau(boolean b) {
+        this.surPlateau = b;
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -91,6 +103,7 @@ public class Jeton extends Pion implements Traversable {
      */
     public void retourner() {
         this.faceBlanche = !this.faceBlanche;
+        this.deplacementsRestants = this.faces[this.faceBlanche ? 0 : 1];
     }
 
     /**
@@ -119,7 +132,7 @@ public class Jeton extends Pion implements Traversable {
 
             } else if (plateau.getCase(newCoord) instanceof Traversable) { //Si la case contient un joueur
                 if (this.deplacementsRestants > 1) { //Dans le cas où on a au moins 2 points de déplacement on peut y rentrer.
-                    this.position = newCoord; //On ne met ici pas à jour la position dans le plateau afin de ne pas effacer l'autre joueur se trouvant dans cette case. La mise à jour du plateau aura lieu au rochain mouvement de ce jeton, qui doit de toute façon quitter cette case pour finir son tour.
+                    this.position = newCoord; //On ne met ici pas à jour la position dans le plateau afin de ne pas effacer l'autre joueur se trouvant dans cette case. La mise à jour du plateau aura lieu au rochain mouvement de ce jeton, qui doit de toute façon quitter cette case pour finir son tour (on suppose que le bouton de fin de tour n'est pas disponible alors)
                     this.deplacementsRestants--;
                     if (plateau.estUneFlaque(this.position)) {//On gère la glissade éventuelle
                         this.seDeplacer(d);
@@ -182,15 +195,15 @@ public class Jeton extends Pion implements Traversable {
         }
     }
 
-    public Object clone(){
-        Jeton j = new Jeton(this.faces[0],this.faces[1],new Plateau());
+    public Object clone() {
+        Jeton j = new Jeton(this.faces[0], this.faces[1], new Plateau());
         j.surPlateau = this.surPlateau;
         j.deplacementsRestants = this.deplacementsRestants;
         j.enJeu = this.enJeu;
         j.vivant = this.vivant;
         j.faceBlanche = this.faceBlanche;
-        
+
         return j;
-        
+
     }
 }

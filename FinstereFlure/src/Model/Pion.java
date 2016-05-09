@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.Objects;
+
 /**
  * Représente un "pion", c'est-à-dire une entité pouvant être posée sur le
  * plateau et déplacée.
@@ -71,8 +73,7 @@ public abstract class Pion {
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
-    
-    public void seDeplacer(Coordonnees c){
+    public void seDeplacer(Coordonnees c) {
         this.plateau.movePion(this, this.position, c);
         this.position = c;
     }
@@ -93,9 +94,25 @@ public abstract class Pion {
 
         //On glisse si on est sur une flaque de sang
         while (this.plateau.estUneFlaque(this.position)) {
-            seDeplacer(d);
+            seDeplacer(d); //C'est ici la méthode redéfinie dans les classes filles qui est appelée, elle prend donc en compte les contraintes.
         }
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Pion) {
+            Pion p = (Pion) o;
+            return this.position.equals(p.position);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.position);
+        return hash;
     }
 
 }
