@@ -181,6 +181,7 @@ public class ClasseSQL {
                     return true;
                 }
                 else{
+                    System.out.println("Login failed");
                     return false;
                 }
             }
