@@ -5,10 +5,13 @@
  */
 package IA;
 
+import Model.Caillou;
 import Model.Carte;
+import Model.Coordonnees;
 import Model.Jeton;
 import Model.Paquet;
 import Model.Partie;
+import Model.Pion;
 import Model.Plateau;
 import java.util.ArrayList;
 
@@ -18,38 +21,63 @@ import java.util.ArrayList;
  */
 public class Etat {
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Attributs
+    ////////////////////////////////////////////////////////////////////////////
     private Jeton[] humain; //On s'en fiche de son nom, on veut juste ses jetons.
     private Jeton[] ordi;
     private Plateau plateau;
-    private int manche;
-    private int tour;
+    private short manche; //On essaye de gratter un peu de place en mémoire comme on peut
+    private short tour;
     private Paquet paquet;
-    private int kikijoue;
+    private short kikijoue;
+    private float proba;
     public static final int HUMAIN = 0;
     public static final int ORDI = 1;
     public static final int CHANCE = 2;
-    
-    
-    public Etat(Jeton[] humain, Jeton[] ordi, Plateau plateau, int manche, int tour, Paquet paquet, int kikijoue){
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Constructeurs
+    ////////////////////////////////////////////////////////////////////////////  
+    public Etat(Jeton[] humain, Jeton[] ordi, Plateau plateau, int manche, int tour, Paquet paquet, int kikijoue) {
         this.humain = humain;
         this.ordi = ordi;
         this.plateau = plateau;
-        this.manche = manche;
-        this. tour = tour;
+        this.manche = (short) manche;
+        this.tour = (short) tour;
         this.paquet = paquet;
-        this.kikijoue = kikijoue;
+        this.kikijoue = (short) kikijoue;
     }
-    
-    
-    public Etat(Partie p){
-        this.manche = p.getManche();
-        this.plateau=p.getPlateau();
-        this.tour = p.getTour();
-        this.paquet = p.getPaquet();
+
+    public Etat(Partie p) {
+        this.manche = (short) p.getManche();
+        this.tour = (short) p.getTour();
+
+        this.paquet = (Paquet) p.getPaquet().clone();
+
+        Plateau plat = new Plateau();
+
+        //Copie du monstre
+        Coordonnees coordMonstre = p.getPlateau().getMonstre().getPosition();
+        plat.getMonstre().seDeplacer(coordMonstre);
+
+        //Copie des cailloux
+        for (Pion pion : plat.getPlateau().values()) {
+            if (pion instanceof Caillou) {
+                Caillou caillou = new Caillou(pion.getPosition(), plat); //Le caillou est ajouté au plateau
+            }
+        }
+        
+        //Copie des jetons
+        
+
         this.humain = p.getJoueur1().getPions();
         this.ordi = p.getJoueur2().getPions();
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Accesseurs
+    ////////////////////////////////////////////////////////////////////////////
     public Jeton[] getHumain() {
         return this.humain;
     }
@@ -74,6 +102,9 @@ public class Etat {
         return this.paquet;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Méthodes publiques
+    ////////////////////////////////////////////////////////////////////////////
     /**
      * Regarde si le jeu est fini, donc si un joueur a trois pions sortis, ou si
      * on en est au tour 15 (donc plus loin que le 14).
@@ -88,27 +119,43 @@ public class Etat {
 
     }
 
+    /**
+     * Indique à qui c'est le tour de jouer
+     *
+     * @return le nombre associé au joueur dont c'est le tour
+     */
     public int kikijoue() {
         return kikijoue;
     }
 
+    /**
+     * Renvoie la liste des successeurs d'un état, c'est-à-dire tous les états
+     * du jeu atteignables après cet état en appliquant les règles.
+     *
+     * La liste est triée selon une heuristique basique (distance à la sortie)
+     * afin de maximiser le nombre de coupes alpha/bêta.
+     *
+     * @return la liste des états successeurs de l'état actuel
+     */
     public ArrayList<Etat> successeurs() {
         ArrayList<Etat> successeurs = new ArrayList<>();
-        
-        if(this.kikijoue == CHANCE){
-            for(Carte c : paquet.getComposition().keySet()){
-                
+
+        if (this.kikijoue == CHANCE) {
+            for (Carte c : paquet.getComposition().keySet()) {
+
             }
         }
-        
-        
-        
-        
+
         return new ArrayList<>();
     }
 
+    /**
+     * Indique la probabilité d'arriver dans cet état sachant l'état précédent.
+     *
+     * @return la probabilité
+     */
     public float proba() {
-        return 1;
+        return this.proba;
     }
 
     /**
@@ -131,12 +178,22 @@ public class Etat {
         return 0; //Match nul.
 
     }
-    
-    
-    public Object clone(){
+
+    @Override
+    public Object clone() {
         return null;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Méthodes privées
+    ////////////////////////////////////////////////////////////////////////////
+    /**
+     * Indique combien de pions sont sortis (c'est-à-dire qui sont arrivés à la
+     * sortie du labbyrinthe) dans un tableau de Jetons
+     *
+     * @param joueur le tableau à tester
+     * @return le nombre qui sont sortis
+     */
     private int nbPionsSortis(Jeton[] joueur) {
         int compteur = 0;
         for (Jeton j : joueur) {
@@ -146,7 +203,5 @@ public class Etat {
         }
         return compteur;
     }
-    
-    
 
 }

@@ -8,7 +8,6 @@ package Model;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -31,7 +30,7 @@ public class Plateau {
     private Monstre monstre;
 
     ////////////////////////////////////////////////////////////////////////////
-    // Constructeurs
+    // Constructeursa
     ////////////////////////////////////////////////////////////////////////////
     /**
      * Plateau est le constructeur. Il place le zombie à sa case de départ, en

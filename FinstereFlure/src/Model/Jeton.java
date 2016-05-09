@@ -78,6 +78,10 @@ public class Jeton extends Pion implements Traversable {
         return this.faceBlanche;
     }
 
+    public void setPlateau(Plateau p) {
+        this.plateau = p;
+    }
+
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
@@ -157,15 +161,20 @@ public class Jeton extends Pion implements Traversable {
     public boolean peutFinirTour() {
         return plateau.getCase(this.position) == this;
     }
-    
+
     /**
      * Indique si le pion est dans la salle d'attente
-     * @return 
+     *
+     * @return
      */
-    public boolean dansSalleDAttente(){
+    public boolean dansSalleDAttente() {
         return this.vivant && this.enJeu && !this.surPlateau;
     }
 
+    /**
+     * Fait entrer un pion de la salle d'attente dans la case en bas à droite du
+     * plateau.
+     */
     public void entrerPlateau() {
         if (this.dansSalleDAttente()) {
             this.position = new Coordonnees(10, 15);
@@ -173,4 +182,15 @@ public class Jeton extends Pion implements Traversable {
         }
     }
 
+    public Object clone(){
+        Jeton j = new Jeton(this.faces[0],this.faces[1],new Plateau());
+        j.surPlateau = this.surPlateau;
+        j.deplacementsRestants = this.deplacementsRestants;
+        j.enJeu = this.enJeu;
+        j.vivant = this.vivant;
+        j.faceBlanche = this.faceBlanche;
+        
+        return j;
+        
+    }
 }
