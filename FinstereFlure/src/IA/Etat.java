@@ -62,6 +62,7 @@ public class Etat {
     public Etat(Partie p) {
         this.manche = (short) p.getManche();
         this.tour = (short) p.getTour();
+        this.kikijoue = ORDI;
 
         this.paquet = (Paquet) p.getPaquet().clone();
 
@@ -371,23 +372,24 @@ public class Etat {
                     Etat s2 = (Etat) s.clone();
                     Jeton j2 = this.kikijoue == HUMAIN ? s2.humain[numJeton] : s2.ordi[numJeton];
                     if (j2.seDeplacer(d)) {//si le déplacement est valide
+                        if (j2.peutFinirTour()) {
+                            if (!ferme.contains(s2)) {//Si on a créé un nouvel état
 
-                        if (!ferme.contains(s2)) {//Si on a créé un nouvel état
-
-                            /*
+                                /*
                             On ajoute ce nouvel état dans la liste des successeurs, en la triant en fonction de la distance du pion déplacé à la sortie.
-                             */
-                            boolean superieur = true;
-                            int i = 0;
-                            while (i < ferme.size() && superieur) {
-                                Jeton j3 = this.kikijoue == HUMAIN ? ferme.get(i).humain[numJeton] : ferme.get(i).ordi[numJeton];
-                                if (j3.getPosition().distance(new Coordonnees(0, 0)) > j2.getPosition().distance(new Coordonnees(0, 0))) {
-                                    superieur = false;
-                                    ferme.add(i, s2);
-                                }
+                                 */
+                                boolean superieur = true;
+                                int i = 0;
+                                while (i < ferme.size() && superieur) {
+                                    Jeton j3 = this.kikijoue == HUMAIN ? ferme.get(i).humain[numJeton] : ferme.get(i).ordi[numJeton];
+                                    if (j3.getPosition().distance(new Coordonnees(0, 0)) > j2.getPosition().distance(new Coordonnees(0, 0))) {
+                                        superieur = false;
+                                        ferme.add(i, s2);
+                                    }
 
+                                }
+                                ouvert.add(s2); //On ajoute ce nouvel état pour tester des déplacements à partir de celui-ci
                             }
-                            ouvert.add(s2); //On ajoute ce nouvel état pour tester des déplacements à partir de celui-ci
                         }
                     }
                 }
