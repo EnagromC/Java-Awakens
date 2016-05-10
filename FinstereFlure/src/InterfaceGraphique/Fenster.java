@@ -91,12 +91,29 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jLabel9 = new javax.swing.JLabel();
         champPseudoCrea = new javax.swing.JTextField();
         champMdpCrea = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        validerInscri = new javax.swing.JButton();
+        entrerNom = new javax.swing.JButton();
+        entrerPrenom = new javax.swing.JButton();
         jDialog3 = new javax.swing.JDialog();
         jLabel4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         boutonInscrip = new javax.swing.JButton();
         boutonConnex = new javax.swing.JButton();
+        jDialog4 = new javax.swing.JDialog();
+        champNom = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        validerNom = new javax.swing.JButton();
+        jDialog5 = new javax.swing.JDialog();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        champPrenom = new javax.swing.JTextField();
+        validerPrenom = new javax.swing.JButton();
+        jDialog6 = new javax.swing.JDialog();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        boutonNbPartie = new javax.swing.JSpinner();
         sortis = new JGroupePions(false);
         salleAttenteGreen = new JGroupePions(true);
         salleAttenteRed = new JGroupePions(true);
@@ -118,7 +135,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
 
-        jDialog1.setPreferredSize(new java.awt.Dimension(200, 300));
         jDialog1.setResizable(false);
 
         jLabel3.setText("Connexion");
@@ -196,52 +212,80 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             }
         });
 
-        jButton1.setText("Valider");
+        validerInscri.setText("Valider");
+        validerInscri.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                validerInscriMouseClicked(evt);
+            }
+        });
+
+        entrerNom.setText("Entrer un nom");
+        entrerNom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entrerNomMouseClicked(evt);
+            }
+        });
+
+        entrerPrenom.setText("Entrer un prénom");
+        entrerPrenom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entrerPrenomMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
         jDialog2.getContentPane().setLayout(jDialog2Layout);
         jDialog2Layout.setHorizontalGroup(
             jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog2Layout.createSequentialGroup()
-                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jDialog2Layout.createSequentialGroup()
+                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(champPseudoCrea))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(champPseudoCrea, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jDialog2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(champMdpCrea, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jDialog2Layout.createSequentialGroup()
-                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(champMdpCrea, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jDialog2Layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(jLabel6))
-                    .addGroup(jDialog2Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDialog2Layout.createSequentialGroup()
+                                .addGap(76, 76, 76)
+                                .addComponent(jLabel6))
+                            .addGroup(jDialog2Layout.createSequentialGroup()
+                                .addGap(64, 64, 64)
+                                .addComponent(validerInscri))
+                            .addGroup(jDialog2Layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(entrerNom))
+                            .addGroup(jDialog2Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(entrerPrenom)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jDialog2Layout.setVerticalGroup(
             jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addGap(54, 54, 54)
+                .addGap(34, 34, 34)
                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(champPseudoCrea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61)
+                    .addComponent(champPseudoCrea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(champMdpCrea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(41, 41, 41))
+                    .addComponent(champMdpCrea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(44, 44, 44)
+                .addComponent(validerInscri)
+                .addGap(18, 18, 18)
+                .addComponent(entrerNom)
+                .addGap(18, 18, 18)
+                .addComponent(entrerPrenom)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
-
-        jDialog3.setPreferredSize(new java.awt.Dimension(300, 200));
 
         jLabel4.setText("Déjà inscrit ? Identifiez-vous !");
 
@@ -290,6 +334,144 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
                 .addComponent(boutonInscrip)
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+
+        jDialog4.setPreferredSize(new java.awt.Dimension(200, 150));
+
+        jLabel11.setText("Nom");
+
+        jLabel12.setText("Saisie du nom");
+
+        validerNom.setText("Valider");
+        validerNom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                validerNomMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog4Layout = new javax.swing.GroupLayout(jDialog4.getContentPane());
+        jDialog4.getContentPane().setLayout(jDialog4Layout);
+        jDialog4Layout.setHorizontalGroup(
+            jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog4Layout.createSequentialGroup()
+                .addGroup(jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(champNom))
+                    .addGroup(jDialog4Layout.createSequentialGroup()
+                        .addGroup(jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDialog4Layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel12))
+                            .addGroup(jDialog4Layout.createSequentialGroup()
+                                .addGap(61, 61, 61)
+                                .addComponent(validerNom)))
+                        .addGap(0, 63, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jDialog4Layout.setVerticalGroup(
+            jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addGap(26, 26, 26)
+                .addGroup(jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(champNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(validerNom)
+                .addGap(22, 22, 22))
+        );
+
+        jDialog5.setPreferredSize(new java.awt.Dimension(200, 150));
+
+        jLabel13.setText("Saisie du prénom");
+
+        jLabel14.setText("Prénom");
+
+        validerPrenom.setText("Valider");
+        validerPrenom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                validerPrenomMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog5Layout = new javax.swing.GroupLayout(jDialog5.getContentPane());
+        jDialog5.getContentPane().setLayout(jDialog5Layout);
+        jDialog5Layout.setHorizontalGroup(
+            jDialog5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog5Layout.createSequentialGroup()
+                .addGroup(jDialog5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog5Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, 18)
+                        .addComponent(champPrenom))
+                    .addGroup(jDialog5Layout.createSequentialGroup()
+                        .addGroup(jDialog5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDialog5Layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(jLabel13))
+                            .addGroup(jDialog5Layout.createSequentialGroup()
+                                .addGap(63, 63, 63)
+                                .addComponent(validerPrenom)))
+                        .addGap(0, 49, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jDialog5Layout.setVerticalGroup(
+            jDialog5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13)
+                .addGap(24, 24, 24)
+                .addGroup(jDialog5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(champPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(validerPrenom)
+                .addGap(24, 24, 24))
+        );
+
+        jLabel15.setText("Historique des parties");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        boutonNbPartie.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                boutonNbPartieStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog6Layout = new javax.swing.GroupLayout(jDialog6.getContentPane());
+        jDialog6.getContentPane().setLayout(jDialog6Layout);
+        jDialog6Layout.setHorizontalGroup(
+            jDialog6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog6Layout.createSequentialGroup()
+                .addGroup(jDialog6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog6Layout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(jLabel15))
+                    .addGroup(jDialog6Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDialog6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(boutonNbPartie, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(66, Short.MAX_VALUE))
+        );
+        jDialog6Layout.setVerticalGroup(
+            jDialog6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel15)
+                .addGap(12, 12, 12)
+                .addComponent(boutonNbPartie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -564,6 +746,54 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jDialog2.setVisible(true);
     }//GEN-LAST:event_boutonInscripMouseClicked
 
+    private void validerInscriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validerInscriMouseClicked
+        bdd.connexionSQL();
+        String pseudo = champPseudoCo.getText();
+        String mdp = champMdpCo.getText();
+        boolean valide;
+        //finir la fonction qui voit si un compte est valide ou pas
+        valide = bdd.creationCompte(pseudo, mdp);
+        bdd.deconnexionSQL();
+        jDialog2.setVisible(false);
+    }//GEN-LAST:event_validerInscriMouseClicked
+
+    private void validerPrenomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validerPrenomMouseClicked
+        bdd.connexionSQL();
+        String p = champPrenom.getText();
+        bdd.entrerPrenom(p);
+        bdd.deconnexionSQL();
+        jDialog5.setVisible(false);
+    }//GEN-LAST:event_validerPrenomMouseClicked
+
+    private void validerNomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validerNomMouseClicked
+        bdd.connexionSQL();
+        String n = champNom.getText();
+        bdd.entrerNom(n);
+        bdd.deconnexionSQL();
+        jDialog5.setVisible(false);
+    }//GEN-LAST:event_validerNomMouseClicked
+
+    private void entrerNomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entrerNomMouseClicked
+        jDialog2.setVisible(false);
+        jDialog4.setVisible(true);
+    }//GEN-LAST:event_entrerNomMouseClicked
+
+    private void entrerPrenomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entrerPrenomMouseClicked
+        jDialog2.setVisible(false);
+        jDialog5.setVisible(true);
+    }//GEN-LAST:event_entrerPrenomMouseClicked
+
+    private void boutonNbPartieStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_boutonNbPartieStateChanged
+        int nbPartie = ((Integer)boutonNbPartie.getValue());
+        bdd.connexionSQL();
+        String[] hist = new String[nbPartie];
+        //finir la fonction qui voit si un compte est valide ou pas
+        hist = bdd.historique(nbPartie);
+        bdd.deconnexionSQL();
+        //ici il faut mettre la valeur de hist dans le text area, je ne sais pas comment on fait, je verrai après ou si quelqu'un a une révélation
+        jDialog6.setVisible(false);
+    }//GEN-LAST:event_boutonNbPartieStateChanged
+
     /**
      * Instructions à éxécuter quand on clique sur un pion : on le sélectionne
      *
@@ -706,16 +936,28 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private javax.swing.JButton boutonEntrerPlateau;
     private javax.swing.JButton boutonFinTour;
     private javax.swing.JButton boutonInscrip;
+    private javax.swing.JSpinner boutonNbPartie;
     private javax.swing.JPasswordField champMdpCo;
     private javax.swing.JTextField champMdpCrea;
+    private javax.swing.JTextField champNom;
+    private javax.swing.JTextField champPrenom;
     private javax.swing.JTextField champPseudoCo;
     private javax.swing.JTextField champPseudoCrea;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton entrerNom;
+    private javax.swing.JButton entrerPrenom;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
+    private javax.swing.JDialog jDialog4;
+    private javax.swing.JDialog jDialog5;
+    private javax.swing.JDialog jDialog6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -733,14 +975,19 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItemNewGame;
     private javax.swing.JMenu jMenuPartie;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel nomJoueurRouge;
     private javax.swing.JLabel nomJoueurVert;
     private javax.swing.JPanel salleAttenteGreen;
     private javax.swing.JPanel salleAttenteRed;
     private javax.swing.JPanel sortis;
     private javax.swing.JButton validerConnexion;
+    private javax.swing.JButton validerInscri;
+    private javax.swing.JButton validerNom;
+    private javax.swing.JButton validerPrenom;
     // End of variables declaration//GEN-END:variables
     JPion[] pionsPurple = new JPion[4];
     JPion[] pionsGreen = new JPion[4];

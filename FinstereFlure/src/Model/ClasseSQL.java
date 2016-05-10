@@ -40,27 +40,32 @@ public class ClasseSQL {
         }
     }
     /**
-     * Cette m�thode cr�e un compte utilisateur avec comme entr�es le pseudonyme et le mot de passe
+     * Cette m�thode cr�e un compte utilisateur avec comme entrées le pseudonyme et le mot de passe
      * @param pseudo
      * @param mdp
+     * @return vrai si le compte a été crée, faux si un pseudo avec cette chaîne de caractère existe déjà, ou si il y a une erreur et qu'il ne rentre pas dans le catch.
      */
-    public void creationCompte(String pseudo, String mdp){
+    public boolean creationCompte(String pseudo, String mdp){
         try {
             boolean compteExistant = verifCompte(pseudo) ;
             if (compteExistant){
                 Statement req1 = con.createStatement();
-                int nb = req1.executeUpdate("INSERT INTO CompteJoueur (Pseudonyme, MotDePasse) VALUES ("+pseudo+","+mdp+") ");}
+                int nb = req1.executeUpdate("INSERT INTO CompteJoueur (Pseudonyme, MotDePasse) VALUES ("+pseudo+","+mdp+") ");
+                return true;
+            }
             else{
                 System.out.println("Un compte avec ce pseudonyme existe déjà.");
+                return false;
             }
         }
         catch (SQLException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
     }
     
     /**
-     * Cette m�thode permet de renseigner le nom de l'utilisateur
+     * Cette méthode permet de renseigner le nom de l'utilisateur
      * @param nom
      */
     public void entrerNom(String nom){
@@ -209,10 +214,10 @@ public class ClasseSQL {
     /**
      * Crée une occurrence de "gagner" table de la bdd
      */
-    public void gagner(){
+    public void gagner(String pseudo){
         try {
             Statement req8 = con.createStatement();
-            int nb = req8.executeUpdate("INSERT INTO Gagner Values ( , DEFAULT");
+            int nb = req8.executeUpdate("INSERT INTO Partie (Pseudonyme) Values ("+pseudo+")");
         } 
         catch (SQLException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -228,9 +233,7 @@ public class ClasseSQL {
         try {
             Statement req9 = con.createStatement();
             String queryCo = "SELECT Pseudonyme FROM CompteJoueur WHERE Pseudonyme = "+pseudo;
-            ResultSet res;
-        
-            res = req9.executeQuery(queryCo);
+            ResultSet res = req9.executeQuery(queryCo);
             if (res.first()){ //regarde si il existe une occurrence dans le résultat. Si il n'en existe pas, c'est que le pseudo n'est pas pris.
                 return false;
             }
@@ -243,5 +246,29 @@ public class ClasseSQL {
         }
         System.out.println("Erreur.");
         return false;
+    }
+    
+    /**
+     * Méthode qui affiche l'historique de nbPartie.
+     * @param nbPartie nombre de partie que l'on souhaite afficher
+     * @return un tableau de chaîne de caractère que l'on récupère pour afficher
+     */
+    public String[] historique(int nbPartie){
+        String[] hist = new String[nbPartie];
+        try {
+            Statement req10 = con.createStatement();
+            String queryHist = "SELECT ALL FROM Partie LIMIT "+nbPartie;
+            ResultSet res = req10.executeQuery(queryHist);
+            if (res.first()){
+                int i;
+                for (i=0;i<nbPartie;i++){
+                    hist[i]=res.getString(i);
+                }
+            }
+        }
+        catch (SQLException ex){
+            Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return hist;
     }
 }
