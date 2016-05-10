@@ -9,6 +9,8 @@ import Model.Caillou;
 import Model.ClasseSQL;
 import Model.Direction;
 import Model.Jeton;
+import Model.Joueur;
+import Model.JoueurIA;
 import Model.Monstre;
 import Model.Partie;
 import Model.Pion;
@@ -16,6 +18,7 @@ import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -674,15 +677,17 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private void jMenuItemNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNewGameActionPerformed
         String[] typePartie = {"2 joueurs", "contre l'ordinateur"};
         int rang = JOptionPane.showOptionDialog(null, "Quel type de partie voulez-vous jouer ?", "Type partie", JOptionPane.OK_CANCEL_OPTION, -1, null, typePartie, typePartie[0]);
+        joueurs = new ArrayList<>();
         if (rang == 0) {//Si partie 2 joueurs
+            
             jDialogConnexionInscription.setVisible(true);
             jDialogConnexionInscription.setVisible(true);
-            //initPartie();
         } else {//Si contre IA
 
             jDialogConnexionInscription.setVisible(true);
-            //initPartie();
+            joueurs.add(new JoueurIA());
         }
+        initPartie(joueurs.get(0), joueurs.get(1));
 
     }//GEN-LAST:event_jMenuItemNewGameActionPerformed
 
@@ -706,6 +711,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         boolean valide = bdd.connexionIdent(pseudo, mdp);
         bdd.deconnexionSQL();
         if (valide) {
+            this.joueurs.add(new Joueur(pseudo));
             jDialogConnexion.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Mot de passe ou identifiant invalide", "Erreur", JOptionPane.WARNING_MESSAGE);
@@ -846,7 +852,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         });
     }
 
-    public void initPartie() {
+    public void initPartie(Joueur j1, Joueur j2) {
 
         //Créer les 2 joueurs en fonction de la réposne
         this.partie = new Partie(this, j1, j2);
@@ -980,6 +986,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     JPion monstre;
     JPlateau plateau;
     JPion selected = new JPion(new String[1]);
+    ArrayList<Joueur> joueurs;
 
     int numJoueur;
 

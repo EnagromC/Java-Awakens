@@ -17,10 +17,16 @@ public class Joueur {
     ////////////////////////////////////////////////////////////////////////////
     Jeton[] pions = new Jeton[4];
     String pseudo;
+    Partie p;
+    int numero;
 
     ////////////////////////////////////////////////////////////////////////////
     // Constructeurs
     ////////////////////////////////////////////////////////////////////////////
+    public Joueur(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
     public Joueur(String pseudo, Plateau p) {
         pions[0] = new Jeton(1, 6, p);
         pions[1] = new Jeton(3, 4, p);
@@ -35,8 +41,30 @@ public class Joueur {
     public Jeton[] getPions() {
         return this.pions;
     }
-    
-    public String getPseudo(){
+
+    public String getPseudo() {
         return this.pseudo;
+    }
+
+    public void setPartie(Partie p) {
+        this.p = p;
+    }
+
+    public void setPlateau(Plateau p) {
+        pions[0] = new Jeton(1, 6, p);
+        pions[1] = new Jeton(3, 4, p);
+        pions[2] = new Jeton(4, 3, p);
+        pions[3] = new Jeton(5, 2, p);
+    }
+    
+    public void setNumero(int n){
+        this.numero = n;
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    // Méthodes publiques
+    ////////////////////////////////////////////////////////////////////////////
+    public void jouer(){
+        p.getVue().tourJoueur(numero);
     }
 }
