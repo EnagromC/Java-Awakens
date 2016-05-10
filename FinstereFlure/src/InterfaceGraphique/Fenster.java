@@ -724,11 +724,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 dejaBouge = true;
                 this.deplacementsRestants.setText(String.valueOf(imageJeton(selected).getDeplacementsRestants()));
                 updatePlateau();
-                if(imageJeton(selected).peutFinirTour()){
-                    boutonFinTour.setEnabled(true);
-                }else{
-                    boutonFinTour.setEnabled(false);
-                }
+                testFinTour();
             }
         }
     }//GEN-LAST:event_formKeyPressed
@@ -886,11 +882,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         if (boutonEntrerPlateau.isEnabled()) {
             imageJeton(selected).entrerPlateau();
             dejaBouge = true;
-            if (imageJeton(selected).peutFinirTour()) {
-                boutonFinTour.setEnabled(true);
-            } else {
-                boutonFinTour.setEnabled(false);
-            }
+            testFinTour();
         }
     }//GEN-LAST:event_boutonEntrerPlateauActionPerformed
 
@@ -1117,9 +1109,18 @@ public class Fenster extends javax.swing.JFrame implements Vue {
 
     boolean contreIA;
 
-    
-    
-    
+    /**
+     * Permet de vérifier si le tour peut être fini, et de verrouiller ou
+     * déverrouiller le bouton de fin de tour en conséquence.
+     */
+    public void testFinTour() {
+        if (imageJeton(selected).peutFinirTour()) {
+            boutonFinTour.setEnabled(true);
+        } else {
+            boutonFinTour.setEnabled(false);
+        }
+    }
+
     /**
      * Permet de récupérer l'image Jeton dans le modèle d'un JPion
      *

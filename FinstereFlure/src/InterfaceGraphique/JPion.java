@@ -18,17 +18,23 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
- * 
+ *
  * @author Morgane
  */
 public class JPion extends JPanel {
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Attributs
+    ////////////////////////////////////////////////////////////////////////////
     public static final int TAILLE_CASE = 36;
-    protected String[] images;
-    protected int imageActuelle;
-    private int numJoueur;
+    protected String[] images; //toi t'as besoin de garder l'adresse que de l'image actuelle
+    protected int imageActuelle; //donc ça ça sert à rien
+    private int numJoueur;//les 2 int là aussi
     private int numPion;
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Constructeurs
+    ////////////////////////////////////////////////////////////////////////////
     /**
      * Constructeur
      *
@@ -39,8 +45,8 @@ public class JPion extends JPanel {
         this.images = adresses;
         imageActuelle = 0;
         this.setSize(TAILLE_CASE, TAILLE_CASE);
-        
-        this.numJoueur = 0;
+
+        this.numJoueur = 0; //Ici le pion n'est pas lié à un joueur (c'est genre un caillou)
 
     }
 
@@ -60,6 +66,9 @@ public class JPion extends JPanel {
         this.numPion = numPion;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Accesseurs
+    ////////////////////////////////////////////////////////////////////////////
     public Coordonnees getCoordonnees() {
         int x = (this.getY() - 20) / 40;
         int y = (this.getX() - 27) / 40;
@@ -69,21 +78,38 @@ public class JPion extends JPanel {
     public int getNumJoueur() {
         return this.numJoueur;
     }
-    
-    public int getNumPion(){
+
+    public int getNumPion() {
         return this.numPion;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Méthodes publiques
+    ////////////////////////////////////////////////////////////////////////////
+    /**
+     * Permet de passer à l'image suivante dans la liste de simages
+     */
     public void nextImagte() {
         this.imageActuelle = (this.imageActuelle + 1) % images.length;
         this.repaint();
     }
 
+    /**
+     * Permet de passer à l'image n dans la liste des images. Si ça dépasse la
+     * taille, on revient au début
+     *
+     * @param n le numéro de l'image
+     */
     public void setImage(int n) {
         this.imageActuelle = n % images.length;
-        this.repaint();
+        this.repaint(); //Il faut repaint() pour rappeler paintComponent() et mettre effectivement à jour l'image.
     }
 
+    /**
+     * On redéfinit cette méthode pour choisir l'image à afficher
+     *
+     * @param g
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         try {
@@ -94,10 +120,16 @@ public class JPion extends JPanel {
         }
     }
 
+    /**
+     * Permet de changer l'affichage du pion pour montrer qu'il est sélectionner
+     */
     public void select() {
         this.setBorder(BorderFactory.createLineBorder(Color.yellow, 5)); //Queque chose pour montrer que le pion est sélectionné
     }
 
+    /**
+     * Annule l'effet de select()
+     */
     public void unselect() {
         this.setBorder(null);
     }
