@@ -18,7 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
- *
+ * 
  * @author Morgane
  */
 public class JPion extends JPanel {

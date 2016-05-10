@@ -7,11 +7,8 @@ package InterfaceGraphique;
 
 import Model.Caillou;
 import Model.ClasseSQL;
-import Model.Coordonnees;
 import Model.Direction;
 import Model.Jeton;
-import Model.Joueur;
-import Model.JoueurIA;
 import Model.Monstre;
 import Model.Partie;
 import Model.Pion;
@@ -21,9 +18,6 @@ import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -33,6 +27,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Corentin
  */
 public class Fenster extends javax.swing.JFrame implements Vue {
+
     ClasseSQL bdd = new ClasseSQL();
     public static final String VERSION = "0.2";
 
@@ -43,30 +38,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         initComponents();
         this.getContentPane().setBackground(BG_COLOR);
 
-        // this.updatePlateau();
-        /*
-            Là c'est des essais
-         */
-//        plateau.add(pionsPurple[0], new Integer(1));
-//        pionsPurple[0].setLocation(106, 220);
-//        pionsPurple[0].setOpaque(false);
-//
-//        int larg = 4;
-//        int haut = 220;
-//        for (int i = 1; i < 4; i++) {
-//            plateau.add(pionsPurple[i], new Integer(1));
-//            larg++;
-//            pionsPurple[i].setLocation(plateau.position(new Coordonnees(6, larg)));
-//            pionsPurple[i].setOpaque(false);
-//        }
-//
-//        JFlaque flaque = new JFlaque(JFlaque.Forme.HORIZ);
-//        flaque.setLocation(plateau.position(new Coordonnees(5, 6)));
-//        flaque.setOpaque(false);
-//        plateau.add(flaque, new Integer(0));
-//        sortis.add(pionsGreen[1]);
-//        sortis.add(pionsGreen[2]);
-        //pionsGreen[1].setLocation(plateau.position(new Coordonnees(5, 1)));
     }
 
     /**
@@ -78,14 +49,14 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
+        jDialogConnexion = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         champPseudoCo = new javax.swing.JTextField();
         validerConnexion = new javax.swing.JButton();
         champMdpCo = new javax.swing.JPasswordField();
-        jDialog2 = new javax.swing.JDialog();
+        jDialogInscription = new javax.swing.JDialog();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -94,7 +65,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         validerInscri = new javax.swing.JButton();
         entrerNom = new javax.swing.JButton();
         entrerPrenom = new javax.swing.JButton();
-        jDialog3 = new javax.swing.JDialog();
+        jDialogConnexionInscription = new javax.swing.JDialog();
         jLabel4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         boutonInscrip = new javax.swing.JButton();
@@ -135,7 +106,9 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
 
-        jDialog1.setResizable(false);
+        jDialogConnexion.setResizable(false);
+        jDialogConnexion.setSize(new java.awt.Dimension(225, 300));
+        jDialogConnexion.setLocationRelativeTo(null);
 
         jLabel3.setText("Connexion");
 
@@ -155,42 +128,46 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 validerConnexionMouseClicked(evt);
             }
         });
+        validerConnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                validerConnexionActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDialog1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(champMdpCo))
-                    .addGroup(jDialog1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(champPseudoCo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jDialog1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(validerConnexion)
+        javax.swing.GroupLayout jDialogConnexionLayout = new javax.swing.GroupLayout(jDialogConnexion.getContentPane());
+        jDialogConnexion.getContentPane().setLayout(jDialogConnexionLayout);
+        jDialogConnexionLayout.setHorizontalGroup(
+            jDialogConnexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogConnexionLayout.createSequentialGroup()
+                .addGroup(jDialogConnexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialogConnexionLayout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel3))
+                    .addGroup(jDialogConnexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDialogConnexionLayout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addGap(18, 18, 18)
+                            .addComponent(champMdpCo))
+                        .addGroup(jDialogConnexionLayout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addGap(18, 18, 18)
+                            .addComponent(champPseudoCo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jDialogConnexionLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(validerConnexion)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
+        jDialogConnexionLayout.setVerticalGroup(
+            jDialogConnexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogConnexionLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel3)
                 .addGap(31, 31, 31)
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jDialogConnexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(champPseudoCo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60)
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jDialogConnexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(champMdpCo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
@@ -198,7 +175,9 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 .addGap(46, 46, 46))
         );
 
-        jDialog2.setPreferredSize(new java.awt.Dimension(200, 300));
+        jDialogInscription.setResizable(false);
+        jDialogInscription.setSize(new java.awt.Dimension(213, 300));
+        jDialogInscription.setLocationRelativeTo(null);
 
         jLabel6.setText("Inscription");
 
@@ -233,49 +212,49 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             }
         });
 
-        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
-        jDialog2.getContentPane().setLayout(jDialog2Layout);
-        jDialog2Layout.setHorizontalGroup(
-            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog2Layout.createSequentialGroup()
-                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jDialogInscriptionLayout = new javax.swing.GroupLayout(jDialogInscription.getContentPane());
+        jDialogInscription.getContentPane().setLayout(jDialogInscriptionLayout);
+        jDialogInscriptionLayout.setHorizontalGroup(
+            jDialogInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogInscriptionLayout.createSequentialGroup()
+                .addGroup(jDialogInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogInscriptionLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(champPseudoCrea, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jDialog2Layout.createSequentialGroup()
+                    .addGroup(jDialogInscriptionLayout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(champMdpCrea, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jDialog2Layout.createSequentialGroup()
-                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jDialog2Layout.createSequentialGroup()
+                    .addGroup(jDialogInscriptionLayout.createSequentialGroup()
+                        .addGroup(jDialogInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDialogInscriptionLayout.createSequentialGroup()
                                 .addGap(76, 76, 76)
                                 .addComponent(jLabel6))
-                            .addGroup(jDialog2Layout.createSequentialGroup()
+                            .addGroup(jDialogInscriptionLayout.createSequentialGroup()
                                 .addGap(64, 64, 64)
                                 .addComponent(validerInscri))
-                            .addGroup(jDialog2Layout.createSequentialGroup()
+                            .addGroup(jDialogInscriptionLayout.createSequentialGroup()
                                 .addGap(48, 48, 48)
                                 .addComponent(entrerNom))
-                            .addGroup(jDialog2Layout.createSequentialGroup()
+                            .addGroup(jDialogInscriptionLayout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addComponent(entrerPrenom)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jDialog2Layout.setVerticalGroup(
-            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog2Layout.createSequentialGroup()
+        jDialogInscriptionLayout.setVerticalGroup(
+            jDialogInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogInscriptionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addGap(34, 34, 34)
-                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jDialogInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(champPseudoCrea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
-                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jDialogInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(champMdpCrea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addGap(44, 44, 44)
@@ -286,6 +265,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 .addComponent(entrerPrenom)
                 .addContainerGap(34, Short.MAX_VALUE))
         );
+
+        jDialogConnexionInscription.setResizable(false);
+        jDialogConnexionInscription.setSize(new java.awt.Dimension(300, 200));
+        jDialogConnexionInscription.setLocationRelativeTo(null);
 
         jLabel4.setText("Déjà inscrit ? Identifiez-vous !");
 
@@ -305,27 +288,27 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             }
         });
 
-        javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(jDialog3.getContentPane());
-        jDialog3.getContentPane().setLayout(jDialog3Layout);
-        jDialog3Layout.setHorizontalGroup(
-            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog3Layout.createSequentialGroup()
-                .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDialog3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jDialogConnexionInscriptionLayout = new javax.swing.GroupLayout(jDialogConnexionInscription.getContentPane());
+        jDialogConnexionInscription.getContentPane().setLayout(jDialogConnexionInscriptionLayout);
+        jDialogConnexionInscriptionLayout.setHorizontalGroup(
+            jDialogConnexionInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogConnexionInscriptionLayout.createSequentialGroup()
+                .addGroup(jDialogConnexionInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialogConnexionInscriptionLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jDialogConnexionInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
-                            .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jDialogConnexionInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(boutonConnex)
                                 .addComponent(jLabel4))))
-                    .addGroup(jDialog3Layout.createSequentialGroup()
+                    .addGroup(jDialogConnexionInscriptionLayout.createSequentialGroup()
                         .addGap(98, 98, 98)
                         .addComponent(boutonInscrip)))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
-        jDialog3Layout.setVerticalGroup(
-            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog3Layout.createSequentialGroup()
+        jDialogConnexionInscriptionLayout.setVerticalGroup(
+            jDialogConnexionInscriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogConnexionInscriptionLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -685,25 +668,20 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     }//GEN-LAST:event_formKeyPressed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItemNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNewGameActionPerformed
         String[] typePartie = {"2 joueurs", "contre l'ordinateur"};
         int rang = JOptionPane.showOptionDialog(null, "Quel type de partie voulez-vous jouer ?", "Type partie", JOptionPane.OK_CANCEL_OPTION, -1, null, typePartie, typePartie[0]);
         if (rang == 0) {//Si partie 2 joueurs
-            /*
-            APPELER 2 FOIS LA FENETRE D'AUTHENTIFICATION. CE SERAIT BIEN DE POUVOIR RECUPERER LE PSEUDO DU JOUEUR. EN CAS DERREUR DE MDP, ON PEUT AFFICHER UN POPUP D'ERREUR.
-             */
-            jDialog3.setVisible(true);
-            jDialog3.setVisible(true);
-            initPartie();
+            jDialogConnexionInscription.setVisible(true);
+            jDialogConnexionInscription.setVisible(true);
+            //initPartie();
         } else {//Si contre IA
-            /*
-            MEME CHOSE MAIS UNE SEULE FOIS, CAR IL N'Y A QU'UN JOUEUR
-            */
-            jDialog3.setVisible(true);
-            initPartie();
+
+            jDialogConnexionInscription.setVisible(true);
+            //initPartie();
         }
 
     }//GEN-LAST:event_jMenuItemNewGameActionPerformed
@@ -725,11 +703,13 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         bdd.connexionSQL();
         String pseudo = champPseudoCo.getText();
         String mdp = champMdpCo.getText();
-        boolean valide;
-        //finir la fonction qui voit si un compte est valide ou pas
-        valide = bdd.connexionIdent(pseudo, mdp);
+        boolean valide = bdd.connexionIdent(pseudo, mdp);
         bdd.deconnexionSQL();
-        jDialog1.setVisible(false);
+        if (valide) {
+            jDialogConnexion.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Mot de passe ou identifiant invalide", "Erreur", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_validerConnexionMouseClicked
 
     private void champPseudoCreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_champPseudoCreaActionPerformed
@@ -737,24 +717,26 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     }//GEN-LAST:event_champPseudoCreaActionPerformed
 
     private void boutonConnexMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boutonConnexMouseClicked
-        jDialog3.setVisible(false);
-        jDialog1.setVisible(true);
+        jDialogConnexionInscription.setVisible(false);
+        jDialogConnexion.setVisible(true);
     }//GEN-LAST:event_boutonConnexMouseClicked
 
     private void boutonInscripMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boutonInscripMouseClicked
-        jDialog3.setVisible(false);
-        jDialog2.setVisible(true);
+        jDialogConnexionInscription.setVisible(false);
+        jDialogInscription.setVisible(true);
     }//GEN-LAST:event_boutonInscripMouseClicked
 
     private void validerInscriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validerInscriMouseClicked
         bdd.connexionSQL();
         String pseudo = champPseudoCo.getText();
         String mdp = champMdpCo.getText();
-        boolean valide;
-        //finir la fonction qui voit si un compte est valide ou pas
-        valide = bdd.creationCompte(pseudo, mdp);
+        boolean valide = bdd.creationCompte(pseudo, mdp);
         bdd.deconnexionSQL();
-        jDialog2.setVisible(false);
+        if (valide) {
+            jDialogInscription.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "Saisie invalide", "Erreur", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_validerInscriMouseClicked
 
     private void validerPrenomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validerPrenomMouseClicked
@@ -774,17 +756,17 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     }//GEN-LAST:event_validerNomMouseClicked
 
     private void entrerNomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entrerNomMouseClicked
-        jDialog2.setVisible(false);
+        jDialogInscription.setVisible(false);
         jDialog4.setVisible(true);
     }//GEN-LAST:event_entrerNomMouseClicked
 
     private void entrerPrenomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entrerPrenomMouseClicked
-        jDialog2.setVisible(false);
+        jDialogInscription.setVisible(false);
         jDialog5.setVisible(true);
     }//GEN-LAST:event_entrerPrenomMouseClicked
 
     private void boutonNbPartieStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_boutonNbPartieStateChanged
-        int nbPartie = ((Integer)boutonNbPartie.getValue());
+        int nbPartie = ((Integer) boutonNbPartie.getValue());
         bdd.connexionSQL();
         String[] hist = new String[nbPartie];
         //finir la fonction qui voit si un compte est valide ou pas
@@ -793,6 +775,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         //ici il faut mettre la valeur de hist dans le text area, je ne sais pas comment on fait, je verrai après ou si quelqu'un a une révélation
         jDialog6.setVisible(false);
     }//GEN-LAST:event_boutonNbPartieStateChanged
+
+    private void validerConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerConnexionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_validerConnexionActionPerformed
 
     /**
      * Instructions à éxécuter quand on clique sur un pion : on le sélectionne
@@ -945,12 +931,12 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private javax.swing.JTextField champPseudoCrea;
     private javax.swing.JButton entrerNom;
     private javax.swing.JButton entrerPrenom;
-    private javax.swing.JDialog jDialog1;
-    private javax.swing.JDialog jDialog2;
-    private javax.swing.JDialog jDialog3;
     private javax.swing.JDialog jDialog4;
     private javax.swing.JDialog jDialog5;
     private javax.swing.JDialog jDialog6;
+    private javax.swing.JDialog jDialogConnexion;
+    private javax.swing.JDialog jDialogConnexionInscription;
+    private javax.swing.JDialog jDialogInscription;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
