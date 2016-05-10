@@ -73,6 +73,15 @@ public class Paquet {
     }
 
     /**
+     * Permet de retirer une carte du paquet
+     *
+     * @param c la carte à retirer
+     */
+    public void remove(Carte c) {
+        this.paquet.remove(c);
+    }
+
+    /**
      * Indique si le paquet est vide, c'est-à-dire qu'il ne contient plus de
      * carte.
      *
@@ -120,10 +129,10 @@ public class Paquet {
 
         return p;
     }
-    
+
     @Override
-    public boolean equals(Object o){
-        if(o instanceof Paquet){
+    public boolean equals(Object o) {
+        if (o instanceof Paquet) {
             Paquet p = (Paquet) o;
             return this.paquet.equals(p.paquet);
         }

@@ -44,7 +44,8 @@ public class Etat {
     // Constructeurs
     ////////////////////////////////////////////////////////////////////////////  
     public Etat() {
-
+        humain = new Jeton[4];
+        ordi = new Jeton[4];
     }
 
     public Etat(Jeton[] humain, Jeton[] ordi, Plateau plateau, int manche, int tour, Paquet paquet, int kikijoue) {
@@ -164,6 +165,7 @@ public class Etat {
                 s.tour++;
                 //La proba d'être dans ce cas est le nombre de carte de cette sorte / le nombre de carte restant
                 s.proba = paquet.getComposition().get(c) / paquet.taille();
+                s.paquet.remove(c);
                 Monstre m = s.plateau.getMonstre();
 
                 //On chasse selon la carte, puis on tue ou non les victimes selon le tour.
@@ -172,6 +174,11 @@ public class Etat {
                     if (manche == 2) {
                         j.setVivant(false);
                     }
+                }
+
+                if (s.paquet.taille() == 1) {
+                    s.paquet = new Paquet();
+                    s.manche = 2;
                 }
 
             }
