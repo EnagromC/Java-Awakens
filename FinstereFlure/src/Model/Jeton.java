@@ -129,6 +129,7 @@ public class Jeton extends Pion implements Traversable {
             if (plateau.caseLibre(newCoord)) { //Si elle est libre, on déplace le pion grâce à la méthode mère (qui gère les glissades...)
                 super.seDeplacer(d);
                 this.deplacementsRestants--;
+                System.out.println("cas 1");
                 return true;
 
             } else if (plateau.getCase(newCoord) instanceof Traversable) { //Si la case contient un joueur

@@ -42,8 +42,8 @@ public class Partie {
         this.joueur1.setNumero(1);
         this.joueur2.setNumero(2);
 
-        this.manche = 0;
-        this.tour = 0;
+        this.manche = 1;
+        this.tour = 1;
         this.paquet = new Paquet();
         faceBlanche = true;
     }

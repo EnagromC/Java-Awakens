@@ -753,6 +753,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
      */
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         Direction d = null;
+        System.out.println("coucou");
         switch (evt.getKeyCode()) {
             case KeyEvent.VK_DOWN:
                 d = Direction.BAS;
@@ -1088,7 +1089,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             Création et initialisation du plateau
          */
         plateau = new JPlateau();
-        plateau.setBounds(100, 50, 694, 479);//permet de définir la position et la taille en même temps        
+        plateau.setBounds(100, 50, 694, 479);//permet de définir la position et la taille en même temps  
         this.add(plateau);
 
         updatePlateau();
