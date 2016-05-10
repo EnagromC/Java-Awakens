@@ -259,16 +259,43 @@ public class ClasseSQL {
      * @param nbPartie nombre de partie que l'on souhaite afficher
      * @return un tableau de chaîne de caractère que l'on récupère pour afficher
      */
-    public String[] historique(int nbPartie){
-        String[] hist = new String[nbPartie];
+    public String[][] historique(){
+        String[][] hist = new String[4][10]; //stock le résultat de res, pour ensuite le retourner
         try {
-            Statement req10 = con.createStatement();
-            String queryHist = "SELECT ALL FROM Partie LIMIT "+nbPartie;
-            ResultSet res = req10.executeQuery(queryHist);
-            if (res.first()){
+            Statement req11 = con.createStatement();
+            String queryHist1 = "SELECT NumPartie FROM Partie LIMIT 10 ";
+            ResultSet res1 = req11.executeQuery(queryHist1);
+            if (res1.first()){
                 int i;
-                for (i=0;i<nbPartie;i++){
-                    hist[i]=res.getString(i);
+                for (i=0;i<10;i++){
+                    hist[1][i]=res1.getString(i);
+                }
+            }
+            Statement req12 = con.createStatement();
+            String queryHist2 = "SELECT NbTour FROM Partie LIMIT 10";
+            ResultSet res2 = req12.executeQuery(queryHist2);
+            if (res2.first()){
+                int i;
+                for (i=0;i<10;i++){
+                    hist[2][i]=res2.getString(i);
+                }
+            }
+            Statement req13 = con.createStatement();
+            String queryHist3 = "SELECT Pseudonyme FROM Partie LIMIT 10";
+            ResultSet res3 = req13.executeQuery(queryHist3);
+            if (res3.first()){
+                int i;
+                for (i=0;i<10;i++){
+                    hist[3][i]=res3.getString(i);
+                }
+            }
+            Statement req14 = con.createStatement();
+            String queryHist4 = "SELECT DatePartie FROM Partie LIMIT 10";
+            ResultSet res4 = req14.executeQuery(queryHist4);
+            if (res4.first()){
+                int i;
+                for (i=0;i<10;i++){
+                    hist[4][i]=res4.getString(i);
                 }
             }
         }

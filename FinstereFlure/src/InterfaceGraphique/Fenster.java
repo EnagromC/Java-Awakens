@@ -14,9 +14,9 @@ import Model.JoueurIA;
 import Model.Monstre;
 import Model.Partie;
 import Model.Pion;
-import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,8 +33,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Fenster extends javax.swing.JFrame implements Vue {
 
     ClasseSQL bdd = new ClasseSQL();
+    String[][]donnees = bdd.historique(); //pour afficher l'historique de la partie
+    String[] entetes = {"Numéro de la partie","Nombre de tour","Pseudo du gagnant","Date de la partie"}; 
+    //entêtes des colonnes pour l'affichage de l'historique des parties
     public static final String VERSION = "0.2";
-
     /**
      * Creates new form Fenste
      */
@@ -86,8 +89,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jDialog6 = new javax.swing.JDialog();
         jLabel15 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        boutonNbPartie = new javax.swing.JSpinner();
+        jTable1 = new javax.swing.JTable();
         sortis = new JGroupePions(false);
         salleAttenteGreen = new JGroupePions(true);
         salleAttenteRed = new JGroupePions(true);
@@ -110,7 +112,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jMenuItem6 = new javax.swing.JMenuItem();
 
         jDialogConnexion.setResizable(false);
-        jDialogConnexion.setSize(new java.awt.Dimension(225, 300));
         jDialogConnexion.setLocationRelativeTo(null);
 
         jLabel3.setText("Connexion");
@@ -179,7 +180,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         );
 
         jDialogInscription.setResizable(false);
-        jDialogInscription.setSize(new java.awt.Dimension(213, 300));
         jDialogInscription.setLocationRelativeTo(null);
 
         jLabel6.setText("Inscription");
@@ -270,7 +270,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         );
 
         jDialogConnexionInscription.setResizable(false);
-        jDialogConnexionInscription.setSize(new java.awt.Dimension(300, 200));
         jDialogConnexionInscription.setLocationRelativeTo(null);
 
         jLabel4.setText("Déjà inscrit ? Identifiez-vous !");
@@ -323,8 +322,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        jDialog4.setPreferredSize(new java.awt.Dimension(200, 150));
-
         jLabel11.setText("Nom");
 
         jLabel12.setText("Saisie du nom");
@@ -371,8 +368,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 .addComponent(validerNom)
                 .addGap(22, 22, 22))
         );
-
-        jDialog5.setPreferredSize(new java.awt.Dimension(200, 150));
 
         jLabel13.setText("Saisie du prénom");
 
@@ -422,15 +417,8 @@ public class Fenster extends javax.swing.JFrame implements Vue {
 
         jLabel15.setText("Historique des parties");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        boutonNbPartie.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                boutonNbPartieStateChanged(evt);
-            }
-        });
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(donnees,entetes));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jDialog6Layout = new javax.swing.GroupLayout(jDialog6.getContentPane());
         jDialog6.getContentPane().setLayout(jDialog6Layout);
@@ -442,23 +430,18 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                         .addGap(145, 145, 145)
                         .addComponent(jLabel15))
                     .addGroup(jDialog6Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jDialog6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(boutonNbPartie, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(66, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jDialog6Layout.setVerticalGroup(
             jDialog6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel15)
-                .addGap(12, 12, 12)
-                .addComponent(boutonNbPartie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -771,17 +754,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jDialog5.setVisible(true);
     }//GEN-LAST:event_entrerPrenomMouseClicked
 
-    private void boutonNbPartieStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_boutonNbPartieStateChanged
-        int nbPartie = ((Integer) boutonNbPartie.getValue());
-        bdd.connexionSQL();
-        String[] hist = new String[nbPartie];
-        //finir la fonction qui voit si un compte est valide ou pas
-        hist = bdd.historique(nbPartie);
-        bdd.deconnexionSQL();
-        //ici il faut mettre la valeur de hist dans le text area, je ne sais pas comment on fait, je verrai après ou si quelqu'un a une révélation
-        jDialog6.setVisible(false);
-    }//GEN-LAST:event_boutonNbPartieStateChanged
-
     private void validerConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerConnexionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_validerConnexionActionPerformed
@@ -928,7 +900,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private javax.swing.JButton boutonEntrerPlateau;
     private javax.swing.JButton boutonFinTour;
     private javax.swing.JButton boutonInscrip;
-    private javax.swing.JSpinner boutonNbPartie;
     private javax.swing.JPasswordField champMdpCo;
     private javax.swing.JTextField champMdpCrea;
     private javax.swing.JTextField champNom;
@@ -970,7 +941,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel nomJoueurRouge;
     private javax.swing.JLabel nomJoueurVert;
     private javax.swing.JPanel salleAttenteGreen;
@@ -993,7 +964,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     boolean dejaBouge; //Indique si le joueur a déjà commencé à bouger un pion. Si oui, il ne peut pas en sélectionner d'autre.
 
     public final Color BG_COLOR = new Color(220, 205, 245);
-
+   
     Partie partie;
 
     /**
@@ -1091,6 +1062,13 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             this.numJoueur = 1;
         } else if (numJoueur == 2) {
             this.numJoueur = 2;
+        }
+    }
+
+    private static class DefaultTableModelImpl extends DefaultTableModel {
+
+        public DefaultTableModelImpl(Object[] columnNames, int rowCount) {
+            super(columnNames, rowCount);
         }
     }
 
