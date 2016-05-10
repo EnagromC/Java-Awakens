@@ -17,6 +17,7 @@ import Model.Partie;
 import Model.Pion;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         this.getContentPane().setBackground(BG_COLOR);
         jcDusse = new JCarte();
         this.add(jcDusse);
-        jcDusse.setLocation(850,100);
+        jcDusse.setLocation(850, 100);
 
     }
 
@@ -1092,6 +1093,12 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         plateau.setBounds(100, 50, 694, 479);//permet de définir la position et la taille en même temps  
         this.add(plateau);
 
+        for (Rectangle r : partie.getPlateau().getFlaques()) {
+            plateau.add(new JFlaque(r), new Integer(0));
+        }
+
+        this.cartesRestantes.setText("8");
+        
         updatePlateau();
         updateInfosPartie();
 

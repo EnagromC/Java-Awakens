@@ -35,7 +35,7 @@ public class JPlateau extends JLayeredPane {
      * @param c les coordonnées dans la grille
      * @return un point
      */
-    public Point position(Coordonnees c) {
+    public static Point position(Coordonnees c) {
         int x = c.getXint() * 40 + 20;
         int y = c.getYint() * 40 + 27;
         return new Point(y, x);

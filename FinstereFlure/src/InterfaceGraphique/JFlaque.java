@@ -5,8 +5,9 @@
  */
 package InterfaceGraphique;
 
-
+import Model.Coordonnees;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,41 +25,32 @@ public class JFlaque extends JPanel {
 
     private String image;
 
-
-    public JFlaque(Forme forme) {
+    public JFlaque(Rectangle r) {
         super();
-        switch (forme) {
-            case CARRE:
-               this.setSize(76, 76);
-               this.image = "tachesang_carree.png";
-               break;
-            case HORIZ:
-                this.setSize(152,38);
-                this.image = "tachesang_lineaireH.png";
-                break;
-            case VERT:
-                this.setSize(38,152);
-                this.image = "tachesang_lineaireV.png";
-                break;
+        if (r.getHeight() == r.getWidth()) {//tache carrée
+            this.setSize(76, 76);
+            this.image = "tachesang_carree.png";
+
+        } else if (r.getHeight() > r.getWidth()) {//tache verticale
+            this.setSize(38, 152);
+            this.image = "tachesang_lineaireV.png";
+        } else {//tache horizontale
+            this.setSize(152, 38);
+            this.image = "tachesang_lineaireH.png";
         }
 
+        this.setLocation(JPlateau.position(new Coordonnees(r.x, r.y)));
+this.setOpaque(false);
     }
-    
-        public void paintComponent(Graphics g) {
+
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         try {
-            BufferedImage img = ImageIO.read(new File("img/" +this.image));
-            g.drawImage(img, 0, 0,this.getSize().width , this.getSize().height, null);
+            BufferedImage img = ImageIO.read(new File("img/" + this.image));
+            g.drawImage(img, 0, 0, this.getSize().width, this.getSize().height, null);
         } catch (IOException ex) {
             Logger.getLogger(JPion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
-        enum Forme {
-    CARRE,
-    HORIZ,
-    VERT;
-}
-}
 
-
+}

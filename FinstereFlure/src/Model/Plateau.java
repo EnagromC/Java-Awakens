@@ -71,6 +71,10 @@ public class Plateau {
     public Monstre getMonstre(){
         return this.monstre;
     }
+    
+    public ArrayList<Rectangle> getFlaques(){
+        return this.flaques;
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
