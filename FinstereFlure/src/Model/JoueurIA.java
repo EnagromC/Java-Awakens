@@ -121,8 +121,9 @@ public class JoueurIA extends Joueur {
 
         //Choix du meilleur coup possible
         Etat sinit = new Etat(super.p);
-        float max = Integer.MIN_VALUE;
+        float max = Float.NEGATIVE_INFINITY;
         Etat meilleur = new Etat();
+        //Pour chacun des successeurs de l'état actuel, on calcule sa valeur et on choisit celui qui a la plus grande
         for (Etat s : sinit.successeurs()) {
             float valeur = expectiminimax(s, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
             if (valeur > max) {
@@ -131,6 +132,7 @@ public class JoueurIA extends Joueur {
             }
         }
         
+        //On joue le coup
         mettreAJour(p, meilleur);
         p.getVue().updatePlateau();
 

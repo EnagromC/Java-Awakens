@@ -56,15 +56,20 @@ public class Joueur {
         pions[2] = new Jeton(4, 3, p);
         pions[3] = new Jeton(5, 2, p);
     }
-    
-    public void setNumero(int n){
+
+    public void setNumero(int n) {
         this.numero = n;
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
-    public void jouer(){
+    /**
+     * Permet de faire jouer le joueur. Si c'est un joueur humain, appelle la
+     * fonction de l'interface qui lui demande de saisir son déplacement. Si
+     * c'est l'ordi, ça joue le coup automatiquement (méthode redéfinie)
+     */
+    public void jouer() {
         p.getVue().tourJoueur(numero);
     }
 }

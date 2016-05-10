@@ -27,6 +27,7 @@ public class JPion extends JPanel {
     protected String[] images;
     protected int imageActuelle;
     private int numJoueur;
+    private int numPion;
 
     /**
      * Constructeur
@@ -48,13 +49,15 @@ public class JPion extends JPanel {
      *
      * @param adresses : les adresses des images
      * @param numJoueur : le joueur à qui appartient le pion
+     * @param numPion : numéro du pion dans le tableau
      */
-    public JPion(String[] adresses, int numJoueur) {
+    public JPion(String[] adresses, int numJoueur, int numPion) {
         this.images = adresses;
         imageActuelle = 0;
         this.setSize(TAILLE_CASE, TAILLE_CASE);
 
         this.numJoueur = numJoueur;
+        this.numPion = numPion;
     }
 
     public Coordonnees getCoordonnees() {
@@ -65,6 +68,10 @@ public class JPion extends JPanel {
 
     public int getNumJoueur() {
         return this.numJoueur;
+    }
+    
+    public int getNumPion(){
+        return this.numPion;
     }
 
     public void nextImagte() {

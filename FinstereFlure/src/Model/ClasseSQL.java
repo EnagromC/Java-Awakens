@@ -29,7 +29,7 @@ public class ClasseSQL {
             System.out.println ("Database connection established.");
         }
         catch (Exception e){
-            System.out.println("Erreur");
+            System.out.println("Erreur de connexion");
         }
     }
     

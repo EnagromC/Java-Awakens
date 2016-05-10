@@ -12,5 +12,7 @@ package InterfaceGraphique;
 public interface Vue {
     public void updatePlateau();
     public void tourJoueur(int numJoueur);
+    public void updatePaquet();
+    public void updateInfosPartie();
     
 }
