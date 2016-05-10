@@ -5,11 +5,41 @@
  */
 package InterfaceGraphique;
 
+import Model.Carte;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  *Cette classe permet d'afficher l'image des cartes sur l'interface.
  * @author Morgane
  */
-public class JCarte {
-    public String image ; //C'est l'adresse de l'image de la carte.
+public class JCarte extends JPanel {
+    private JLabel nombre ;
+    private JLabel typeCarte ;
+    
+    
+    public JCarte () {
+        super() ;
+        this.setSize(100, 100) ;
+        this.add(nombre) ;
+        this.add(typeCarte) ;
+        
+        
+    }
+    /**
+     * Crée une JCarte à  partir d'une Carte passée en paramètre.
+     * @param c : la carte à partir de laquelle on veut créer la JCarte.
+     */
+    public void createCarte(Carte c) {
+        this.nombre.setText(String.valueOf(c.getNombre()));
+        if (c.getProie()){
+            this.typeCarte.setText("Proies");
+        }
+        else {
+            this.typeCarte.setText("Pas") ;
+        }
+        
+        
+    }
     
 }

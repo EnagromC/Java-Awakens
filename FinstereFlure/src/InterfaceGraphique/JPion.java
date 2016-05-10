@@ -27,9 +27,9 @@ public class JPion extends JPanel {
     // Attributs
     ////////////////////////////////////////////////////////////////////////////
     public static final int TAILLE_CASE = 36;
-    private String[] images; //toi t'as besoin de garder l'adresse que de l'image actuelle
-    private int imageActuelle; //donc ça ça sert à rien
-    private int numJoueur;//les 2 int là aussi
+    private String[] images; 
+    private int imageActuelle;
+    private int numJoueur;
     private int numPion;
 
     ////////////////////////////////////////////////////////////////////////////
@@ -46,7 +46,7 @@ public class JPion extends JPanel {
         imageActuelle = 0;
         this.setSize(TAILLE_CASE, TAILLE_CASE);
 
-        this.numJoueur = 0; //Ici le pion n'est pas lié à un joueur (c'est genre un caillou)
+        this.numJoueur = 0; //Ici le pion n'est pas lié à un joueur (c'est genre un caillou).
 
     }
 
@@ -87,7 +87,7 @@ public class JPion extends JPanel {
     // Méthodes publiques
     ////////////////////////////////////////////////////////////////////////////
     /**
-     * Permet de passer à l'image suivante dans la liste de simages
+     * Permet de passer à l'image suivante dans la liste des images
      */
     public void nextImagte() {
         this.imageActuelle = (this.imageActuelle + 1) % images.length;
