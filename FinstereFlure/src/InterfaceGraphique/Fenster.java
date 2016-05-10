@@ -17,6 +17,8 @@ import Model.Partie;
 import Model.Pion;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -49,6 +51,9 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jcDusse = new JCarte();
         this.add(jcDusse);
         jcDusse.setLocation(850, 100);
+
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new MyDispatcher());
 
     }
 
@@ -753,32 +758,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
      * @param evt
      */
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        Direction d = null;
-        System.out.println("coucou");
-        switch (evt.getKeyCode()) {
-            case KeyEvent.VK_DOWN:
-                d = Direction.BAS;
-                break;
-            case KeyEvent.VK_UP:
-                d = Direction.HAUT;
-                break;
-            case KeyEvent.VK_LEFT:
-                d = Direction.GAUCHE;
-                break;
-            case KeyEvent.VK_RIGHT:
-                d = Direction.DROITE;
-                break;
-        }
 
-        if (selected != null && d != null) {
-
-            if (imageJeton(selected).seDeplacer(d)) {
-                dejaBouge = true;
-                this.deplacementsRestants.setText(String.valueOf(imageJeton(selected).getDeplacementsRestants()));
-                updatePlateau();
-                testFinTour();
-            }
-        }
     }//GEN-LAST:event_formKeyPressed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -830,7 +810,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             imageJeton(selected).retourner();
             this.updatePlateau();
             this.selected.unselect();
-            this.selected = new JPion(new String[0]);
+            this.selected = defaultPion;
 
             if (partie.tourFini()) {//Si le tour est terminé, c'est-à-dire que tous les joueurs ont retourné tous leurs jetons
                 partie.actionFinTour();
@@ -1097,8 +1077,13 @@ public class Fenster extends javax.swing.JFrame implements Vue {
             plateau.add(new JFlaque(r), new Integer(0));
         }
 
+        plateau.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         this.cartesRestantes.setText("8");
-        
+
         updatePlateau();
         updateInfosPartie();
 
@@ -1182,7 +1167,8 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     JPion[] pionsGreen = new JPion[4];
     JPion monstre;
     JPlateau plateau;
-    JPion selected = new JPion(new String[1]);
+    JPion defaultPion = new JPion(new String[0]);
+    JPion selected = defaultPion;
     ArrayList<Joueur> joueurs;
     int numJoueur;
     boolean dejaBouge; //Indique si le joueur a déjà commencé à bouger un pion. Si oui, il ne peut pas en sélectionner d'autre.
@@ -1306,7 +1292,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     public void tourJoueur(int numJoueur) {
         dejaBouge = false;
         selected.unselect();
-        this.selected = new JPion(new String[0]);
+        this.selected = defaultPion;
         boutonFinTour.setEnabled(false);
 
         if (numJoueur == 1) {
@@ -1353,4 +1339,48 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         }
     }
 
+    
+    /**
+     * Cette classe s'occupe de récupérer les actions des flèches pour déplacer
+     * les personnages
+     */
+    private class MyDispatcher implements KeyEventDispatcher {
+
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED) {
+
+                Direction d = null;
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_DOWN:
+                        d = Direction.BAS;
+                        break;
+                    case KeyEvent.VK_UP:
+                        d = Direction.HAUT;
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        d = Direction.GAUCHE;
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        d = Direction.DROITE;
+                        break;
+                }
+
+                if (!selected.equals(defaultPion) && d != null) {
+
+                    if (imageJeton(selected).seDeplacer(d)) {
+                        dejaBouge = true;
+                        deplacementsRestants.setText(String.valueOf(imageJeton(selected).getDeplacementsRestants()));
+                        updatePlateau();
+                        testFinTour();
+                    }
+                }
+            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+
+            } else if (e.getID() == KeyEvent.KEY_TYPED) {
+
+            }
+            return false;
+        }
+    }
 }
