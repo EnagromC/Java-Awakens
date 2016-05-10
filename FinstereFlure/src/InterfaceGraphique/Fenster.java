@@ -52,6 +52,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         this.add(jcDusse);
         jcDusse.setLocation(850, 100);
 
+        //Ecouteur de clavier
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new MyDispatcher());
 
@@ -805,6 +806,11 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuPartieActionPerformed
 
+    /**
+     * Action effectuée au clic sur le bouton de fin de tour
+     *
+     * @param evt
+     */
     private void boutonFinTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonFinTourActionPerformed
         if (boutonFinTour.isEnabled()) {
             imageJeton(selected).retourner();
@@ -924,14 +930,20 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jDialogInscription.setVisible(true);
     }//GEN-LAST:event_jMenuItemInscriptionActionPerformed
 
+    /**
+     * Actions au clic sur le bouton "Entrer sur plateau"
+     *
+     * @param evt
+     */
     private void boutonEntrerPlateauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonEntrerPlateauActionPerformed
         if (boutonEntrerPlateau.isEnabled()) {
-            imageJeton(selected).entrerPlateau();
-            dejaBouge = true;
-            updatePlateau();
-            this.deplacementsRestants.setText(String.valueOf(imageJeton(selected).getDeplacementsRestants()));
-            testFinTour();
-            boutonEntrerPlateau.setEnabled(false);
+            if (imageJeton(selected).entrerPlateau()) {
+                dejaBouge = true;
+                updatePlateau();
+                this.deplacementsRestants.setText(String.valueOf(imageJeton(selected).getDeplacementsRestants()));
+                testFinTour();
+                boutonEntrerPlateau.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_boutonEntrerPlateauActionPerformed
 
@@ -1339,7 +1351,6 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         }
     }
 
-    
     /**
      * Cette classe s'occupe de récupérer les actions des flèches pour déplacer
      * les personnages

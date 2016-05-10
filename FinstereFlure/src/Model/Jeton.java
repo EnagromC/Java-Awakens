@@ -124,39 +124,40 @@ public class Jeton extends Pion implements Traversable {
      */
     public boolean seDeplacer(Direction d) {
         Coordonnees newCoord = this.position.plus(d.getVector()); //coordonnées de la case d'arrivée
-
-        if (plateau.valide(newCoord)) {//On vérifie que cette case est bien sur le plateau
-            if (plateau.caseLibre(newCoord)) { //Si elle est libre, on déplace le pion grâce à la méthode mère (qui gère les glissades...)
-                super.seDeplacer(d);
-                this.deplacementsRestants--;
-                System.out.println("cas 1");
-                return true;
-
-            } else if (plateau.getCase(newCoord) instanceof Traversable) { //Si la case contient un joueur
-                if (this.deplacementsRestants > 1) { //Dans le cas où on a au moins 2 points de déplacement on peut y rentrer.
-                    this.position = newCoord; //On ne met ici pas à jour la position dans le plateau afin de ne pas effacer l'autre joueur se trouvant dans cette case. La mise à jour du plateau aura lieu au rochain mouvement de ce jeton, qui doit de toute façon quitter cette case pour finir son tour (on suppose que le bouton de fin de tour n'est pas disponible alors)
+        if (this.deplacementsRestants > 0) {
+            if (plateau.valide(newCoord)) {//On vérifie que cette case est bien sur le plateau
+                if (plateau.caseLibre(newCoord)) { //Si elle est libre, on déplace le pion grâce à la méthode mère (qui gère les glissades...)
+                    super.seDeplacer(d);
                     this.deplacementsRestants--;
-                    if (plateau.estUneFlaque(this.position)) {//On gère la glissade éventuelle
-                        this.seDeplacer(d);
-                    }
+                    System.out.println("cas 1");
                     return true;
 
-                } else if (plateau.estUneFlaque(newCoord)) {//Dans le cas ou le joueur n'a plus qu'un seul point de déplacement, il ne peut éventuellement entrer sur la case que si elle lui permet de la quitter immédiatement en glissant
-                    this.position = newCoord;
-                    if (this.seDeplacer(d)) { //On vérifie alors si le joueur peut glisser
+                } else if (plateau.getCase(newCoord) instanceof Traversable) { //Si la case contient un joueur
+                    if (this.deplacementsRestants > 1) { //Dans le cas où on a au moins 2 points de déplacement on peut y rentrer.
+                        this.position = newCoord; //On ne met ici pas à jour la position dans le plateau afin de ne pas effacer l'autre joueur se trouvant dans cette case. La mise à jour du plateau aura lieu au rochain mouvement de ce jeton, qui doit de toute façon quitter cette case pour finir son tour (on suppose que le bouton de fin de tour n'est pas disponible alors)
                         this.deplacementsRestants--;
+                        if (plateau.estUneFlaque(this.position)) {//On gère la glissade éventuelle
+                            this.seDeplacer(d);
+                        }
                         return true;
-                    } else { //Si non, on lui remet ses anciennes coordonnées pour annuler le déplacement
-                        this.position.plus(d.getVector().fois(-1));
-                        return false;
-                    }
-                }
 
-            } else if (plateau.getCase(newCoord) instanceof Caillou) { //Si la case contient un caillou
-                Caillou caillou = (Caillou) plateau.getCase(newCoord);
-                if (caillou.seDeplacer(d)) { //On pousse le caillou d'une case
-                    this.seDeplacer(d); //On prend sa place
-                    return true;
+                    } else if (plateau.estUneFlaque(newCoord)) {//Dans le cas ou le joueur n'a plus qu'un seul point de déplacement, il ne peut éventuellement entrer sur la case que si elle lui permet de la quitter immédiatement en glissant
+                        this.position = newCoord;
+                        if (this.seDeplacer(d)) { //On vérifie alors si le joueur peut glisser
+                            this.deplacementsRestants--;
+                            return true;
+                        } else { //Si non, on lui remet ses anciennes coordonnées pour annuler le déplacement
+                            this.position.plus(d.getVector().fois(-1));
+                            return false;
+                        }
+                    }
+
+                } else if (plateau.getCase(newCoord) instanceof Caillou) { //Si la case contient un caillou
+                    Caillou caillou = (Caillou) plateau.getCase(newCoord);
+                    if (caillou.seDeplacer(d)) { //On pousse le caillou d'une case
+                        this.seDeplacer(d); //On prend sa place
+                        return true;
+                    }
                 }
             }
         }
@@ -190,13 +191,17 @@ public class Jeton extends Pion implements Traversable {
      * Fait entrer un pion de la salle d'attente dans la case en bas à droite du
      * plateau.
      */
-    public void entrerPlateau() {
+    public boolean entrerPlateau() {
         if (this.dansSalleDAttente()) {
-            this.position = new Coordonnees(10, 15);
-            this.surPlateau = true;
-            this.deplacementsRestants--;
-            plateau.addPion(this, position);
+            if (!(this.deplacementsRestants == 1 && !plateau.caseLibre(new Coordonnees(10, 15)))) {
+                this.position = new Coordonnees(10, 15);
+                this.surPlateau = true;
+                this.deplacementsRestants--;
+                plateau.addPion(this, position);
+                return true;
+            }
         }
+        return false;
     }
 
     public Object clone() {
