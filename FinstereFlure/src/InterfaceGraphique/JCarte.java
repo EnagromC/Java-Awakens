@@ -6,6 +6,8 @@
 package InterfaceGraphique;
 
 import Model.Carte;
+import java.awt.Color;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,9 +22,12 @@ public class JCarte extends JPanel {
     
     public JCarte () {
         super() ;
+        nombre = new JLabel("");
+        typeCarte = new JLabel("");
         this.setSize(100, 100) ;
         this.add(nombre) ;
         this.add(typeCarte) ;
+        this.setBorder(BorderFactory.createLineBorder(Color.PINK, 3, true));
         
         
     }

@@ -46,6 +46,7 @@ public class Jeton extends Pion implements Traversable {
         this.faces[1] = noire;
         this.enJeu = true;
         this.vivant = true;
+        this.deplacementsRestants = blanche;
 
         this.faceBlanche = true;
 
@@ -191,7 +192,9 @@ public class Jeton extends Pion implements Traversable {
     public void entrerPlateau() {
         if (this.dansSalleDAttente()) {
             this.position = new Coordonnees(10, 15);
+            this.surPlateau = true;
             this.deplacementsRestants--;
+            plateau.addPion(this, position);
         }
     }
 

@@ -6,6 +6,7 @@
 package InterfaceGraphique;
 
 import Model.Caillou;
+import Model.Carte;
 import Model.ClasseSQL;
 import Model.Direction;
 import Model.Jeton;
@@ -44,6 +45,9 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     public Fenster() {
         initComponents();
         this.getContentPane().setBackground(BG_COLOR);
+        jcDusse = new JCarte();
+        this.add(jcDusse);
+        jcDusse.setLocation(850,100);
 
     }
 
@@ -106,6 +110,12 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         jLabel18 = new javax.swing.JLabel();
         tour = new javax.swing.JLabel();
         manche = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        sortis1 = new javax.swing.JLabel();
+        sortis2 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        cartesRestantes = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuPartie = new javax.swing.JMenu();
         jMenuItemNewGame = new javax.swing.JMenuItem();
@@ -547,6 +557,18 @@ public class Fenster extends javax.swing.JFrame implements Vue {
 
         manche.setText("1");
 
+        jLabel19.setText("Pions sortis :");
+
+        jLabel20.setText("Pions sortis :");
+
+        sortis1.setText("0");
+
+        sortis2.setText("0");
+
+        jLabel21.setText("Cartes restantes :");
+
+        cartesRestantes.setText("0");
+
         jMenuPartie.setText("Partie");
         jMenuPartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -633,22 +655,38 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(nomJoueurRouge, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(nomJoueurRouge, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(sortis1)))
                         .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(nomJoueurVert, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(nomJoueurVert, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel20)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(sortis2)))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(salleAttenteGreen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                                .addComponent(boutonEntrerPlateau))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(boutonEntrerPlateau)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel21)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cartesRestantes))))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(boutonFinTour)
-                        .addGap(441, 441, 441)))
-                .addGap(33, 33, 33))
+                        .addGap(448, 448, 448)))
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -660,6 +698,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(cartesRestantes))
+                        .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel17)
                             .addComponent(tour))
@@ -681,7 +723,15 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                         .addComponent(nomJoueurRouge, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2)
                     .addComponent(nomJoueurVert, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel19)
+                        .addComponent(sortis1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel20)
+                        .addComponent(sortis2)))
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(deplacementsRestants))
@@ -774,7 +824,21 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     }//GEN-LAST:event_jMenuPartieActionPerformed
 
     private void boutonFinTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonFinTourActionPerformed
-        // TODO add your handling code here:
+        if (boutonFinTour.isEnabled()) {
+            imageJeton(selected).retourner();
+            this.updatePlateau();
+            this.selected.unselect();
+            this.selected = new JPion(new String[0]);
+
+            if (partie.tourFini()) {//Si le tour est terminé, c'est-à-dire que tous les joueurs ont retourné tous leurs jetons
+                partie.actionFinTour();
+            } else {
+                this.numJoueur = this.numJoueur == 1 ? 2 : 1;
+                Joueur j = this.numJoueur == 1 ? partie.getJoueur1() : partie.getJoueur2();
+                j.jouer();
+            }
+
+        }
     }//GEN-LAST:event_boutonFinTourActionPerformed
 
     private void champPseudoCoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_champPseudoCoActionPerformed
@@ -882,7 +946,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         if (boutonEntrerPlateau.isEnabled()) {
             imageJeton(selected).entrerPlateau();
             dejaBouge = true;
+            updatePlateau();
+            this.deplacementsRestants.setText(String.valueOf(imageJeton(selected).getDeplacementsRestants()));
             testFinTour();
+            boutonEntrerPlateau.setEnabled(false);
         }
     }//GEN-LAST:event_boutonEntrerPlateauActionPerformed
 
@@ -893,11 +960,12 @@ public class Fenster extends javax.swing.JFrame implements Vue {
      */
     private void pionClicked(MouseEvent evt) {
         JPion clicked = (JPion) evt.getSource();
-        if (clicked.isEnabled() && clicked.getNumJoueur() == numJoueur && !dejaBouge) {
+        if (clicked.isEnabled() && clicked.getNumJoueur() == numJoueur && !dejaBouge && imageJeton(clicked).estSurFaceBlanche() == partie.getFace()) {
 
             this.selected.unselect();
             this.selected = clicked;
             this.selected.select();
+            this.boutonFinTour.setEnabled(false);
 
             deplacementsRestants.setText(String.valueOf(imageJeton(selected).getDeplacementsRestants()));
 
@@ -1038,6 +1106,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private javax.swing.JButton boutonEntrerPlateau;
     private javax.swing.JButton boutonFinTour;
     private javax.swing.JButton boutonInscrip;
+    private javax.swing.JLabel cartesRestantes;
     private javax.swing.JPasswordField champMdpCo;
     private javax.swing.JTextField champMdpCrea;
     private javax.swing.JTextField champNom;
@@ -1063,7 +1132,10 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1090,6 +1162,8 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     private javax.swing.JPanel salleAttenteGreen;
     private javax.swing.JPanel salleAttenteRed;
     private javax.swing.JPanel sortis;
+    private javax.swing.JLabel sortis1;
+    private javax.swing.JLabel sortis2;
     private javax.swing.JLabel tour;
     private javax.swing.JButton validerConnexion;
     private javax.swing.JButton validerInscri;
@@ -1106,6 +1180,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
     boolean dejaBouge; //Indique si le joueur a déjà commencé à bouger un pion. Si oui, il ne peut pas en sélectionner d'autre.
     public final Color BG_COLOR = new Color(220, 205, 245);
     Partie partie;
+    JCarte jcDusse = new JCarte();
 
     boolean contreIA;
 
@@ -1215,6 +1290,8 @@ public class Fenster extends javax.swing.JFrame implements Vue {
 
             }
         }
+        this.pack();
+        this.repaint();
     }
 
     @Override
@@ -1222,7 +1299,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         dejaBouge = false;
         selected.unselect();
         this.selected = new JPion(new String[0]);
-        boutonFinTour.setEnabled(true);
+        boutonFinTour.setEnabled(false);
 
         if (numJoueur == 1) {
             this.numJoueur = 1;
@@ -1231,15 +1308,34 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         }
     }
 
+    /**
+     * Met à jour l'affichage du paquet : le nombre de carte restante et la
+     * dernière carte tirée
+     *
+     * @param c : dernière carte tirée.
+     */
     @Override
-    public void updatePaquet() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updatePaquet(Carte c) {
+        jcDusse.createCarte(c);
+        this.cartesRestantes.setText(String.valueOf(partie.getPaquet().taille()));
     }
 
     @Override
     public void updateInfosPartie() {
         this.tour.setText(String.valueOf(this.partie.getTour()));
         this.manche.setText(String.valueOf(this.partie.getManche()));
+    }
+
+    @Override
+    public void gameOver() {
+        String message = "La partie est terminée.\n";
+        if (partie.vainqueur() == null) {
+            message += "Match null. :(";
+        } else {
+            message += partie.vainqueur().getPseudo() + " a gagné !";
+        }
+
+        JOptionPane.showMessageDialog(null, message, "Partie terminée", 0);
     }
 
     private static class DefaultTableModelImpl extends DefaultTableModel {

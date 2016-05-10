@@ -5,6 +5,8 @@
  */
 package InterfaceGraphique;
 
+import Model.Carte;
+
 /**
  *
  * @author Corentin
@@ -12,7 +14,8 @@ package InterfaceGraphique;
 public interface Vue {
     public void updatePlateau();
     public void tourJoueur(int numJoueur);
-    public void updatePaquet();
+    public void updatePaquet(Carte c);
     public void updateInfosPartie();
+    public void gameOver();
     
 }
