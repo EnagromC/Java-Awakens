@@ -16,9 +16,12 @@ public class ClasseSQL {
     
     private Connection con ;
     
+    /**
+     * Méthode pour connecter le programme à la base de données
+     */
     public void connexionSQL(){
-        String connectUrl = "jdbc:mysql://localhost/java";  
-        String username = "nom", password ="mdp"; //utilisé pour getConnexion
+        String connectUrl = "jdbc:mysql://localhost/finstereFlure";  
+        String username = "finstereFlure", password =""; //utilisés pour getConnexion
         Connection con = null;
         try{
             Class.forName(" com.mysql.jdbc.Driver ").newInstance(); // on enregistre le driver JDBC
@@ -30,6 +33,9 @@ public class ClasseSQL {
         }
     }
     
+    /**
+     * Méthode pour deconnecter le serveur MySQL
+     */
     public void deconnexionSQL(){
         if (con != null) {
             try {
@@ -40,10 +46,10 @@ public class ClasseSQL {
         }
     }
     /**
-     * Cette m�thode cr�e un compte utilisateur avec comme entrées le pseudonyme et le mot de passe
+     * Cette méthode crée un compte utilisateur avec comme entrées le pseudonyme et le mot de passe
      * @param pseudo
      * @param mdp
-     * @return vrai si le compte a été crée, faux si un pseudo avec cette chaîne de caractère existe déjà, ou si il y a une erreur et qu'il ne rentre pas dans le catch.
+     * @return vrai si le compte a été crée, faux si un pseudo avec cette chaîne de caractère existe déjà, ou si il y a une erreur et qu'il ne rentre pas dans le try.
      */
     public boolean creationCompte(String pseudo, String mdp){
         try {
@@ -79,7 +85,7 @@ public class ClasseSQL {
     }
     
     /**
-     * Cette m�thode permet de renseigner le nom de l'utilisateur
+     * Cette méthode permet de renseigner le prénom de l'utilisateur
      * @param prenom
      */
     public void entrerPrenom(String prenom){
@@ -93,12 +99,12 @@ public class ClasseSQL {
     }
     
     /**
-     * M�thode pour ins�rer une image dans l'avatar
+     * Méthode pour insérer une image dans la base de données, en tant qu'avatar
      */
     public void insererAvatar(){
-        Scanner imLoc = new Scanner(System.in);
+        Scanner imLoc = new Scanner(System.in);//on récupère la localisation de l'image
         String location = imLoc.nextLine();
-        Scanner nomIm = new Scanner(System.in);
+        Scanner nomIm = new Scanner(System.in);//on récupère le nom que l'on veut donner à l'image
         String nomPourIm = nomIm.nextLine();
         File avatar = new File(location);
         FileInputStream istreamImage = null;
@@ -108,14 +114,14 @@ public class ClasseSQL {
         catch (FileNotFoundException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try { //on cr�e la table image
+        try { //on crée la table image
             tableImage();
         }
         catch (Exception ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            // on ins�re l'image dans la base de donn�es
+            // on insère l'image dans la base de données
             PreparedStatement ps = con.prepareStatement("INSERT INTO image (name, img) values (?,?)");
             try {
                 ps.setString(1, nomPourIm);
@@ -125,9 +131,9 @@ public class ClasseSQL {
             finally {
                 ps.close();
             }
-            //on r�cup�re l'image pour l'ins�rer dans l'attribut "avatar"
+            //on récupère l'image pour l'insérer dans l'attribut "avatar"
             Statement recupImage = con.createStatement();
-            String query3 = "SELECT nomPourIm FROM image";
+            String query3 = "SELECT "+nomPourIm+" FROM image";
             ResultSet res = recupImage.executeQuery(query3);
             Statement reqIm = con.createStatement();
             int nb = reqIm.executeUpdate("UPDATE CompteJoueur SET Avatar =" +res);
@@ -146,8 +152,8 @@ public class ClasseSQL {
     }
     
     /**
-     * M�thode pour cr�er une table "image" dans la bdd
-     * @throws Exception vu qu'on l'appelle dans insererAvatar, c'est cette m�thode qui g�rera l'erreur
+     * Méthode pour créer une table "image" dans la bdd
+     * @throws Exception vu qu'on l'appelle dans insererAvatar, c'est cette méthode qui gèrera l'erreur
      */
     public void tableImage () throws Exception{
         Statement creation = con.createStatement();
@@ -155,14 +161,14 @@ public class ClasseSQL {
     }
     
     /**
-     * M�thode pour enregistrer une partie
-     * nbTour correspond au nombre de tour au bout desquels la partie est gagn�e. Rappel : au bout de 14, la partie est finie.
+     * Méthode pour enregistrer une partie
+     * nbTour correspond au nombre de tour au bout desquels la partie est gagnée. Rappel : au bout de 14, la partie est finie.
      */
     public void enregistrerPartie(int nbTour){
         try {
             Statement req7 = con.createStatement();
             int nb = req7.executeUpdate("INSERT INTO Partie Values (DEFAULT," +nbTour+")");
-        } //DEFAULT est utilis� pour les donn�es avec "NumAuto" pour remplir automatiquement. On peut aussi ne rien mettre.
+        } //DEFAULT est utilisé pour les données avec "NumAuto" pour remplir automatiquement. On peut aussi ne rien mettre.
         catch (SQLException ex) {
             Logger.getLogger(ClasseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -212,7 +218,7 @@ public class ClasseSQL {
     }
     
     /**
-     * Crée une occurrence de "gagner" table de la bdd
+     * Enregistre le pseudo du gagnant dans la partie correspondante
      */
     public void gagner(String pseudo){
         try {
