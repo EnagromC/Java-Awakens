@@ -67,7 +67,7 @@ public class Etat {
         this.paquet = (Paquet) p.getPaquet().clone();
 
         Plateau plat = new Plateau();
-        plateau.getPlateau().clear();
+        plat.getPlateau().clear();
 
         //Copie du monstre
         Coordonnees coordMonstre = p.getPlateau().getMonstre().getPosition();
@@ -82,6 +82,8 @@ public class Etat {
         }
 
         //Copie des jetons
+        this.humain = new Jeton[4];
+        this.ordi = new Jeton[4];
         for (int i = 0; i < 4; i++) {
             this.humain[i] = (Jeton) p.getJoueur1().getPions()[i].clone();
             this.humain[i].setPlateau(plat);
@@ -228,7 +230,7 @@ public class Etat {
             }
 
         }
-        System.out.println(successeurs.get(0).tour);
+
         return successeurs;
     }
 

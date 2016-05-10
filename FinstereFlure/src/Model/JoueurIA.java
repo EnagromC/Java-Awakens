@@ -6,7 +6,6 @@
 package Model;
 
 import IA.Etat;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -26,6 +25,7 @@ public class JoueurIA extends Joueur {
     ////////////////////////////////////////////////////////////////////////////
     public JoueurIA() {
         super(baptiser());
+        dejaCalcules = new HashMap<>();
     }
 
     public JoueurIA(Plateau p) {
@@ -131,7 +131,7 @@ public class JoueurIA extends Joueur {
                 meilleur = s;
             }
         }
-        
+
         //On joue le coup
         mettreAJour(p, meilleur);
         p.getVue().updatePlateau();

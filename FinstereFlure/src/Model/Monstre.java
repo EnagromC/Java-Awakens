@@ -123,6 +123,7 @@ public class Monstre extends Pion implements NonTraversable {
             //Tant qu'on n'a pas tué assez de personnes, en un maximum de 20 pas
             while (nbPas < 20 && victimes.size() < c.getNombre()) {
                 victimes.add(chasser());
+                nbPas++;
             }
 
             //Carte de type "nombre de pas"
@@ -162,7 +163,7 @@ public class Monstre extends Pion implements NonTraversable {
      */
     private ArrayList directionsVisibles() {
         ArrayList<Direction> l = new ArrayList<>();
-        for (Direction d :Direction.values()){
+        for (Direction d : Direction.values()) {
             l.add(d);
         }
         l.remove(this.direction.directionOpposee());

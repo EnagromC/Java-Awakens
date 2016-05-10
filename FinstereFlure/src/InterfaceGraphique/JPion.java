@@ -18,7 +18,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
- *Cette classe permet d'afficher l'image des pions sur l'interface graphique.
+ * Cette classe permet d'afficher l'image des pions sur l'interface graphique.
+ *
  * @author Morgane
  */
 public class JPion extends JPanel {
@@ -27,7 +28,7 @@ public class JPion extends JPanel {
     // Attributs
     ////////////////////////////////////////////////////////////////////////////
     public static final int TAILLE_CASE = 36;
-    private String[] images; 
+    private String[] images;
     private int imageActuelle;
     private int numJoueur;
     private int numPion;

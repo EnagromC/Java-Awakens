@@ -72,4 +72,19 @@ public class Joueur {
     public void jouer() {
         p.getVue().tourJoueur(numero);
     }
+
+    /**
+     * Indique le nombre de pions du joueur qui sont sortis.
+     *
+     * @return le nombre de pions sortis.
+     */
+    public int nbSortis() {
+        int compt = 0;
+        for (Jeton j : pions) {
+            if (j.getVivant() && !j.getEnJeu()) {
+                compt++;
+            }
+        }
+        return compt;
+    }
 }

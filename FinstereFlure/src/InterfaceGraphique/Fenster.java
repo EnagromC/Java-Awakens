@@ -813,13 +813,19 @@ public class Fenster extends javax.swing.JFrame implements Vue {
      */
     private void boutonFinTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonFinTourActionPerformed
         if (boutonFinTour.isEnabled()) {
+
             imageJeton(selected).retourner();
             this.updatePlateau();
             this.selected.unselect();
             this.selected = defaultPion;
 
+            if (partie.getJoueur1().nbSortis() == 3 || partie.getJoueur2().nbSortis() == 3) {
+                partie.gameOver();
+            }
+
             if (partie.tourFini()) {//Si le tour est terminé, c'est-à-dire que tous les joueurs ont retourné tous leurs jetons
                 partie.actionFinTour();
+                this.numJoueur = 1;
             } else {
                 this.numJoueur = this.numJoueur == 1 ? 2 : 1;
                 Joueur j = this.numJoueur == 1 ? partie.getJoueur1() : partie.getJoueur2();
@@ -1039,13 +1045,13 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         /*
           Création des jetons joueurs avec ajout de leurs images
          */
-        String[] adresses = {"pionred_1_6_clair.gif", "pionpurple_1_6_fonce.gif"};
+        String[] adresses = {"pionred_1_6_clair.gif", "pionred_1_6_fonce.gif"};
         pionsPurple[0] = new JPion(adresses, 1, 0);
-        String[] adresses2 = {"pionred_3_4_clair.gif", "pionpurple_3_4_fonce.gif"};
+        String[] adresses2 = {"pionred_3_4_clair.gif", "pionred_3_4_fonce.gif"};
         pionsPurple[1] = new JPion(adresses2, 1, 1);
-        String[] adresses3 = {"pionred_4_3_clair.gif", "pionpurple_4_3_fonce.gif"};
+        String[] adresses3 = {"pionred_4_3_clair.gif", "pionred_4_3_fonce.gif"};
         pionsPurple[2] = new JPion(adresses3, 1, 2);
-        String[] adresses4 = {"pionred_5_2_clair.gif", "pionpurple_5_2_fonce.gif"};
+        String[] adresses4 = {"pionred_5_2_clair.gif", "pionred_5_2_fonce.gif"};
         pionsPurple[3] = new JPion(adresses4, 1, 3);
 
         String[] adresses5 = {"piongreen_1_6_clair.gif", "piongreen_1_6_fonce.gif"};
@@ -1236,7 +1242,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 if (jeton.getSurPlateau()) {
                     jetonAffiche.setLocation(plateau.position(jeton.getPosition()));
 
-                    //Revoir s'il faut vérifier le sprite
+                    jetonAffiche.setImage(imageJeton(jetonAffiche).estSurFaceBlanche() ? 0 : 1);
                     plateau.add(jetonAffiche, new Integer(1));
                 } else { //Le jeton est dans la réserve
                     salleAttenteRed.add(jetonAffiche);
@@ -1253,7 +1259,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 if (jeton.getSurPlateau()) {
                     jetonAffiche.setLocation(plateau.position(jeton.getPosition()));
 
-                    //Revoir s'il faut vérifier le sprite
+                    jetonAffiche.setImage(imageJeton(jetonAffiche).estSurFaceBlanche() ? 0 : 1);
                     plateau.add(jetonAffiche, new Integer(1));
                 } else { //Le jeton est dans la réserve
                     salleAttenteGreen.add(jetonAffiche);
@@ -1342,6 +1348,7 @@ public class Fenster extends javax.swing.JFrame implements Vue {
         }
 
         JOptionPane.showMessageDialog(null, message, "Partie terminée", 0);
+        System.exit(0);
     }
 
     private static class DefaultTableModelImpl extends DefaultTableModel {

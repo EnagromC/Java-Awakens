@@ -41,6 +41,11 @@ public class Partie {
         joueur2.setPlateau(plateau);
         this.joueur1.setNumero(1);
         this.joueur2.setNumero(2);
+        //On retourne les 2 premiers jetons car ils ne peuvent pas être joués au premier tour
+        joueur1.getPions()[0].retourner();
+        joueur1.getPions()[1].retourner();
+        joueur2.getPions()[0].retourner();
+        joueur2.getPions()[1].retourner();
 
         this.manche = 1;
         this.tour = 1;
@@ -95,7 +100,7 @@ public class Partie {
     public boolean tourFini() {
         for (int i = 0; i < 4; i++) {
             //Si un des pions est encore sur la face pour bouger
-            if (joueur1.getPions()[i].estSurFaceBlanche() == this.faceBlanche && joueur2.getPions()[i].estSurFaceBlanche() == this.faceBlanche) {
+            if (joueur1.getPions()[i].estSurFaceBlanche() == this.faceBlanche || joueur2.getPions()[i].estSurFaceBlanche() == this.faceBlanche) {
                 return false;
             }
         }
@@ -124,13 +129,14 @@ public class Partie {
             if (this.manche == 1) {
                 this.paquet = new Paquet();
                 this.manche = 2;
-                joueur1.jouer();
+
             } else {
                 this.gameOver();
             }
         }
         vue.updatePaquet(c);
         vue.updateInfosPartie();
+        joueur1.jouer();
     }
 
     /**
