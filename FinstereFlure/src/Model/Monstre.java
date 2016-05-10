@@ -160,8 +160,11 @@ public class Monstre extends Pion implements NonTraversable {
      *
      * @return
      */
-    private List directionsVisibles() {
-        List l = asList(Direction.values()); //Transforme un tableau en liste.
+    private ArrayList directionsVisibles() {
+        ArrayList<Direction> l = new ArrayList<>();
+        for (Direction d :Direction.values()){
+            l.add(d);
+        }
         l.remove(this.direction.directionOpposee());
         return l;
     }

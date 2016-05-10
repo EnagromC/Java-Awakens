@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 public class JPion extends JPanel {
 
     public static final int TAILLE_CASE = 36;
-    protected String[] sprites;
+    protected String[] images;
     protected int imageActuelle;
     private int numJoueur;
 
@@ -35,7 +35,7 @@ public class JPion extends JPanel {
      *
      */
     public JPion(String[] adresses) {
-        this.sprites = adresses;
+        this.images = adresses;
         imageActuelle = 0;
         this.setSize(TAILLE_CASE, TAILLE_CASE);
         
@@ -50,7 +50,7 @@ public class JPion extends JPanel {
      * @param numJoueur : le joueur à qui appartient le pion
      */
     public JPion(String[] adresses, int numJoueur) {
-        this.sprites = adresses;
+        this.images = adresses;
         imageActuelle = 0;
         this.setSize(TAILLE_CASE, TAILLE_CASE);
 
@@ -67,20 +67,20 @@ public class JPion extends JPanel {
         return this.numJoueur;
     }
 
-    public void nextSprite() {
-        this.imageActuelle = (this.imageActuelle + 1) % sprites.length;
+    public void nextImagte() {
+        this.imageActuelle = (this.imageActuelle + 1) % images.length;
         this.repaint();
     }
 
-    public void setSprite(int n) {
-        this.imageActuelle = n % sprites.length;
+    public void setImage(int n) {
+        this.imageActuelle = n % images.length;
         this.repaint();
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         try {
-            BufferedImage img = ImageIO.read(new File("img/" + sprites[imageActuelle]));
+            BufferedImage img = ImageIO.read(new File("img/" + images[imageActuelle]));
             g.drawImage(img, 0, 0, TAILLE_CASE, TAILLE_CASE, null);
         } catch (IOException ex) {
             Logger.getLogger(JPion.class.getName()).log(Level.SEVERE, null, ex);

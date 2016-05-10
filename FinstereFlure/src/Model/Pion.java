@@ -29,6 +29,7 @@ public abstract class Pion {
      */
     public Pion() {
         this.plateau = new Plateau();
+        this.position = new Coordonnees(-1,-1);
     }
 
     /**
@@ -49,6 +50,7 @@ public abstract class Pion {
      */
     public Pion(Plateau plateau) {
         this.plateau = plateau;
+        this.position = new Coordonnees(-1,-1);
     }
 
     /**

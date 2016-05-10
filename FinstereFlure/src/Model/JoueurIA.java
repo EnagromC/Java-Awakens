@@ -21,11 +21,12 @@ public class JoueurIA extends Joueur{
     }
     
     public int expectiminimax(Etat sinit, int prof, int alpha, int beta){
+        System.out.println("a");
         if(this.dejaCalcules.containsKey(sinit)){
             return dejaCalcules.get(sinit);
         }
         
-        if(prof == 0 || sinit.fini()){
+        if(sinit.fini()){
             return sinit.kikawon();
         }
         int v = 0;

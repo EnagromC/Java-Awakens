@@ -822,16 +822,16 @@ public class Fenster extends javax.swing.JFrame implements Vue {
                 monstre.setLocation(plateau.position(p.getPosition()));
                 switch (m.getDirection()) {//On attribue au monstre le sprite correspondant à sa direction
                     case HAUT:
-                        monstre.setSprite(0);
+                        monstre.setImage(0);
                         break;
                     case DROITE:
-                        monstre.setSprite(1);
+                        monstre.setImage(1);
                         break;
                     case BAS:
-                        monstre.setSprite(2);
+                        monstre.setImage(2);
                         break;
                     case GAUCHE:
-                        monstre.setSprite(3);
+                        monstre.setImage(3);
                         break;
                 }
                 plateau.add(monstre, new Integer(1));

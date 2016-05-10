@@ -5,9 +5,9 @@
  */
 package Model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Objects;
 
 /**
@@ -19,7 +19,7 @@ public class Paquet {
     ////////////////////////////////////////////////////////////////////////////
     // Attributs
     ////////////////////////////////////////////////////////////////////////////
-    ArrayList<Carte> paquet = new ArrayList<>();
+    LinkedList<Carte> paquet = new LinkedList<>();
 
     ////////////////////////////////////////////////////////////////////////////
     // Attributs
@@ -122,7 +122,7 @@ public class Paquet {
     @Override
     public Object clone() {
         Paquet p = new Paquet();
-        ArrayList<Carte> cartes = new ArrayList<>();
+        LinkedList<Carte> cartes = new LinkedList<>();
         for (Carte c : this.paquet) {
             cartes.add((Carte) c.clone());
         }

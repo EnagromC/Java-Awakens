@@ -46,6 +46,7 @@ public class Etat {
     public Etat() {
         humain = new Jeton[4];
         ordi = new Jeton[4];
+        this.plateau = new Plateau();
     }
 
     public Etat(Jeton[] humain, Jeton[] ordi, Plateau plateau, int manche, int tour, Paquet paquet, int kikijoue) {
@@ -164,7 +165,7 @@ public class Etat {
                 Etat s = (Etat) this.clone();
                 s.tour++;
                 //La proba d'être dans ce cas est le nombre de carte de cette sorte / le nombre de carte restant
-                s.proba = paquet.getComposition().get(c) / paquet.taille();
+                s.proba = (float) (paquet.getComposition().get(c) / paquet.taille());
                 s.paquet.remove(c);
                 Monstre m = s.plateau.getMonstre();
 
@@ -180,6 +181,7 @@ public class Etat {
                     s.paquet = new Paquet();
                     s.manche = 2;
                 }
+                successeurs.add(s);
 
             }
 
@@ -225,7 +227,7 @@ public class Etat {
             }
 
         }
-
+        System.out.println(successeurs.get(0).tour);
         return successeurs;
     }
 
@@ -279,7 +281,7 @@ public class Etat {
                 Caillou caillou = new Caillou(pion.getPosition(), plat); //Le caillou est ajouté au plateau
             }
         }
-        this.plateau = plat;
+        s.plateau = plat;
 
         //Copie des jetons
         for (int i = 0; i < 4; i++) {
